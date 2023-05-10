@@ -182,6 +182,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        'captcha'=>Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
