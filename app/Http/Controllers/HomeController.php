@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -24,20 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $level = Auth::user()->level;
-        switch ($level) {
-            case '0':
-                return view('home');
-                break;
-            case '1':
-                return view('register');
-                break;
-            case '2':
-                return view('welcome');
-                break;
-                echo "stikes";
-                break;
-        }        
-        
+        $now = Carbon::now(); // today
+        $date = Carbon::parse($now)->isoFormat('D MMMM Y');
+        return view('master.welcome', compact('date'));
     }
 }

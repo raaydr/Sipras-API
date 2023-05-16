@@ -13,10 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
-
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/ubah-password', [App\Http\Controllers\GeneralController::class, 'ubah_password'])->name('general.ubah.password');
+Route::post('/change-password', [App\Http\Controllers\GeneralController::class, 'change_password'])->name('general.change.password');
