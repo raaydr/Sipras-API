@@ -19,3 +19,16 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/ubah-password', [App\Http\Controllers\GeneralController::class, 'ubah_password'])->name('general.ubah.password');
 Route::post('/change-password', [App\Http\Controllers\GeneralController::class, 'change_password'])->name('general.change.password');
+
+
+Route::group(['middleware' => 'check-permission:superadmin'], function () {
+    Route::group(['prefix' => 'superadmin'], function () {
+        Route::get('/Data-Barang', [App\Http\Controllers\BarangController::class, 'dataBarang'])->name('superadmin.dataBarang');
+        Route::get('/Detail-Barang/{id}', [App\Http\Controllers\BarangController::class, 'detailBarang'])->name('superadmin.detailBarang');
+    });
+});
+Route::group(['middleware' => 'check-permission:admin'], function () {
+    Route::group(['prefix' => 'admin'], function () {
+        Route::get('/Data-Barang', [App\Http\Controllers\BarangController::class, 'dataBarang'])->name('admin.dataBarang');
+    });
+});
