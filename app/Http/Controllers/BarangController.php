@@ -35,7 +35,7 @@ class BarangController extends Controller
     public function tabelBarang(Request $request)
     {
         
-        $data = Dokumen::where('status', '!=',0)->orderBy('created_at', 'desc')->get();
+        $data = Barang::where('status', '!=',0)->orderBy('created_at', 'desc')->get();
             if($request->ajax()){
     
                 return datatables()->of($data)                   
