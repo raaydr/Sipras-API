@@ -23,9 +23,20 @@ Route::post('/change-password', [App\Http\Controllers\GeneralController::class, 
 
 Route::group(['middleware' => 'check-permission:superadmin'], function () {
     Route::group(['prefix' => 'superadmin'], function () {
+        //Barang
         Route::get('/Data-Barang', [App\Http\Controllers\BarangController::class, 'dataBarang'])->name('superadmin.dataBarang');
         Route::get('/Detail-Barang/{id}', [App\Http\Controllers\BarangController::class, 'detailBarang'])->name('superadmin.detailBarang');
         Route::get('/Barang/Tabel-Barang', [App\Http\Controllers\BarangController::class, 'tabelBarang'])->name('superadmin.tabelBarang');
+
+        //Dokumen
+        Route::get('/Dokumen/Dokumen-Edit', [App\Http\Controllers\DokumenController::class, 'dokumenEdit'])->name('dokumenEdit');    
+        Route::post('/Dokumen/Dokumen-Search-Unit', [App\Http\Controllers\DokumenController::class, 'searchUnit'])->name('searchUnit');
+        Route::post('/Dokumen/Dokumen-Update', [App\Http\Controllers\DokumenController::class, 'dokumenUpdate'])->name('dokumenUpdate');        
+        Route::get('/Dokumen/Dokumen-Tabel', [App\Http\Controllers\DokumenController::class, 'tabelDokumen'])->name('tabelDokumen');
+        Route::get('/Dokumen/Dokumen-Publish/{id}', [App\Http\Controllers\DokumenController::class, 'dokumenPublish'])->name('dokumenPublish');
+        Route::get('/Dokumen/Dokumen-Delete/{id}', [App\Http\Controllers\DokumenController::class, 'dokumenDelete'])->name('dokumenDelete');
+        Route::get('/Dokumen/Dokumen-Detail/{id}', [App\Http\Controllers\DokumenController::class, 'dokumenDetailAdmin'])->name('dokumenDetailAdmin');
+
     });
 });
 Route::group(['middleware' => 'check-permission:admin'], function () {
