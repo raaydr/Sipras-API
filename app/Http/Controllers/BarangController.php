@@ -45,7 +45,7 @@ class BarangController extends Controller
         [   
             
             'nama_barang' => 'required|string',
-            'kode_barang' => 'nullable|string',
+            'kode_barang' => 'nullable|string|unique:barang,kode_barang',
             'tipe_barang' => 'nullable|string',
             'keterangan' => 'required',
         ],
@@ -54,9 +54,11 @@ class BarangController extends Controller
         [
             
             'nama_barang.required' => 'nama barang tidak boleh kosong!',
-            'kode_barang.required' => 'kode barang terbit tidak boleh kosong!',            
+            'kode_barang.required' => 'kode barang tidak boleh kosong!',
+            'kode_barang.unique' => 'kode barang tidak boleh sama',            
             'tipe_barang.required' => 'tipe barang unit tidak boleh kosong!',
             'keterangan.required' => 'keterangan barang tidak boleh kosong!',
+            
         ]);     
 
         if($validator->fails())
