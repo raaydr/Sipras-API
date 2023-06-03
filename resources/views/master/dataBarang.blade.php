@@ -16,12 +16,12 @@
    <div class="container-fluid">
       <div class="row mb-2">
          <div class="col-sm-6">
-            <h1>Edit Dokumen</h1>
+            <h1>Data Barang</h1>
          </div>
          <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-               <li class="breadcrumb-item"><a href="/">Informasi</a></li>
-               <li class="breadcrumb-item active">Dokumen-Edit</li>
+               <li class="breadcrumb-item"><a href="/">Barang</a></li>
+               <li class="breadcrumb-item active">List-Barang</li>
             </ol>
          </div>
       </div>
@@ -41,7 +41,7 @@
          <!-- general form elements -->
          <div class="card card-primary">
             <div class="card-header">
-               <h3 class="card-title">Dokumen Edit</h3>
+               <h3 class="card-title">Barang Edit</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -49,129 +49,54 @@
                @csrf  
                <div class="card-body">
                   <div class="form-group row">
-                     <label for="judul" class="col-md-4 col-form-label text-md-right">{{ __('Judul') }}</label>
+                     <label for="nama_barang" class="col-md-4 col-form-label text-md-right">{{ __('Nama Barang') }}</label>
                      <div class="col-md-6">
-                        <input id="judul" type="text" class="form-control" name="judul" value="{{ old('judul') }}"required autofocus />
-                        @if ($errors->has('judul'))
+                        <input id="nama_barang" type="text" class="form-control" name="nama_barang" value="{{ old('nama_barang') }}"required autofocus />
+                        @if ($errors->has('nama_barang'))
                         <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('judul') }}</strong>
+                        <strong>{{ $errors->first('nama_barang') }}</strong>
                         </span>
                         @endif
                      </div>
                   </div>
                   
                   <div class="form-group row">
-                     <label for="nomor" class="col-md-4 col-form-label text-md-right">{{ __('Nomor') }}</label>
+                     <label for="kode_barang" class="col-md-4 col-form-label text-md-right">{{ __('Kode Barang') }}</label>
                      <div class="col-md-6">
-                        <input id="nomor" type="text" class="form-control" name="nomor" value="{{ old('nomor') }}" />
-                        @if ($errors->has('nomor'))
+                        <input id="kode_barang" type="text" class="form-control" name="kode_barang" value="{{ old('kode_barang') }}" />
+                        <small>Contoh : "KOMP" untuk komputer</small><br>
+                        <small>Kode Barang tidak akan bisa diganti setelahnya</small>
+                        @if ($errors->has('kode_barang'))
                         <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('nomor') }}</strong>
+                        <strong>{{ $errors->first('kode_barang') }}</strong>
                         </span>
                         @endif
                      </div>
                   </div>
-                  <div class="form-group row">
-                     <label for="unit" class="col-md-4 col-form-label text-md-right">{{ __('Yang Mengeluarkan/Penerbit') }}</label>
-                     <div class="col-md-6">
-                        <input id="search_unit" type="text" class="form-control" name="search_unit"  >
-                        
-                        @if ($errors->has('judul'))
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('judul') }}</strong>
-                        </span>
-                        @endif
-                     </div>
-                  </div>
-                  <div class="form-group row">
-                            <label for="terbit" class="col-md-4 col-form-label text-md-right">{{ __('Tanggal Terbit') }}</label>
-
-                            <div class="col-md-6">
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <span class="glyphicon glyphicon-th"></span>
-                                    </div>
-                                    <input class="form-control js-datepicker" type="text"  name="terbit" required autofocus />
-                                    
-                                </div>
-                            </div>
-                            
-                    </div>    
                     <div class="form-group row">
-                            <label for="tanggal_lahir" class="col-md-4 col-form-label text-md-right">{{ __('Tanggal Kadaluarsa') }}</label>
-
-                            <div class="col-md-6">
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <span class="glyphicon glyphicon-th"></span>
-                                    </div>
-                                    <input class="form-control js-datepicker" type="text"  name="kadaluarsa" />
-                                    
-                                </div>
-                                <small id="passwordHelpBlock" class="form-text text-sucess">Dapat dikosongkan</small>
-                            </div>
-                            
-                    </div>
-                    <div class="form-group row">
-                     <label for="kategori" class="col-md-4 col-form-label text-md-right">{{ __('Kategori Dokumen') }}</label>
+                     <label for="tipe_barang" class="col-md-4 col-form-label text-md-right">{{ __('Tipe Barang') }}</label>
                      <div class="col-md-6">
-                        <input id="kategori" type="text" class="form-control" name="kategori" value="{{ old('kategori') }}"required autofocus />
-                        @if ($errors->has('kategori'))
+                        <input id="tipe_barang" type="text" class="form-control" name="tipe_barang" value="{{ old('tipe_barang') }}"required autofocus />
+                        <small>Contoh : elektronik atau senyawa kimia</small>
+                        @if ($errors->has('tipe_barang'))
                         <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('kategori') }}</strong>
+                        <strong>{{ $errors->first('tipe_barang') }}</strong>
                         </span>
                         @endif
                      </div>
-                  </div>    
+                  </div>
                   <div class="form-group row">
-                     <label for="nama" class="col-md-4 col-form-label text-md-right">{{ __('tipe konten') }}</label>
+                     <label for="keterangan" class="col-md-4 col-form-label text-md-right">{{ __('Keterangan') }}</label>
                      <div class="col-md-6">
-                        <div class="input-group mb-3">
-                           <select class="form-control" id="tipe_konten" name="tipe_konten">
-                              <option value="1">URL</option>
-                              <option value="2">File</option>
-                           </select>
-                           @error('nama_mata_pelatihan')
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $message }}</strong>
-                           </span>
-                           @enderror
-                        </div>
-                     </div>
-                  </div>
-                  <div class="form-group row" id="link">
-                     <label for="url_konten" class="col-md-4 col-form-label text-md-right">{{ __('URL') }}</label>
-                     <div class="col-md-6">
-                        <input id="url_konten" type="text" class="form-control" name="url_konten" value="{{ old('url_konten') }}"required autofocus />
-                        @if ($errors->has('url_konten'))
+                        <textarea id="keterangan" type="text" class="form-control" name="keterangan" value="{{ old('keterangan') }}"required autofocus></textarea>
+                        @if ($errors->has('keterangan'))
                         <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('url_konten') }}</strong>
+                        <strong>{{ $errors->first('keterangan') }}</strong>
                         </span>
                         @endif
                      </div>
-                  </div>
-                  <div class="form-group row" id="files">
-                     <label for="file_konten" class="col-md-4 col-form-label text-md-right">{{ __('File') }}</label>
-                     <div class="col-md-8">
-                        <input
-                           id="file_konten"
-                           type="file"
-                           class="form-control{{ $errors->has('file_konten') ? ' is-invalid' : '' }}"
-                           name="file_konten"
-                           value="{{ old('file_konten') }}"
-                           required
-                           autofocus
-                           /></input>
-                        <small id="passwordHelpBlock" class="form-text text-sucess">
-                        Format harus jpg,png,jpeg,pdf dan ukuran 5 mb
-                        </small>
-                        @if ($errors->has('file_konten'))
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('file_konten') }}</strong>
-                        </span>
-                        @endif
-                     </div>
-                  </div>
+                  </div>        
+                  
                </div>
                <!-- /.card-body -->
                <div class="card-footer">
@@ -185,158 +110,10 @@
          </div>
          <!-- /.card -->
       </div>
-      <div class="modal fade" id="modal-edit-konten">
-         <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-               <div class="modal-header bg-primary">
-                  <h4 class="modal-title">Edit Dokumen</h4>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                  </button>
-               </div>
-               <form id="formUpdate" enctype="multipart/form-data" >
-                  @csrf     
-                  <div class="modal-body">
-                     <input type="hidden" id="id" name="id" >
-                     <div class="form-group row">
-                     <label for="judul" class="col-md-4 col-form-label text-md-right">{{ __('Judul') }}</label>
-                     <div class="col-md-6">
-                        <input id="judul" type="text" class="form-control" name="judul" value="{{ old('judul') }}"required autofocus />
-                        @if ($errors->has('judul'))
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('judul') }}</strong>
-                        </span>
-                        @endif
-                     </div>
-                  </div>
-                  
-                  <div class="form-group row">
-                     <label for="nomor" class="col-md-4 col-form-label text-md-right">{{ __('Nomor') }}</label>
-                     <div class="col-md-6">
-                        <input id="nomor" type="text" class="form-control" name="nomor" value="{{ old('nomor') }}" />
-                        @if ($errors->has('nomor'))
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('nomor') }}</strong>
-                        </span>
-                        @endif
-                     </div>
-                  </div>
-                  <div class="form-group row">
-                     <label for="unit" class="col-md-4 col-form-label text-md-right">{{ __('Yang Mengeluarkan/Penerbit') }}</label>
-                     <div class="col-md-6">
-                        <input id="search_unitUpdate" type="text" class="form-control" name="search_unit" >
-                        
-                        @if ($errors->has('judul'))
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('judul') }}</strong>
-                        </span>
-                        @endif
-                     </div>
-                  </div>
-                  <div class="form-group row">
-                            <label for="terbit" class="col-md-4 col-form-label text-md-right">{{ __('Tanggal Terbit') }}</label>
-
-                            <div class="col-md-6">
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <span class="glyphicon glyphicon-th"></span>
-                                    </div>
-                                    <input class="form-control js-datepicker" type="text" id="terbit"  name="terbit" required autofocus />
-                                    
-                                </div>
-                            </div>
-                            
-                    </div>    
-                    <div class="form-group row">
-                            <label for="tanggal_lahir" class="col-md-4 col-form-label text-md-right">{{ __('Tanggal Kadaluarsa') }}</label>
-
-                            <div class="col-md-6">
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <span class="glyphicon glyphicon-th"></span>
-                                    </div>
-                                    <input class="form-control js-datepicker" type="text" id="kadaluarsa" name="kadaluarsa" />
-                                    
-                                </div>
-                                <small id="passwordHelpBlock" class="form-text text-sucess">Dapat dikosongkan</small>
-                            </div>
-                            
-                    </div>
-                    <div class="form-group row">
-                     <label for="kategori" class="col-md-4 col-form-label text-md-right">{{ __('Kategori Dokumen') }}</label>
-                     <div class="col-md-6">
-                        <input id="kategori" type="text" class="form-control" name="kategori" value="{{ old('kategori') }}"required autofocus />
-                        @if ($errors->has('kategori'))
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('kategori') }}</strong>
-                        </span>
-                        @endif
-                     </div>
-                  </div>    
-                  <div class="form-group row">
-                     <label for="nama" class="col-md-4 col-form-label text-md-right">{{ __('tipe konten') }}</label>
-                     <div class="col-md-6">
-                        <div class="input-group mb-3">
-                           <select class="form-control" id="tipe_konten" name="tipe_konten">
-                              <option value="1">URL</option>
-                              <option value="2">File</option>
-                           </select>
-                           @error('nama_mata_pelatihan')
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $message }}</strong>
-                           </span>
-                           @enderror
-                        </div>
-                     </div>
-                  </div>
-                  <div class="form-group row" id="link">
-                     <label for="url_konten" class="col-md-4 col-form-label text-md-right">{{ __('URL') }}</label>
-                     <div class="col-md-6">
-                        <input id="url_konten" type="text" class="form-control" name="url_konten" value="{{ old('url_konten') }}"required autofocus />
-                        @if ($errors->has('url_konten'))
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('url_konten') }}</strong>
-                        </span>
-                        @endif
-                     </div>
-                  </div>
-                  <div class="form-group row" id="files">
-                     <label for="file_konten" class="col-md-4 col-form-label text-md-right">{{ __('File') }}</label>
-                     <div class="col-md-8">
-                        <input
-                           id="file_konten"
-                           type="file"
-                           class="form-control{{ $errors->has('file_konten') ? ' is-invalid' : '' }}"
-                           name="file_konten"
-                           value="{{ old('file_konten') }}"
-                           required
-                           autofocus
-                           /></input>
-                        <small id="passwordHelpBlock" class="form-text text-sucess">
-                        Format harus jpg,png,jpeg,pdf dan ukuran 5 mb
-                        </small>
-                        @if ($errors->has('file_konten'))
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('file_konten') }}</strong>
-                        </span>
-                        @endif
-                     </div>
-                  </div>
-                  </div>
-                  <div class="modal-footer justify-content-between ">
-                     <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
-                     <button class="btn btn-outline-primary btn-submit" id="simpanBTN1">Submit</button>
-                  </div>
-               </form>
-            </div>
-            <!-- /.modal-content -->
-         </div>
-         <!-- /.modal-dialog -->
-      </div>
       <div class="col-12">
          <div class="card">
             <div class="card-header">
-               <h3 class="card-title">List Dokumen</h3>
+               <h3 class="card-title">List Barang</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -344,8 +121,10 @@
                   <thead>
                      <tr>
                         <th>no</th>
-                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Judul</th>
-                        
+                        <th>Nama Barang</th>
+                        <th>Kode</th>
+                        <th>Jumlah</th>
+                        <th>Updated By</th>
                         <th>status</th>
                         <th>action</th>
                      </tr>
@@ -355,8 +134,10 @@
                   <tfoot>
                      <tr>
                         <th>no</th>
-                        <th>Judul</th>
-                        
+                        <th>Nama Barang</th>
+                        <th>Kode</th>
+                        <th>Jumlah</th>
+                        <th>Updated By</th>
                         <th>status</th>
                         <th>action</th>
                      </tr>
@@ -392,7 +173,7 @@ $(function() {
             processing: true,
             serverSide: true,
             ajax: {
-                url: "{{route(getMyPermission(Auth::user()->level) .'.tabelBarang')}}",
+                url: "{{route('tabelBarang')}}",
                 type: 'GET'
             },
             columns: [{
@@ -405,6 +186,25 @@ $(function() {
                     orderable: true,
                     searchable: true
                 },
+                {
+                    data: 'kode_barang',
+                    name: 'kode_barang',
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                    data: 'jumlah',
+                    name: 'jumlah',
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                    data: 'user_name',
+                    name: 'user_name',
+                    orderable: true,
+                    searchable: true
+                },
+                
                 {
                     data: 'status',
                     name: 'status',
@@ -444,6 +244,241 @@ $(function() {
         .container()
         .appendTo("#example1_wrapper .col-md-6:eq(0)");
 });
-      
+$('#load').hide();
+$(function() {
+    $(".datepicker").datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        todayHighlight: true,
+    });
+    // Summernote
+    $('#summernote').summernote()
+
+})
+$(function() {
+    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+        event.preventDefault();
+        $(this).ekkoLightbox({
+            alwaysShowClose: true
+        });
+    });
+
+    $('.btn[data-filter]').on('click', function() {
+        $('.btn[data-filter]').removeClass('active');
+        $(this).addClass('active');
+    });
+})
+var CSRF_TOKEN = $('meta[name="csrf-token"]').attr("content");
+$(document).ready(function() {    
+    $('body').on('click', '.deleteBarang', function() {
+        var Item_id = $(this).data("id");
+        var url = '{{ route("BarangDelete",[":id"]) }}';
+        url = url.replace(':id', Item_id);
+        $.ajax({
+
+            type: "GET",
+
+            url: url,
+
+            success: function(data) {
+
+                iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                    title: 'Data Berhasil Disimpan',
+                    message: '{{ Session('
+                    success ')}}',
+                    position: 'bottomRight'
+                });
+                var oTable = $('#example1').dataTable(); //inialisasi datatable
+                oTable.fnDraw(false); //reset datatable
+
+            },
+
+            error: function(data) {
+
+                console.log('Error:', data);
+
+            }
+
+        });
+
+    });
+    $('body').on('click', '.publishBarang', function() {
+        var Item_id = $(this).data("id");
+        var url = '{{ route("BarangPublish",[":id"]) }}';
+        url = url.replace(':id', Item_id);
+        $.ajax({
+
+            type: "GET",
+
+            url: url,
+
+            success: function(data) {
+
+                iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                    title: 'Data Berhasil Disimpan',
+                    message: '{{ Session('
+                    success ')}}',
+                    position: 'bottomRight'
+                });
+                var oTable = $('#example1').dataTable(); //inialisasi datatable
+                oTable.fnDraw(false); //reset datatable
+
+            },
+
+            error: function(data) {
+
+                console.log('Error:', data);
+
+            }
+
+        });
+
+    });
+    if ($("#formTarget").length > 0) {
+        $.validator.addMethod('filesize', function(value, element, param) {
+            return this.optional(element) || (element.files[0].size <= param * 1000000)
+        }, 'File size must be less than {0} MB');
+
+        $("#formTarget").validate({
+
+            rules: {
+
+                nama_barang: {
+                    required: true,
+
+
+                },
+                kode_barang: {
+                    required: true,
+
+
+                },
+                tipe_barang: {
+                    required: true,
+
+
+                },
+                keterangan: {
+                    required: true,
+
+
+                },
+
+            },
+            messages: {
+               nama_barang: {
+                    required: 'Tolong Diisi',
+
+                },
+                kode_barang: {
+                    required: 'Tolong Diisi',
+
+                },
+                tipe_barang: {
+                    required: 'Tolong Diisi',
+
+                },
+                keterangan: {
+                    required: 'Tolong Diisi',
+
+                },
+            },
+            submitHandler: function(form) {
+                var actionType = $('#simpanBTN').val();
+                $('#simpanBTN').html('Sending..');
+                $('#load').show();
+                var form = $("#formTarget").closest("form");
+                var formData = new FormData(form[0]);
+                $.ajax({
+                    xhr: function() {
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function(evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = Math.round(((evt.loaded / evt.total) * 100));
+                                $(".progress-bar").width(percentComplete + '%');
+                                $(".progress-bar").html(percentComplete + '%');
+                            }
+                        }, false);
+                        return xhr;
+                    },
+                    data: formData,
+                    url: "{{ route('BarangUpdate') }}", //url simpan data
+                    type: "POST", //karena simpan kita pakai method POST
+                    dataType: 'json', //data tipe kita kirim berupa JSON
+                    processData: false,
+                    contentType: false,
+                    success: function(data) { //jika berhasil
+                        switch (data.status) {
+                            case 0:
+                                $('#load').hide();
+                                $('#simpanBTN').html('Submit');
+                                $('#simpanBTN').show();
+                                var oTable = $('#example1').dataTable(); //inialisasi datatable
+                                oTable.fnDraw(false); //reset datatable
+                                iziToast.error({
+                                    title: 'Error',
+                                    message: data.error,
+                                });
+                                console.log('Error:', "periksa");
+                                break;
+                            case 1:
+                                $('#load').hide();
+                                $('#simpanBTN').html('Submit'); //tombol simpan
+                                $('#simpanBTN').show();
+                                document.getElementById("formTarget").reset();
+                                $("#link").show();
+                                $("#url_konten").attr("required");
+                                $("#url_konten").attr("data-error");
+                                $("#files").hide();
+                                $("#file_konten").val("");
+                                $("#file_konten").removeAttr("required");
+                                $("#file_konten").removeAttr("data-error");
+                                var oTable = $('#example1').dataTable(); //inialisasi datatable
+                                oTable.fnDraw(false); //reset datatable
+                                //$('#uploadStatus').html('<p style="color:#28A74B;">File Berhasil diupload!</p>');
+                                iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                                    title: 'Data Berhasil Disimpan',
+                                    message: '{{ Session('
+                                    success ')}}',
+                                    position: 'bottomRight'
+                                });
+                                break;
+                            default:
+                                // code block
+
+                        }
+
+                    },
+                    error: function(data) { //jika error tampilkan error pada console
+                        $('#load').hide();
+
+
+                        $('#simpanBTN').html('Submit'); //tombol simpan
+                        iziToast.error({
+                            title: 'Error',
+                            message: 'Illegal operation',
+                        });
+                        console.log('Error:', "Data kosong");
+
+                    }
+                });
+            }
+        })
+    }
+    function printErrorMsg(msg) {
+
+        $(".print-error-msg").find("ul").html('');
+
+        $(".print-error-msg").css('display', 'block');
+
+        $.each(msg, function(key, value) {
+
+            $(".print-error-msg").find("ul").append('<li>' + value + '</li>');
+
+        });
+
+    }
+
+});
 </script>
 @endsection
