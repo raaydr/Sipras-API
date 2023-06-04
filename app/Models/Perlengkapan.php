@@ -18,11 +18,13 @@ class Perlengkapan extends Model
         'lokasi_perlengkapan',
         'departemen',
         'foto_perlengkapan',
+        'foto_perlengkapan_thumbnail',
         'kondisi_perlengkapan',
         'barcode_perlengkapan',
-        'lendable_perlengkapan',
+        'leandable_perlengkapan',
         'status_peminjaman',
         'status',
+        'barang_id',
         'user_id',
         'user_name',
         
@@ -45,4 +47,9 @@ class Perlengkapan extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    public function Barang()
+	{
+		return $this->belongsTo('App\Models\Barang','barang_id');
+	}
 }

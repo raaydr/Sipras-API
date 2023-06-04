@@ -35,8 +35,8 @@ class BarangController extends Controller
     public function BarangDetail($id)
     {
         $title = 'Welcome Admin';
-        
-        return view('master.detailBarang',);
+        $barang = Barang::where('id',$id)->first();
+        return view('master.detailBarang',compact('barang'));
     }
 
 

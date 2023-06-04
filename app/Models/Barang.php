@@ -38,4 +38,9 @@ class Barang extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    public function perlengkapan()
+    {
+        return $this->hasMany('App\Models\Perlengkapan');
+    }
 }

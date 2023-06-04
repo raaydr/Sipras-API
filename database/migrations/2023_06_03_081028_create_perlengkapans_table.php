@@ -21,11 +21,13 @@ return new class extends Migration
             $table->string('lokasi_perlengkapan')->nullable();
             $table->string('departemen')->nullable();
             $table->text('foto_perlengkapan');
-            $table->string('kondisi_perlengkapan');
+            $table->text('foto_perlengkapan_thumbnail');
+            $table->boolean('kondisi_perlengkapan');
             $table->text('barcode_perlengkapan');
             $table->boolean('status');
             $table->boolean('leandable_perlengkapan');
             $table->boolean('status_peminjaman');
+            $table->integer('barang_id');
             $table->integer('user_id');
             $table->string('user_name');
             $table->timestamps();
