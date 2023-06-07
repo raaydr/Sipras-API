@@ -185,6 +185,7 @@ return [
         'captcha'=>Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 

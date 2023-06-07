@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Crypt;
-
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class PerlengkapanController extends Controller
 {
     public function __construct()
@@ -39,10 +39,27 @@ class PerlengkapanController extends Controller
     public function PerlengkapanDetail($id)
     {
         $title = 'Welcome Admin';
-        
-        return view('master.detailPerlengkapan',);
+        $image = QrCode::format('png')
+        ->merge('/public/stikes/stikes.png')
+        ->size(200)
+        ->errorCorrection('H')
+        ->generate('A simple example of QR code!'.$title);
+
+return response($image)->header('Content-type','image/png');
     }
 
+    public function PerlengkapanQrcode($id){
+        $perlengkapan = Perlengkapan::where('id',$id)->first();
+        
+        $kode = $perlengkapan->kode_perlengkapan;
+        $image = QrCode::format('png')
+        ->merge('/public/stikes/stikes.png')
+        ->size(200)
+        ->errorCorrection('H')
+        ->generate($kode);
+
+return response($image)->header('Content-type','image/png');
+    }
 
     public function PerlengkapanUpdate(Request $request){
         $validator = Validator::make($request->all(), 
@@ -224,6 +241,12 @@ class PerlengkapanController extends Controller
     
                 return datatables()->of($data)                   
                     ->addIndexColumn()
+                    ->addColumn('qrcode', function($row){
+                        $id = $row->id;
+                        $detail = route('PerlengkapanQrcode',$id); 
+                        $actionBtn = '<a class="btn btn-outline-info m-1" href='.$detail.' target="_blank">QRcode</a>';
+                        return $actionBtn;
+                    }) 
                     ->addColumn('status', function($row){
                         $status = $row->status;
                         switch ($status) {
@@ -284,7 +307,7 @@ class PerlengkapanController extends Controller
                         
                         
                         return $actionBtn;
-                    })->rawColumns(['status','action'])
+                    })->rawColumns(['qrcode','status','action'])
                     ->make(true);
             }
     }

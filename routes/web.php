@@ -38,6 +38,7 @@ Route::group(['middleware' => 'check-permission:superadmin'], function () {
         Route::get('/Perlengkapan/Perlengkapan-Publish/{id}', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanPublish'])->name('PerlengkapanPublish');
         Route::get('/Perlengkapan/Perlengkapan-Delete/{id}', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanDelete'])->name('PerlengkapanDelete');
         Route::get('/Perlengkapan/Perlengkapan-Detail/{id}', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanDetail'])->name('PerlengkapanDetail');
+        Route::get('/Barang/Perlengkapan-QrCode//{id}', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanQrcode'])->name('PerlengkapanQrcode');  
 
         //Dokumen
         Route::get('/Dokumen/Dokumen-Edit', [App\Http\Controllers\DokumenController::class, 'dokumenEdit'])->name('dokumenEdit');    

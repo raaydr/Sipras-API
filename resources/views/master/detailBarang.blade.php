@@ -370,7 +370,7 @@
                         <th>no</th>
                         <th>Kode</th>
                         <th>Jumlah</th>
-                        <th>Updated By</th>
+                        <th>QrCode</th>
                         <th>status</th>
                         <th>action</th>
                      </tr>
@@ -382,7 +382,7 @@
                         <th>no</th>
                         <th>Kode</th>
                         <th>Jumlah</th>
-                        <th>Updated By</th>
+                        <th>QrCode</th>
                         <th>status</th>
                         <th>action</th>
                      </tr>
@@ -431,8 +431,8 @@
                        searchable: true
                    },
                    {
-                       data: 'user_name',
-                       name: 'user_name',
+                       data: 'qrcode',
+                       name: 'qrcode',
                        orderable: true,
                        searchable: true
                    },
