@@ -241,20 +241,32 @@ return response($image)->header('Content-type','image/png');
     
                 return datatables()->of($data)                   
                     ->addIndexColumn()
-                    ->addColumn('qrcode', function($row){
+                    ->addColumn('image', function($row){
+                        $b = $row->foto_perlengkapan;
+                        $c = $row->foto_perlengkapan_thumbnail;
+                        $asset= "/foto-perlengkapan/";
+                        $detail=  $asset.$b;
+                        $assetThumbnail= "/foto-perlengkapan/";
+                        $thumbnail=  $assetThumbnail.$c;
                         $id = $row->id;
-                        $detail = route('PerlengkapanQrcode',$id); 
-                        $actionBtn = '<a class="btn btn-outline-info m-1" href='.$detail.' target="_blank">QRcode</a>';
-                        return $actionBtn;
+                        $image = '<div class="col-md-8"> <a href='.$detail.' data-toggle="lightbox" >
+                        <img src='.$thumbnail.' class="img-fluid" alt="white sample"/>
+                        </a> </div>';
+                        
+                            return $image;
                     }) 
-                    ->addColumn('status', function($row){
-                        $status = $row->status;
+                    ->addColumn('kondisi', function($row){
+                        $status = $row->kondisi_perlengkapan;
                         switch ($status) {
-                            case '2':
-                                return '<p class="text-danger">Tidak Aktif</p>';
-                                break;
+                            
                             case '1':
-                                return '<p class="text-success">Aktif</p>';     
+                                return '<p class="text-success">Bagus</p>';     
+                                break;
+                            case '2':
+                                return '<p class="text-warning">Kurang Bagus</p>';
+                                break;
+                            case '3':
+                                return '<p class="text-danger">Rusak</p>';
                                 break;
                                 default:
                                 echo "stikes medistra";
@@ -264,8 +276,10 @@ return response($image)->header('Content-type','image/png');
                     ->addColumn('action', function($row){
                         $id = $row->id;
                         $nama = $row->nama_perlengkapan;
+                        $qrcode = route('PerlengkapanQrcode',$id); 
+                        $actionBtn = '<a class="btn btn-outline-info m-1" href='.$qrcode.' target="_blank">QRcode</a>';
                         $detail = route('PerlengkapanDetail',$id); 
-                        $actionBtn = '<a class="btn btn-outline-primary m-1" href='.$detail.'>detail</a>';
+                        $actionBtn =$actionBtn. '<a class="btn btn-outline-primary m-1" href='.$detail.'>detail</a>';
                         $status = $row->status;
                         switch ($status) {
                             case '2':
@@ -307,7 +321,7 @@ return response($image)->header('Content-type','image/png');
                         
                         
                         return $actionBtn;
-                    })->rawColumns(['qrcode','status','action'])
+                    })->rawColumns(['image','kondisi','action'])
                     ->make(true);
             }
     }
