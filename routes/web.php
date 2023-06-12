@@ -35,6 +35,7 @@ Route::group(['middleware' => 'check-permission:superadmin'], function () {
         Route::get('/Barang/Perlengkapan-Edit//{id}', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanEdit'])->name('PerlengkapanEdit');  
         Route::post('/Perlengkapan/Perlengkapan-Update', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanUpdate'])->name('PerlengkapanUpdate');        
         Route::get('/Perlengkapan/Perlengkapan-Tabel', [App\Http\Controllers\PerlengkapanController::class, 'tabelPerlengkapan'])->name('tabelPerlengkapan');
+        Route::get('/Perlengkapan/Perlengkapan-Tabel-Barang/{id}', [App\Http\Controllers\PerlengkapanController::class, 'tabelPerlengkapanBarang'])->name('tabelPerlengkapanBarang');
         Route::get('/Perlengkapan/Perlengkapan-Publish/{id}', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanPublish'])->name('PerlengkapanPublish');
         Route::get('/Perlengkapan/Perlengkapan-Delete/{id}', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanDelete'])->name('PerlengkapanDelete');
         Route::get('/Perlengkapan/Perlengkapan-Detail/{id}', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanDetail'])->name('PerlengkapanDetail');

@@ -30,6 +30,8 @@ return new class extends Migration
             $table->integer('barang_id');
             $table->integer('user_id');
             $table->string('user_name');
+            $table->string('editedBy_name');
+            $table->integer('editedBy_id');
             $table->timestamps();
 
                

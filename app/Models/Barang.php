@@ -18,6 +18,8 @@ class Barang extends Model
         'status',
         'user_id',
         'user_name',
+        'editedBy_id',
+        'editedBy_name',
         
         
         

@@ -11,21 +11,23 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('barang', function (Blueprint $table) {
+        Schema::create('mutasi', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('nama_barang');
-            $table->text('kode_barang')->unique();
-            $table->text('tipe_barang');
-            $table->integer('jumlah')->unsigned();
             $table->text('keterangan');
-            $table->boolean('status');
-            $table->integer('user_id');
+            $table->date('tanggal_mutasi');
+            $table->text('lokasi_penempatan_lama');
+            $table->text('lokasi_penempatan_baru');
+            $table->string('departemen_lama');
+            $table->string('departemen_baru');
+            $table->text('foto_pemindahan')->nullable();
+            $table->integer('barang_id');
+            $table->integer('perlengkapan_id');
             $table->string('user_name');
+            $table->integer('user_id');
             $table->string('editedBy_name');
             $table->integer('editedBy_id');
+            $table->boolean('status');
             $table->timestamps();
-
-               
         });
     }
 
@@ -36,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('barang');
+        Schema::dropIfExists('mutasi');
     }
 };

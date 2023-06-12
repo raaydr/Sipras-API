@@ -83,8 +83,10 @@ class BarangController extends Controller
         }
         if($request->id != NULL){
             $update['updated_at'] = now(); 
-            
-            
+            $user_id = Auth::user()->id;        
+            $user_name = Auth::user()->name;
+            $update['editedBy_id'] = $user_id;      
+            $update['editedBy_name'] = $user_name;    
     
             Barang::updateOrInsert(
                 ['id' => $id], $update
@@ -98,6 +100,8 @@ class BarangController extends Controller
             $user_name = Auth::user()->name;  
             $update['user_id'] = $user_id;      
             $update['user_name'] = $user_name;
+            $update['editedBy_id'] = $user_id;      
+            $update['editedBy_name'] = $user_name;
             $update['updated_at'] = now(); 
             $update['created_at'] = now(); 
             Barang::updateOrInsert(

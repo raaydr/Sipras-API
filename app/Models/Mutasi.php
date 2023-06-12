@@ -5,30 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Perlengkapan extends Model
+class Mutasi extends Model
 {
     use HasFactory;
-    protected $table = 'perlengkapan';
+    use HasFactory;
+    protected $table = 'mutasi';
     protected $fillable = [
-        'kode_perlengkapan',
-        'jumlah_perlengkapan',
-        'harga_perlengkapan',
-        'keterangan_perlengkapan',
-        'tanggal_pembelian',
-        'lokasi_perlengkapan',
-        'departemen',
-        'foto_perlengkapan',
-        'foto_perlengkapan_thumbnail',
-        'kondisi_perlengkapan',
-        'barcode_perlengkapan',
-        'leandable_perlengkapan',
-        'status_peminjaman',
+        'lokasi_penempatan_lama',
+        'lokasi_penempatan_baru',
+        'departemen_lama',
+        'departemen_baru',
+        'tanggal_mutasi',
+        'foto_pemindahan',
+        'keterangan',
         'status',
         'barang_id',
+        'perlengkapan_id',
         'user_id',
         'user_name',
         'editedBy_id',
         'editedBy_name',
+
         
         
         
@@ -54,4 +51,10 @@ class Perlengkapan extends Model
 	{
 		return $this->belongsTo('App\Models\Barang','barang_id');
 	}
+
+    public function Perlengkapan()
+	{
+		return $this->belongsTo('App\Models\Perlengkapan','perlengkapan_id');
+	}
+
 }
