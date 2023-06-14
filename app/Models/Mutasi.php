@@ -17,6 +17,7 @@ class Mutasi extends Model
         'departemen_baru',
         'tanggal_mutasi',
         'foto_pemindahan',
+        'foto_pemindahan_thumbnail',
         'keterangan',
         'status',
         'barang_id',

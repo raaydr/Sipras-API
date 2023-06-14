@@ -34,23 +34,11 @@
       </div>
       @endif
       <div class="col-12" id="accordion">
-         <div class="card card-primary card-outline">
-            <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
-               <div class="card-header">
-                  <h4 class="card-title w-100">
-                     <b>Detail Perlengkapan</b>
-                  </h4>
-               </div>
-            </a>
-            <div id="collapseOne" class="collapse" data-parent="#accordion">
-              
-            </div>
-         </div>
          <div class="card card-warning card-outline">
             <a class="d-block w-100" data-toggle="collapse" href="#collapseFour">
                <div class="card-header">
                   <h4 class="card-title w-100">
-                     <b>Input Perlengkapan</b> 
+                     <b>Edit Perlengkapan</b> 
                   </h4>
                </div>
             </a>
@@ -204,14 +192,106 @@
             <a class="d-block w-100" data-toggle="collapse" href="#collapseSeven">
                <div class="card-header">
                   <h4 class="card-title w-100">
-                     <b></b> 
+                     <b>Mutasi Perlengkapan</b> 
                   </h4>
                </div>
             </a>
             <div id="collapseSeven" class="collapse" data-parent="#accordion">
-               <div class="card-body">
-                  
-               </div>
+               <!-- form start -->
+               <form id="formTarget" enctype="multipart/form-data" >
+                  @csrf  
+                  <div class="card-body">
+                  <input type="hidden" id="perlengkapan_id" name="perlengkapan_id" value="{{$perlengkapan->id}}" >
+                  <input type="hidden" id="kode" name="kode" value="{{$perlengkapan->kode_perlengkapan}}" >
+                     <input type="hidden" id="barang_id" name="barang_id" value="{{$barang->id}}" >
+                     <div class="form-group row">
+                        <label for="lokasi_penempatan_lama" class="col-md-4 col-form-label text-md-right">{{ __('Lokasi Perlengkapan yang Lama') }}</label>
+                        <div class="col-md-6">
+                           <input id="lokasi_penempatan_lama" type="text" class="form-control" name="lokasi_penempatan_lama" value="{{$perlengkapan->lokasi_perlengkapan}}"required autofocus />
+                           @if ($errors->has('lokasi_penempatan_lama'))
+                           <span class="invalid-feedback" role="alert">
+                           <strong>{{ $errors->first('lokasi_penempatan_lama') }}</strong>
+                           </span>
+                           @endif
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label for="lokasi_penempatan_baru" class="col-md-4 col-form-label text-md-right">{{ __('Lokasi Perlengkapan yang Baru') }}</label>
+                        <div class="col-md-6">
+                           <input id="lokasi_penempatan_baru" type="text" class="form-control" name="lokasi_penempatan_baru"required autofocus />
+                           @if ($errors->has('lokasi_penempatan_baru'))
+                           <span class="invalid-feedback" role="alert">
+                           <strong>{{ $errors->first('lokasi_penempatan_baru') }}</strong>
+                           </span>
+                           @endif
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label for="departemen_lama" class="col-md-4 col-form-label text-md-right">{{ __('Departemen yang lama') }}</label>
+                        <div class="col-md-6">
+                           <input id="departemen_lama" type="text" class="form-control" name="departemen_lama" value="{{$perlengkapan->departemen}}" required autofocus/>
+                           @if ($errors->has('departemen_lama'))
+                           <span class="invalid-feedback" role="alert">
+                           <strong>{{ $errors->first('departemen_lama') }}</strong>
+                           </span>
+                           @endif
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label for="departemen_baru" class="col-md-4 col-form-label text-md-right">{{ __('Departemen yang baru') }}</label>
+                        <div class="col-md-6">
+                           <input id="departemen_baru" type="text" class="form-control" name="departemen_baru" required autofocus/>
+                           @if ($errors->has('departemen_baru'))
+                           <span class="invalid-feedback" role="alert">
+                           <strong>{{ $errors->first('departemen_baru') }}</strong>
+                           </span>
+                           @endif
+                        </div>
+                     </div>
+                     
+                     <div class="form-group row">
+                        <label for="tanggal_mutasi" class="col-md-4 col-form-label text-md-right">{{ __('Tanggal Mutasi') }}</label>
+                        <div class="col-md-6">
+                           <div class="input-group date">
+                              <div class="input-group-addon">
+                                 <span class="glyphicon glyphicon-th"></span>
+                              </div>
+                              <input placeholder="tanggal mutasi" type="text" class="form-control datepicker" name="tanggal_mutasi" required autofocus    />
+                           </div>
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label for="foto_pemindahan" class="col-md-4 col-form-label text-md-right">{{ __('foto pemindahan') }}</label>
+                        <div class="col-md-4">
+                           <input id="foto_pemindahan" type="file" class="form-control" name="foto_pemindahan" value="{{ old('foto_pemindahan') }}" ></input>
+                           @if ($errors->has('foto_pemindahan'))
+                           <span class="invalid-feedback" role="alert">
+                           <strong>{{ $errors->first('foto_pemindahan') }}</strong>
+                           </span>
+                           @endif
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label for="keterangan" class="col-md-4 col-form-label text-md-right">{{ __('Keterangan') }}</label>
+                        <div class="col-md-6">
+                           <textarea id="keterangan" type="text" class="form-control" name="keterangan" value="{{ old('keterangan') }}"required autofocus></textarea>
+                           @if ($errors->has('keterangan'))
+                           <span class="invalid-feedback" role="alert">
+                           <strong>{{ $errors->first('keterangan') }}</strong>
+                           </span>
+                           @endif
+                        </div>
+                     </div>
+                  </div>
+                  <!-- /.card-body -->
+                  <div class="card-footer">
+                     <!-- /.card-body -->
+                     <div class="text-center">
+                        <button class="btn btn-success btn-submit" id="simpanBTN">Submit</button>
+                        <div id="load" class="spinner-border text-primary"></div>
+                     </div>
+                  </div>
+               </form>
             </div>
          </div>
       </div>
@@ -237,10 +317,10 @@
                   <thead>
                      <tr>
                         <th>no</th>
-                        <th>Kode</th>
-                        <th>Jumlah</th>
-                        <th>gambar</th>
-                        <th>Kondisi</th>
+                        <th>Loasi Baru</th>
+                        <th>Departemen Baru</th>
+                        <th>Tanggal</th>
+                        <th>Gambar</th>
                         <th>action</th>
                      </tr>
                   </thead>
@@ -248,11 +328,11 @@
                   </tbody>
                   <tfoot>
                      <tr>
-                        <th>no</th>
-                        <th>Kode</th>
-                        <th>Jumlah</th>
-                        <th>gambar</th>
-                        <th>Kondisi</th>
+                     <th>no</th>
+                        <th>Loasi Baru</th>
+                        <th>Departemen Baru</th>
+                        <th>Tanggal</th>
+                        <th>Gambar</th>
                         <th>action</th>
                      </tr>
                   </tfoot>
@@ -304,7 +384,7 @@
                processing: true,
                serverSide: true,
                ajax: {
-                   url: "{{route('tabelPerlengkapanBarang',$barang->id)}}",
+                   url: "{{route('tabelMutasiPerlengkapan',$perlengkapan->id)}}",
                    type: 'GET'
                },
                columns: [{
@@ -312,30 +392,28 @@
                        name: 'DT_RowIndex'
                    },
                    {
-                       data: 'kode_perlengkapan',
-                       name: 'kode_perlengkapan',
+                       data: 'Lokasi',
+                       name: 'Lokasi',
                        orderable: true,
                        searchable: true
                    },
                    {
-                       data: 'jumlah_perlengkapan',
-                       name: 'jumlah',
+                       data: 'Departemen',
+                       name: 'Departemen',
+                       orderable: true,
+                       searchable: true
+                   },
+                   {
+                       data: 'tanggal',
+                       name: 'tanggal',
                        orderable: true,
                        searchable: true
                    },
                    {
                        data: 'image',
                        name: 'image',
-                       
-                       
                    },
                    
-                   {
-                       data: 'kondisi',
-                       name: 'kondisi',
-                       orderable: true,
-                       searchable: true
-                   },
                    {
                        data: 'action',
                        name: 'action'
@@ -421,9 +499,9 @@
    })
    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr("content");
    $(document).ready(function() {    
-       $('body').on('click', '.deletePerlengkapan', function() {
+       $('body').on('click', '.deleteMutasi', function() {
            var Item_id = $(this).data("id");
-           var url = '{{ route("PerlengkapanDelete",[":id"]) }}';
+           var url = '{{ route("MutasiDelete",[":id"]) }}';
            url = url.replace(':id', Item_id);
            $.ajax({
    
@@ -494,12 +572,22 @@
    
                rules: {
    
-                   nama_perlengkapan: {
+                  lokasi_penempatan_baru: {
+                       required: true,
+                   },
+                   
+                  lokasi_penempatan_lama: {
+                       required: true,
+                   },
+                   departemen_lama: {
+                       required: true,
+                   },
+                   departemen_baru: {
                        required: true,
    
    
                    },
-                   tipe_barang: {
+                   tanggal_mutasi: {
                        required: true,
    
    
@@ -512,15 +600,27 @@
    
                },
                messages: {
-                  nama_perlengkapan: {
+                  lokasi_penempatan_baru: {
                        required: 'Tolong Diisi',
    
                    },
-                   tipe_barang: {
+                   lokasi_penempatan_lama: {
+                       required: 'Tolong Diisi',
+   
+                   },
+                   departemen_baru: {
+                       required: 'Tolong Diisi',
+   
+                   },
+                   departemen_lama: {
                        required: 'Tolong Diisi',
    
                    },
                    keterangan: {
+                       required: 'Tolong Diisi',
+   
+                   },
+                   tanggal_mutasi: {
                        required: 'Tolong Diisi',
    
                    },
@@ -545,7 +645,7 @@
                            return xhr;
                        },
                        data: formData,
-                       url: "{{ route('BarangUpdate') }}", //url simpan data
+                       url: "{{ route('MutasiUpdate') }}", //url simpan data
                        type: "POST", //karena simpan kita pakai method POST
                        dataType: 'json', //data tipe kita kirim berupa JSON
                        processData: false,
@@ -566,7 +666,10 @@
                                    $('#load').hide();
                                    $('#simpanBTN').html('Submit'); //tombol simpan
                                    $('#simpanBTN').show();
-                                   location.reload(); 
+                                   document.getElementById("formTarget1").reset();
+                                   var oTable = $('#example1').dataTable(); //inialisasi datatable
+                                    oTable.fnDraw(false); //reset datatable 
+                                    location.reload();
                                    //$('#uploadStatus').html('<p style="color:#28A74B;">File Berhasil diupload!</p>');
                                    iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                                        title: 'Data Berhasil Disimpan',

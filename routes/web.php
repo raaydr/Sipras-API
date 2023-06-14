@@ -41,6 +41,16 @@ Route::group(['middleware' => 'check-permission:superadmin'], function () {
         Route::get('/Perlengkapan/Perlengkapan-Detail/{id}', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanDetail'])->name('PerlengkapanDetail');
         Route::get('/Barang/Perlengkapan-QrCode//{id}', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanQrcode'])->name('PerlengkapanQrcode');  
 
+        
+        //Mutasi
+        Route::get('/Barang/Mutasi-Edit//{id}', [App\Http\Controllers\MutasiController::class, 'MutasiEdit'])->name('MutasiEdit');  
+        Route::post('/Mutasi/Mutasi-Update', [App\Http\Controllers\MutasiController::class, 'MutasiUpdate'])->name('MutasiUpdate');        
+        Route::get('/Mutasi/Mutasi-Tabel', [App\Http\Controllers\MutasiController::class, 'tabelMutasi'])->name('tabelMutasi');
+        Route::get('/Mutasi/Mutasi-Tabel-Perlengkapan/{id}', [App\Http\Controllers\MutasiController::class, 'tabelMutasiPerlengkapan'])->name('tabelMutasiPerlengkapan');
+        Route::get('/Mutasi/Mutasi-Publish/{id}', [App\Http\Controllers\MutasiController::class, 'MutasiPublish'])->name('MutasiPublish');
+        Route::get('/Mutasi/Mutasi-Delete/{id}', [App\Http\Controllers\MutasiController::class, 'MutasiDelete'])->name('MutasiDelete');
+        Route::get('/Mutasi/Mutasi-Detail/{id}', [App\Http\Controllers\MutasiController::class, 'MutasiDetail'])->name('MutasiDetail');
+        
         //Dokumen
         Route::get('/Dokumen/Dokumen-Edit', [App\Http\Controllers\DokumenController::class, 'dokumenEdit'])->name('dokumenEdit');    
         Route::post('/Dokumen/Dokumen-Search-Unit', [App\Http\Controllers\DokumenController::class, 'searchUnit'])->name('searchUnit');

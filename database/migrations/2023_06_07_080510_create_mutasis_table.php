@@ -20,12 +20,13 @@ return new class extends Migration
             $table->string('departemen_lama');
             $table->string('departemen_baru');
             $table->text('foto_pemindahan')->nullable();
+            $table->text('foto_pemindahan_thumbnail')->nullable();
             $table->integer('barang_id');
             $table->integer('perlengkapan_id');
             $table->string('user_name');
             $table->integer('user_id');
-            $table->string('editedBy_name');
-            $table->integer('editedBy_id');
+            $table->string('editedBy_name')->nullable();;
+            $table->integer('editedBy_id')->nullable();;
             $table->boolean('status');
             $table->timestamps();
         });
