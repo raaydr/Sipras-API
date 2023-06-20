@@ -19,7 +19,25 @@
                             <a href="{{ route('BarangEdit') }}" class="nav-link ">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
-                                        Dashboard
+                                        Data Barang
+                                    </p>
+                                </a>
+                     
+                            </li>
+                            <li class="nav-item">
+                            <a href="{{ route('PerlengkapanEdit') }}" class="nav-link ">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        Data Perlengkapan
+                                    </p>
+                                </a>
+                     
+                            </li>
+                            <li class="nav-item">
+                            <a href="{{ route('BarangEdit') }}" class="nav-link ">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        Data Mutasi
                                     </p>
                                 </a>
                      

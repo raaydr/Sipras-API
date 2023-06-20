@@ -32,7 +32,7 @@ Route::group(['middleware' => 'check-permission:superadmin'], function () {
         Route::get('/Barang/Barang-Detail/{id}', [App\Http\Controllers\BarangController::class, 'BarangDetail'])->name('BarangDetail');
 
         //Perlengkapan
-        Route::get('/Barang/Perlengkapan-Edit//{id}', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanEdit'])->name('PerlengkapanEdit');  
+        Route::get('/Perlengkapan/Perlengkapan-Edit', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanEdit'])->name('PerlengkapanEdit');  
         Route::post('/Perlengkapan/Perlengkapan-Update', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanUpdate'])->name('PerlengkapanUpdate');        
         Route::get('/Perlengkapan/Perlengkapan-Tabel', [App\Http\Controllers\PerlengkapanController::class, 'tabelPerlengkapan'])->name('tabelPerlengkapan');
         Route::get('/Perlengkapan/Perlengkapan-Tabel-Barang/{id}', [App\Http\Controllers\PerlengkapanController::class, 'tabelPerlengkapanBarang'])->name('tabelPerlengkapanBarang');
@@ -40,7 +40,7 @@ Route::group(['middleware' => 'check-permission:superadmin'], function () {
         Route::get('/Perlengkapan/Perlengkapan-Delete/{id}', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanDelete'])->name('PerlengkapanDelete');
         Route::get('/Perlengkapan/Perlengkapan-Detail/{id}', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanDetail'])->name('PerlengkapanDetail');
         Route::get('/Barang/Perlengkapan-QrCode//{id}', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanQrcode'])->name('PerlengkapanQrcode');  
-
+        Route::post('/Perlengkapan/Barang-Search', [App\Http\Controllers\PerlengkapanController::class, 'searchBarang'])->name('searchBarang');
         
         //Mutasi
         Route::get('/Barang/Mutasi-Edit//{id}', [App\Http\Controllers\MutasiController::class, 'MutasiEdit'])->name('MutasiEdit');  

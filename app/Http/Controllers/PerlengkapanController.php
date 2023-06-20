@@ -28,12 +28,12 @@ class PerlengkapanController extends Controller
         $this->middleware('auth');
     }
 
-    public function PerlengkapanEdit($id)
+    public function PerlengkapanEdit()
     {
         $title = 'Welcome Admin';
-        $barang = Barang::where('id',$id)->first();
         
-        return view('master.dataPerlengkapan',compact('barang'));
+        
+        return view('master.dataPerlengkapan',);
     }
 
     public function PerlengkapanDetail($id)
@@ -55,7 +55,26 @@ class PerlengkapanController extends Controller
         ->errorCorrection('H')
         ->generate($kode);
 
-return response($image)->header('Content-type','image/png');
+        return response($image)->header('Content-type','image/png');
+    }
+
+    public function searchBarang(Request $request){
+
+        $search = $request->search;
+
+        if($search == ''){
+           $barangs = Barang::where('status', 1)->orderby('nama_barang','asc')->select('id','nama_barang','kode_barang',)->limit(10)->get();
+        }else{
+           $barangs = Barang::where('status', 1)->orderby('nama_barang','asc')->select('id','nama_barang','kode_barang',)->where('nama_barang', 'like', '%' .$search . '%')->orWhere('nama_barang', 'like', '%' .$search . '%')->limit(10)->get();
+        }
+  
+        $response = array();
+        foreach($barangs as $barang){
+            $response[] = array("id"=>$barang->id,"label"=>$barang->nama_barang,"value"=>$barang->kode_barang);
+        }
+  
+        return response()->json($response);
+     
     }
 
     public function PerlengkapanUpdate(Request $request){
@@ -247,7 +266,7 @@ return response($image)->header('Content-type','image/png');
     public function tabelPerlengkapan(Request $request)
     {
         
-        $data = Perlengkapan::where('status', '!=',0)->orderBy('created_at', 'desc')->get();
+        $data = Perlengkapan::where('status', 1)->orderBy('created_at', 'desc')->get();
             if($request->ajax()){
     
                 return datatables()->of($data)                   
