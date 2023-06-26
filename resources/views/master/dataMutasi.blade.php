@@ -666,7 +666,7 @@
                                    $('#load').hide();
                                    $('#simpanBTN').html('Submit'); //tombol simpan
                                    $('#simpanBTN').show();
-                                   document.getElementById("formTarget").reset();
+                                   document.getElementById("formTarget1").reset();
                                    var oTable = $('#example1').dataTable(); //inialisasi datatable
                                     oTable.fnDraw(false); //reset datatable 
                                     location.reload();
