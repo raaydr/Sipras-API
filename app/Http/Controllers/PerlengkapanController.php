@@ -45,6 +45,10 @@ class PerlengkapanController extends Controller
         return view('master.detailPerlengkapan',compact('barang','perlengkapan','harga_perlengkapan'));
     }
 
+    Public function PageQrcodePerlengkapan(){
+        
+        return view('master.qrcodePerlengkapan',);
+    }
     public function PerlengkapanQrcode($id){
         $perlengkapan = Perlengkapan::where('id',$id)->first();
         
@@ -310,6 +314,8 @@ class PerlengkapanController extends Controller
                         $actionBtn = '<a class="btn btn-outline-info m-1" href='.$qrcode.' target="_blank">QRcode</a>';
                         $detail = route('PerlengkapanDetail',$id); 
                         $actionBtn =$actionBtn. '<a class="btn btn-outline-primary m-1" href='.$detail.'>detail</a>';
+                        $qrpage = route('PageQrcodePerlengkapan'); 
+                        $actionBtn =$actionBtn. '<a class="btn btn-outline-warning m-1" href='.$qrpage.'>qrpage</a>';
                         $status = $row->status;
                         switch ($status) {
                             case '2':
@@ -403,6 +409,8 @@ class PerlengkapanController extends Controller
                         $actionBtn = '<a class="btn btn-outline-info m-1" href='.$qrcode.' target="_blank">QRcode</a>';
                         $detail = route('PerlengkapanDetail',$id); 
                         $actionBtn =$actionBtn. '<a class="btn btn-outline-primary m-1" href='.$detail.'>detail</a>';
+                        $qrpage = route('PageQrcodePerlengkapan'); 
+                        $actionBtn =$actionBtn. '<a class="btn btn-outline-warning m-1" href='.$qrpage.'>qrpage</a>';
                         $status = $row->status;
                         switch ($status) {
                             case '2':
