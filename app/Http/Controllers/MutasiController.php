@@ -201,100 +201,98 @@ class MutasiController extends Controller
 
     public function tabelMutasi(Request $request)
     {
-        $data = DB::table('peserta')->where('peserta.user_id',$user_id)
-        ->join('tugas_entrepreneur', 'tugas_entrepreneur.user_id', '=', 'peserta.user_id')
-        ->orderBy('tugas_entrepreneur.id', 'ASC')->get();
+        
 
-        $data = DB::table('perlengkapan')
-        ->join('mutasi', 'tugas_entrepreneur.user_id', '=', 'peserta.user_id')
-        ->orderBy('tugas_entrepreneur.id', 'ASC')->get();
+        $data = DB::table('perlengkapan')->where('perlengkapan.status',1)
+        ->join('barang', 'barang.id', '=', 'perlengkapan.barang_id')
+        ->leftjoin('mutasi', 'mutasi.id', '=', 'perlengkapan.mutasi_id')
+        ->select('barang.nama_barang', 'perlengkapan.kode_perlengkapan', 
+        'perlengkapan.lokasi_perlengkapan', 'perlengkapan.departemen',
+        'perlengkapan.id','perlengkapan.barang_id', 
+        'mutasi.lokasi_penempatan_lama','mutasi.lokasi_penempatan_baru',
+        'mutasi.departemen_lama','mutasi.departemen_baru','mutasi.foto_pemindahan'
+        ,'mutasi.foto_pemindahan_thumbnail','mutasi.keterangan')
+        ->orderBy('perlengkapan.updated_at', 'ASC')->get();
 
-        $data = Perlengkapan::where('status', 1)->orderBy('created_at', 'desc')->get();
+        //$data = Perlengkapan::where('status', 1)->orderBy('created_at', 'desc')->get();
             if($request->ajax()){
     
                 return datatables()->of($data)                   
                     ->addIndexColumn()
+                    ->addColumn('nama_barang', function($row){
+                            return $row->nama_barang;
+                    }) 
+                    ->addColumn('kode_perlengkapan', function($row){
+                        return $row->kode_perlengkapan;
+                    }) 
                     ->addColumn('image', function($row){
-                        $b = $row->foto_perlengkapan;
-                        $c = $row->foto_perlengkapan_thumbnail;
-                        $asset= "/foto-perlengkapan/";
-                        $detail=  $asset.$b;
-                        $assetThumbnail= "/foto-perlengkapan/";
-                        $thumbnail=  $assetThumbnail.$c;
-                        $id = $row->id;
-                        $image = '<div class="col-md-8"> <a href='.$detail.' data-toggle="lightbox" >
-                        <img src='.$thumbnail.' class="img-fluid" alt="white sample"/>
-                        </a> </div>';
-                        
-                            return $image;
-                    }) 
-                    ->addColumn('kondisi', function($row){
-                        $status = $row->kondisi_perlengkapan;
-                        switch ($status) {
+                        if($row->id != NULL){
+                            $b = $row->foto_pemindahan;
+                            $c = $row->foto_pemindahan_thumbnail;
+                            $d = $row->keterangan;
+                            $asset= "/foto-mutasi/";
+                            $detail=  $asset.$b;
+                            $assetThumbnail= "/foto-mutasi/";
+                            $thumbnail=  $assetThumbnail.$c;
+                            $id = $row->id;
+                            $image = '<div class="col-md-8"> <a href='.$detail.' data-toggle="lightbox" >
+                            <img src='.$thumbnail.' class="img-fluid" alt="white sample"/>
+                            </a> </div>
+                            <strong>'.$d.'</strong>';
                             
-                            case '1':
-                                return '<p class="text-success">Bagus</p>';     
-                                break;
-                            case '2':
-                                return '<p class="text-warning">Kurang Bagus</p>';
-                                break;
-                            case '3':
-                                return '<p class="text-danger">Rusak</p>';
-                                break;
-                                default:
-                                echo "stikes medistra";
-                                break;
-                        } 
+                            return $image;
+                        }else{
+                            return "belum dipindahkan";
+                        }
                     }) 
-                    ->addColumn('action', function($row){
-                        $id = $row->id;
-                        $nama = $row->nama_perlengkapan;
-                        $qrcode = route('PerlengkapanQrcode',$id); 
-                        $actionBtn = '<a class="btn btn-outline-info m-1" href='.$qrcode.' target="_blank">QRcode</a>';
-                        $detail = route('PerlengkapanDetail',$id); 
-                        $actionBtn =$actionBtn. '<a class="btn btn-outline-primary m-1" href='.$detail.'>detail</a>';
-                        $status = $row->status;
-                        switch ($status) {
-                            case '2':
-                                $actionBtn =$actionBtn.' <a data-id="'.$id.'" class="btn btn-outline-success m-1 publishPerlengkapan">Kembalikan</a>';
-                                break;
-                            case '1':
-                                $actionBtn =$actionBtn.' 
-                                <a id="hapus" data-toggle="modal" data-target="#hapus-Perlengkapan'.$id.'" class="btn btn-outline-danger m-1">Hapus</a></dl>
-                                                            <div class="modal fade" id="hapus-Perlengkapan'.$id.'">
-                                                                <div class="modal-dialog">
-                                                                    <div class="modal-content bg-danger">
-                                                                        <div class="modal-header">
-                                                                            <h4 class="modal-title">Penolakan</h4>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">    
-                                                                                <p>Apa anda yakin ingin menghapus Perlengkapan '.$nama.' ini ?</p>
-                                                                                <div class="modal-footer justify-content-between">
-                                                                                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-                                                                                <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$id.'" data-dismiss="modal" data-original-title="Delete" class="btn btn-outline-light deletePerlengkapan">Delete</a>
-                                                                                </div>
-                                                                            
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- /.modal-content -->
-                                                                </div>
-                                                                <!-- /.modal-dialog -->
-                                                            </div>
-                                                            <!-- /.modal -->';
-                         
-                                break;
-                                default:
-                                echo "stikes medistra";
-                                break;
+                    ->addColumn('penempatan', function($row){
+                        if($row->lokasi_penempatan_lama == NULL){
+                            return $row->lokasi_perlengkapan;
+                        }else{
+                            $awal = $row->lokasi_penempatan_lama;
+                            $baru = $row->lokasi_penempatan_baru;
+    
+                            $penempatan = $awal.' dipindahkan ke '.$baru;
+                            return $penempatan;
+                        }
                         
-                            }
+                        
+                    })
+                    ->addColumn('departemen', function($row){
+                        if($row->departemen_lama == NULL){
+                            
+                            return $row->departemen;
+                        }else{
+                            $awal = $row->departemen_lama;
+                            $baru = $row->departemen_baru;
+
+                            $penempatan = $awal.' dipindahkan ke unit '.$baru;
+                            return $penempatan;
+                        }
+                        
+                        
+                    })  
+                    ->addColumn('action', function($row){
+                        
+                        $perlengkapan_id = $row->id;
+                        $barang_id = $row->barang_id;
+                        $lokasi_penempatan_lama = $row->lokasi_perlengkapan;
+                        $departemen_lama = $row->departemen;
+                        $actionBtn ='
+                        <a class="btn btn-outline-danger m-1" data-toggle="modal" data-perlengkapan="'.$perlengkapan_id.'" 
+                        data-barang="'.$barang_id.'"
+                        data-lokasi="'.$lokasi_penempatan_lama.'"
+                        data-departemen="'.$departemen_lama.'"  
+                        data-target="#modal-edit-konten"  target="_blank">
+                        Mutasi</a>
+                        ';
+                        $detail = route('PerlengkapanDetail',$perlengkapan_id); 
+                        $actionBtn =$actionBtn. '<a class="btn btn-outline-primary m-1" href='.$detail.'>detail</a>';
+                        
                         
                         
                         return $actionBtn;
-                    })->rawColumns(['image','kondisi','action'])
+                    })->rawColumns(['nama_barang','kode_perlengkapan','image','penempatan','departemen','action'])
                     ->make(true);
             }
     }

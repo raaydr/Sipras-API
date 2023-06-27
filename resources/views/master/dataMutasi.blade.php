@@ -1,5 +1,9 @@
 @extends('general.layout')
 @section('head')
+<link rel="stylesheet" href="{{asset('jquery-ui')}}/jquery-ui.min.css" type="text/css"/>
+<link rel="stylesheet" href="{{asset('jquery-ui')}}/jquery-ui.structure.min.css"type="text/css"/>
+<link rel="stylesheet" href="{{asset('jquery-ui')}}/jquery-ui.theme.min.css"type="text/css"/>
+<link href="{{asset('colorlib-reg')}}/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
 <style>
    .ui-autocomplete.ui-menu {
    z-index: 3001;
@@ -33,6 +37,111 @@
          {{session('pesan')}}.
       </div>
       @endif
+      <!-- /.modal -->
+      <div class="modal fade" id="modal-edit-konten">
+         <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+               <div class="modal-header bg-primary">
+                  <h4 class="modal-title">Mutasi </h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <form id="formTarget" enctype="multipart/form-data" >
+                  @csrf     
+                  <div class="modal-body">
+                  <input type="hidden" id="perlengkapan_id" name="perlengkapan_id"  >
+                     <input type="hidden" id="barang_id" name="barang_id" >
+                     <div class="form-group row">
+                        <label for="lokasi_penempatan_lama" class="col-md-4 col-form-label text-md-right">{{ __('Lokasi Perlengkapan yang Lama') }}</label>
+                        <div class="col-md-6">
+                           <input id="lokasi_penempatan_lama" type="text" class="form-control" name="lokasi_penempatan_lama" required autofocus />
+                           @if ($errors->has('lokasi_penempatan_lama'))
+                           <span class="invalid-feedback" role="alert">
+                           <strong>{{ $errors->first('lokasi_penempatan_lama') }}</strong>
+                           </span>
+                           @endif
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label for="lokasi_penempatan_baru" class="col-md-4 col-form-label text-md-right">{{ __('Lokasi Perlengkapan yang Baru') }}</label>
+                        <div class="col-md-6">
+                           <input id="lokasi_penempatan_baru" type="text" class="form-control" name="lokasi_penempatan_baru"required autofocus />
+                           @if ($errors->has('lokasi_penempatan_baru'))
+                           <span class="invalid-feedback" role="alert">
+                           <strong>{{ $errors->first('lokasi_penempatan_baru') }}</strong>
+                           </span>
+                           @endif
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label for="departemen_lama" class="col-md-4 col-form-label text-md-right">{{ __('Departemen yang lama') }}</label>
+                        <div class="col-md-6">
+                           <input id="departemen_lama" type="text" class="form-control" name="departemen_lama"  required autofocus/>
+                           @if ($errors->has('departemen_lama'))
+                           <span class="invalid-feedback" role="alert">
+                           <strong>{{ $errors->first('departemen_lama') }}</strong>
+                           </span>
+                           @endif
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label for="departemen_baru" class="col-md-4 col-form-label text-md-right">{{ __('Departemen yang baru') }}</label>
+                        <div class="col-md-6">
+                           <input id="departemen_baru" type="text" class="form-control" name="departemen_baru" required autofocus/>
+                           @if ($errors->has('departemen_baru'))
+                           <span class="invalid-feedback" role="alert">
+                           <strong>{{ $errors->first('departemen_baru') }}</strong>
+                           </span>
+                           @endif
+                        </div>
+                     </div>
+                     
+                     <div class="form-group row">
+                        <label for="tanggal_mutasi" class="col-md-4 col-form-label text-md-right">{{ __('Tanggal Mutasi') }}</label>
+                        <div class="col-md-6">
+                           <div class="input-group date">
+                              <div class="input-group-addon">
+                                 <span class="glyphicon glyphicon-th"></span>
+                              </div>
+                              <input placeholder="tanggal mutasi" type="text" class="form-control js-datepicker" name="tanggal_mutasi" required autofocus    />
+                           </div>
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label for="foto_pemindahan" class="col-md-4 col-form-label text-md-right">{{ __('foto pemindahan') }}</label>
+                        <div class="col-md-4">
+                           <input id="foto_pemindahan" type="file" class="form-control" name="foto_pemindahan" value="{{ old('foto_pemindahan') }}" ></input>
+                           @if ($errors->has('foto_pemindahan'))
+                           <span class="invalid-feedback" role="alert">
+                           <strong>{{ $errors->first('foto_pemindahan') }}</strong>
+                           </span>
+                           @endif
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label for="keterangan" class="col-md-4 col-form-label text-md-right">{{ __('Keterangan') }}</label>
+                        <div class="col-md-6">
+                           <textarea id="keterangan" type="text" class="form-control" name="keterangan" value="{{ old('keterangan') }}"required autofocus></textarea>
+                           @if ($errors->has('keterangan'))
+                           <span class="invalid-feedback" role="alert">
+                           <strong>{{ $errors->first('keterangan') }}</strong>
+                           </span>
+                           @endif
+                        </div>
+                     </div>
+                  </div>
+                  <div class="modal-footer justify-content-between ">
+                     <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                     <button class="btn btn-outline-primary btn-submit" id="tombol-simpan">Submit</button>
+                     <div id="load" class="spinner-border text-primary"></div>
+                  </div>
+               </form>
+            </div>
+            <!-- /.modal-content -->
+         </div>
+         <!-- /.modal-dialog -->
+      </div>
       <div class="col-12">
          <div class="card">
             <div class="card-header">
@@ -44,6 +153,7 @@
                <thead>
                      <tr>
                         <th>no</th>
+                        <th>Nama Barang</th>
                         <th>Kode</th>
                         <th>gambar</th>
                         <th>Pemindahan Tempat</th>
@@ -56,6 +166,7 @@
                   <tfoot>
                      <tr>
                         <th>no</th>
+                        <th>Nama Barang</th>
                         <th>Kode</th>
                         <th>gambar</th>
                         <th>Pemindahan Tempat</th>
@@ -75,6 +186,11 @@
 </section>
 @endsection
 @section('script')
+<script src="{{asset('jquery-ui')}}/jquery-ui.min.js"></script>
+<script src="{{asset('colorlib-reg')}}/vendor/datepicker/moment.min.js"></script>
+<script src="{{asset('colorlib-reg')}}/vendor/datepicker/daterangepicker.js"></script>
+<!-- Main JS-->
+<script src="{{asset('colorlib-reg')}}/js/global.js"></script>
 <script>    
    $.ajaxSetup({
        headers: {
@@ -95,14 +211,14 @@
                        name: 'DT_RowIndex'
                    },
                    {
-                       data: 'kode_perlengkapan',
-                       name: 'kode_perlengkapan',
+                       data: 'nama_barang',
+                       name: 'nama_barang',
                        orderable: true,
                        searchable: true
                    },
                    {
-                       data: 'jumlah_perlengkapan',
-                       name: 'jumlah',
+                       data: 'kode_perlengkapan',
+                       name: 'kode_perlengkapan',
                        orderable: true,
                        searchable: true
                    },
@@ -114,8 +230,14 @@
                    },
                    
                    {
-                       data: 'kondisi',
-                       name: 'kondisi',
+                       data: 'penempatan',
+                       name: 'penempatan',
+                       orderable: true,
+                       searchable: true
+                   },
+                   {
+                       data: 'departemen',
+                       name: 'departemen',
                        orderable: true,
                        searchable: true
                    },
@@ -160,8 +282,7 @@
            autoclose: true,
            todayHighlight: true,
        });
-       // Summernote
-       $('#summernote').summernote()
+       
    
    })
    $(function() {
@@ -346,10 +467,10 @@
                                    $('#load').hide();
                                    $('#simpanBTN').html('Submit'); //tombol simpan
                                    $('#simpanBTN').show();
-                                   document.getElementById("formTarget1").reset();
+                                   document.getElementById("formTarget").reset();
+                                   $('#modal-edit-konten').modal('hide'); 
                                    var oTable = $('#example1').dataTable(); //inialisasi datatable
-                                    oTable.fnDraw(false); //reset datatable 
-                                    location.reload();
+                                   oTable.fnDraw(false); //reset datatable
                                    //$('#uploadStatus').html('<p style="color:#28A74B;">File Berhasil diupload!</p>');
                                    iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                                        title: 'Data Berhasil Disimpan',
@@ -380,7 +501,6 @@
                }
            })
        }
-
        if ($("#formTarget1").length > 0) {
            $.validator.addMethod('filesize', function(value, element, param) {
                return this.optional(element) || (element.files[0].size <= param * 1000000)
@@ -564,5 +684,25 @@
        }
    
    });
+   $('#modal-edit-konten').on('show.bs.modal', function(event) {
+      
+      var button = $(event.relatedTarget) // Button that triggered the modal
+      var perlengkapan_id = button.data('perlengkapan')
+      var barang_id = button.data('barang')
+      var lokasi_penempatan_lama = button.data('lokasi')
+      var departemen_lama = button.data('departemen')
+      
+      
+      var modal = $(this)
+      modal.find('.modal-footer #load').hide();
+      modal.find('.modal-footer #tombol-simpan').show();
+      modal.find('.modal-body #perlengkapan_id').val(perlengkapan_id)
+      modal.find('.modal-body #barang_id').val(barang_id)
+      modal.find('.modal-body #lokasi_penempatan_lama').val(lokasi_penempatan_lama)
+      modal.find('.modal-body #departemen_lama').val(departemen_lama)
+      
+      
+      
+      });
 </script>
 @endsection
