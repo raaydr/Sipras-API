@@ -43,7 +43,7 @@ Route::group(['middleware' => 'check-permission:superadmin'], function () {
         Route::post('/Perlengkapan/Barang-Search', [App\Http\Controllers\PerlengkapanController::class, 'searchBarang'])->name('searchBarang');
         
         //Mutasi
-        Route::get('/Perlengkapan/Mutasi-Edit/{id}', [App\Http\Controllers\MutasiController::class, 'MutasiEdit'])->name('MutasiEdit');  
+        Route::get('/Perlengkapan/Mutasi-Edit', [App\Http\Controllers\MutasiController::class, 'MutasiEdit'])->name('MutasiEdit');  
         Route::post('/Mutasi/Mutasi-Update', [App\Http\Controllers\MutasiController::class, 'MutasiUpdate'])->name('MutasiUpdate');        
         Route::get('/Mutasi/Mutasi-Tabel', [App\Http\Controllers\MutasiController::class, 'tabelMutasi'])->name('tabelMutasi');
         Route::get('/Mutasi/Mutasi-Tabel-Perlengkapan/{id}', [App\Http\Controllers\MutasiController::class, 'tabelMutasiPerlengkapan'])->name('tabelMutasiPerlengkapan');

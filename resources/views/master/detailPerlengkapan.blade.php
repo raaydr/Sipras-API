@@ -51,6 +51,12 @@
                      <input type="hidden" id="barang_id" name="barang_id" value="{{$barang->id}}" >
                      <input type="hidden" id="kode" name="kode" value="{{$barang->kode_barang}}" >
                      <div class="form-group row">
+                        <label for="jumlah_perlengkapan" class="col-md-4 col-form-label text-md-right">{{ __('Kode Perlengkapan') }}</label>
+                        <div class="col-md-6">
+                           <input id="kode_perlengkapan" type="text" class="form-control" name="kode_perlengkapan" value="{{$perlengkapan->kode_perlengkapan}}"readonly />
+                        </div>
+                     </div>
+                     <div class="form-group row">
                         <label for="jumlah_perlengkapan" class="col-md-4 col-form-label text-md-right">{{ __('Jumlah Barang') }}</label>
                         <div class="col-md-6">
                            <input id="jumlah_perlengkapan" type="text" class="form-control" name="jumlah_perlengkapan" value="{{ $perlengkapan->jumlah_perlengkapan }}"required autofocus />

@@ -30,12 +30,12 @@ class MutasiController extends Controller
         $this->middleware('auth');
     }
 
-    public function MutasiEdit($id)
+    public function MutasiEdit()
     {
         $title = 'Welcome Admin';
-        $barang = Barang::where('id',$id)->first();
         
-        return view('master.dataMutasi',compact('barang'));
+        
+        return view('master.dataMutasi');
     }
 
     public function MutasiDetail($id)
@@ -166,11 +166,30 @@ class MutasiController extends Controller
             $update['user_name'] = $user_name;
             $update['updated_at'] = now(); 
             $update['created_at'] = now(); 
-            Mutasi::updateOrInsert($update);
+            //Mutasi::updateOrInsert($update);
+
+            $datamutasi = new Mutasi;
+            $datamutasi->lokasi_penempatan_lama=$update['lokasi_penempatan_lama'];
+            $datamutasi->lokasi_penempatan_baru=$update['lokasi_penempatan_baru'];
+            $datamutasi->keterangan=$update['keterangan'];
+            $datamutasi->departemen_lama=$update['departemen_lama'];
+            $datamutasi->departemen_baru=$update['departemen_baru'];
+            $datamutasi->tanggal_mutasi=$update['tanggal_mutasi'];
+            $datamutasi->foto_pemindahan=$update['foto_pemindahan'];
+            $datamutasi->foto_pemindahan_thumbnail=$update['foto_pemindahan_thumbnail'];
+            $datamutasi->barang_id=$update['barang_id'];
+            $datamutasi->perlengkapan_id=$update['perlengkapan_id'];
+            $datamutasi->status=$update['status'];
+            $datamutasi->user_id=$update['user_id'];
+            $datamutasi->user_name=$update['user_name'];
+            $datamutasi->perlengkapan_id=$update['perlengkapan_id'];
+            $datamutasi->save();
+
 
             $mutasi = array();
             $mutasi['departemen'] =  $update['departemen_baru'] ;
             $mutasi['lokasi_perlengkapan'] =  $update['lokasi_penempatan_baru'];
+            $mutasi['mutasi_id'] =  $datamutasi->id;
             Perlengkapan::updateOrInsert(
                 ['id' => $perlengkapan_id], $mutasi
             );
@@ -182,23 +201,25 @@ class MutasiController extends Controller
 
     public function tabelMutasi(Request $request)
     {
-        
-        $data = Mutasi::where('status', '!=',0)->orderBy('created_at', 'desc')->get();
+        $data = DB::table('peserta')->where('peserta.user_id',$user_id)
+        ->join('tugas_entrepreneur', 'tugas_entrepreneur.user_id', '=', 'peserta.user_id')
+        ->orderBy('tugas_entrepreneur.id', 'ASC')->get();
+
+        $data = DB::table('perlengkapan')
+        ->join('mutasi', 'tugas_entrepreneur.user_id', '=', 'peserta.user_id')
+        ->orderBy('tugas_entrepreneur.id', 'ASC')->get();
+
+        $data = Perlengkapan::where('status', 1)->orderBy('created_at', 'desc')->get();
             if($request->ajax()){
     
                 return datatables()->of($data)                   
                     ->addIndexColumn()
-                    ->addColumn('tanggal', function($row){
-                        $terakhir = $row->tanggal_mutasi;
-                        $tanggal_akhir=Carbon::parse($terakhir)->isoFormat('D MMMM Y');
-                        return $tanggal_akhir;
-                    })
                     ->addColumn('image', function($row){
-                        $b = $row->foto_mutasi;
-                        $c = $row->foto_mutasi_thumbnail;
-                        $asset= "/foto-Mutasi/";
+                        $b = $row->foto_perlengkapan;
+                        $c = $row->foto_perlengkapan_thumbnail;
+                        $asset= "/foto-perlengkapan/";
                         $detail=  $asset.$b;
-                        $assetThumbnail= "/foto-Mutasi/";
+                        $assetThumbnail= "/foto-perlengkapan/";
                         $thumbnail=  $assetThumbnail.$c;
                         $id = $row->id;
                         $image = '<div class="col-md-8"> <a href='.$detail.' data-toggle="lightbox" >
@@ -207,18 +228,40 @@ class MutasiController extends Controller
                         
                             return $image;
                     }) 
+                    ->addColumn('kondisi', function($row){
+                        $status = $row->kondisi_perlengkapan;
+                        switch ($status) {
+                            
+                            case '1':
+                                return '<p class="text-success">Bagus</p>';     
+                                break;
+                            case '2':
+                                return '<p class="text-warning">Kurang Bagus</p>';
+                                break;
+                            case '3':
+                                return '<p class="text-danger">Rusak</p>';
+                                break;
+                                default:
+                                echo "stikes medistra";
+                                break;
+                        } 
+                    }) 
                     ->addColumn('action', function($row){
                         $id = $row->id;
-                        
+                        $nama = $row->nama_perlengkapan;
+                        $qrcode = route('PerlengkapanQrcode',$id); 
+                        $actionBtn = '<a class="btn btn-outline-info m-1" href='.$qrcode.' target="_blank">QRcode</a>';
+                        $detail = route('PerlengkapanDetail',$id); 
+                        $actionBtn =$actionBtn. '<a class="btn btn-outline-primary m-1" href='.$detail.'>detail</a>';
                         $status = $row->status;
                         switch ($status) {
                             case '2':
-                                $actionBtn =$actionBtn.' <a data-id="'.$id.'" class="btn btn-outline-success m-1 publishMutasi">Kembalikan</a>';
+                                $actionBtn =$actionBtn.' <a data-id="'.$id.'" class="btn btn-outline-success m-1 publishPerlengkapan">Kembalikan</a>';
                                 break;
                             case '1':
                                 $actionBtn =$actionBtn.' 
-                                <a id="hapus" data-toggle="modal" data-target="#hapus-Mutasi'.$id.'" class="btn btn-outline-danger m-1">Hapus</a></dl>
-                                                            <div class="modal fade" id="hapus-Mutasi'.$id.'">
+                                <a id="hapus" data-toggle="modal" data-target="#hapus-Perlengkapan'.$id.'" class="btn btn-outline-danger m-1">Hapus</a></dl>
+                                                            <div class="modal fade" id="hapus-Perlengkapan'.$id.'">
                                                                 <div class="modal-dialog">
                                                                     <div class="modal-content bg-danger">
                                                                         <div class="modal-header">
@@ -228,10 +271,10 @@ class MutasiController extends Controller
                                                                             </button>
                                                                         </div>
                                                                         <div class="modal-body">    
-                                                                                <p>Apa anda yakin ingin menghapus Mutasi  ini ?</p>
+                                                                                <p>Apa anda yakin ingin menghapus Perlengkapan '.$nama.' ini ?</p>
                                                                                 <div class="modal-footer justify-content-between">
                                                                                 <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-                                                                                <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$id.'" data-dismiss="modal" data-original-title="Delete" class="btn btn-outline-light deleteMutasi">Delete</a>
+                                                                                <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$id.'" data-dismiss="modal" data-original-title="Delete" class="btn btn-outline-light deletePerlengkapan">Delete</a>
                                                                                 </div>
                                                                             
                                                                         </div>
@@ -251,7 +294,7 @@ class MutasiController extends Controller
                         
                         
                         return $actionBtn;
-                    })->rawColumns(['tanggal','image','action'])
+                    })->rawColumns(['image','kondisi','action'])
                     ->make(true);
             }
     }

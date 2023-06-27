@@ -12,12 +12,12 @@
    <div class="container-fluid">
       <div class="row mb-2">
          <div class="col-sm-6">
-            <h1>Detail Perlengkapan</h1>
+            <h1>Mutasi Perlengkapan</h1>
          </div>
          <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-               <li class="breadcrumb-item"><a href="/">Perlengkapan</a></li>
-               <li class="breadcrumb-item active">Detail-Perlengkapan</li>
+               <li class="breadcrumb-item"><a href="/">Mutasi</a></li>
+               <li class="breadcrumb-item active">Mutasi-Perlengkapan</li>
             </ol>
          </div>
       </div>
@@ -33,279 +33,6 @@
          {{session('pesan')}}.
       </div>
       @endif
-      <div class="col-12" id="accordion">
-         <div class="card card-warning card-outline">
-            <a class="d-block w-100" data-toggle="collapse" href="#collapseFour">
-               <div class="card-header">
-                  <h4 class="card-title w-100">
-                     <b>Edit Perlengkapan</b> 
-                  </h4>
-               </div>
-            </a>
-            <div id="collapseFour" class="collapse show" data-parent="#accordion">
-               <!-- form start -->
-               <form id="formTarget1" enctype="multipart/form-data" >
-                  @csrf  
-                  <div class="card-body">
-                  <input type="hidden" id="id" name="id" value="{{$perlengkapan->id}}" >
-                     <input type="hidden" id="barang_id" name="barang_id" value="{{$barang->id}}" >
-                     <input type="hidden" id="kode" name="kode" value="{{$barang->kode_barang}}" >
-                     <div class="form-group row">
-                        <label for="jumlah_perlengkapan" class="col-md-4 col-form-label text-md-right">{{ __('Jumlah Barang') }}</label>
-                        <div class="col-md-6">
-                           <input id="jumlah_perlengkapan" type="text" class="form-control" name="jumlah_perlengkapan" value="{{ $perlengkapan->jumlah_perlengkapan }}"required autofocus />
-                           @if ($errors->has('jumlah_perlengkapan'))
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $errors->first('jumlah_perlengkapan') }}</strong>
-                           </span>
-                           @endif
-                        </div>
-                     </div>
-                     <div class="form-group row">
-                        <label for="harga_perlengkapan" class="col-md-4 col-form-label text-md-right">{{ __('Harga Lama') }}</label>
-                        <div class="col-md-6">
-                        <a read only><b><omset  ></omset></b></a>
-                        </div>
-                     </div>
-                     <div class="form-group row">
-                        <label for="harga_perlengkapan" class="col-md-4 col-form-label text-md-right">{{ __('Harga Baru') }}</label>
-                        <div class="col-md-6">
-                           <input id="harga_perlengkapan" type="text" class="form-control @error('harga_perlengkapan') is-invalid @enderror" name="harga_perlengkapan" value="" autocomplete="harga_perlengkapan"></input>
-                           @error('harga_perlengkapan')
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $message }}</strong>
-                           </span>
-                           @enderror
-                        </div>
-                     </div>
-                     <div class="form-group row">
-                        <label for="keterangan_perlengkapan" class="col-md-4 col-form-label text-md-right">{{ __('Keterangan') }}</label>
-                        <div class="col-md-6">
-                           <textarea id="keterangan_perlengkapan" type="text" class="form-control" name="keterangan_perlengkapan" value="{{ old('keterangan_perlengkapan') }}"required autofocus>{{$perlengkapan->keterangan_perlengkapan}}</textarea>
-                           @if ($errors->has('keterangan_perlengkapan'))
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $errors->first('keterangan_perlengkapan') }}</strong>
-                           </span>
-                           @endif
-                        </div>
-                     </div>
-                     <div class="form-group row">
-                        <label for="tanggal_pembelian" class="col-md-4 col-form-label text-md-right">{{ __('Tanggal Pembelian') }}</label>
-                        <div class="col-md-6">
-                           <div class="input-group date">
-                              <div class="input-group-addon">
-                                 <span class="glyphicon glyphicon-th"></span>
-                              </div>
-                              <input placeholder="tanggal pembelian" type="text" class="form-control datepicker" name="tanggal_pembelian"  value="{{$perlengkapan->tanggal_pembelian}}"   />
-                           </div>
-                        </div>
-                     </div>
-                     <div class="form-group row">
-                        <label for="lokasi_perlengkapan" class="col-md-4 col-form-label text-md-right">{{ __('lokasi perlengkapan') }}</label>
-                        <div class="col-md-6">
-                           <input id="lokasi_perlengkapan" type="text" class="form-control" name="lokasi_perlengkapan" value="{{ $perlengkapan->lokasi_perlengkapan}}"required autofocus />
-                           @if ($errors->has('lokasi_perlengkapan'))
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $errors->first('lokasi_perlengkapan') }}</strong>
-                           </span>
-                           @endif
-                        </div>
-                     </div>
-                     <div class="form-group row">
-                        <label for="departemen" class="col-md-4 col-form-label text-md-right">{{ __('departemen') }}</label>
-                        <div class="col-md-6">
-                           <input id="departemen" type="text" class="form-control" name="departemen" value="{{ $perlengkapan->departemen }}"required autofocus />
-                           @if ($errors->has('departemen'))
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $errors->first('departemen') }}</strong>
-                           </span>
-                           @endif
-                        </div>
-                     </div>
-                     <div class="form-group row">
-                        <label for="foto" class="col-md-4 col-form-label text-md-right">{{ __('foto perlengkapan') }}</label>
-                        <div class="col-md-4">
-                           <input id="foto_perlengkapan" type="file" class="form-control" name="foto_perlengkapan" value="{{ old('foto_perlengkapan') }}" ></input>
-                           @if ($errors->has('foto_perlengkapan'))
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $errors->first('foto_perlengkapan') }}</strong>
-                           </span>
-                           @endif
-                        </div>
-                        <div class="col-md-2">
-                        <a href="{{asset('foto-perlengkapan')}}/{{$perlengkapan->foto_perlengkapan}}" target="_blank" class="btn btn-outline-primary">Gambar Sebelumnya</a>
-                     </div>
-                     </div>
-                     <div class="form-group row">
-                        <label for="kondisi_perlengkapan" class="col-md-4 col-form-label text-md-right">{{ __('Kondisi Perlengkapan') }}</label>
-                        <div class="col-md-8">
-                           <div class="custom-control custom-radio custom-control-inline mt-2">
-                              <input type="radio" id="customRadioInline1" name="kondisi_perlengkapan" class="custom-control-input" value="1" {{ ($perlengkapan->kondisi_perlengkapan == 1)? "checked" : "" }}/>
-                              <label class="custom-control-label" for="customRadioInline1">Bagus</label>
-                           </div>
-                           <div class="custom-control custom-radio custom-control-inline">
-                              <input type="radio" id="customRadioInline2" name="kondisi_perlengkapan" class="custom-control-input" value="2" {{ ($perlengkapan->kondisi_perlengkapan == 2)? "checked" : "" }} />
-                              <label class="custom-control-label" for="customRadioInline2">Kurang Bagus</label>
-                           </div>
-                           <div class="custom-control custom-radio custom-control-inline">
-                              <input type="radio" id="customRadioInline3" name="kondisi_perlengkapan" class="custom-control-input" {{ ($perlengkapan->kondisi_perlengkapan == 3)? "checked" : "" }} />
-                              <label class="custom-control-label" for="customRadioInline3">Rusak</label>
-                           </div>
-                           @if ($errors->has('kondisi_perlengkapan'))
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $errors->first('kondisi_perlengkapan') }}</strong>
-                           </span>
-                           @endif
-                        </div>
-                     </div>
-                     <div class="form-group row">
-                        <label for="leandable_perlengkapan" class="col-md-4 col-form-label text-md-right">{{ __('Peminjaman Perlengkapan') }}</label>
-                        <div class="col-md-8">
-                           <div class="custom-control custom-radio custom-control-inline mt-2">
-                              <input type="radio" id="customRadioInline4" name="leandable_perlengkapan" class="custom-control-input" value="1" {{ ($perlengkapan->leandable_perlengkapan == 1)? "checked" : "" }} />
-                              <label class="custom-control-label" for="customRadioInline4">Bisa Dipinjam</label>
-                           </div>
-                           <div class="custom-control custom-radio custom-control-inline">
-                              <input type="radio" id="customRadioInline5" name="leandable_perlengkapan" class="custom-control-input" value="2" {{ ($perlengkapan->leandable_perlengkapan == 2)? "checked" : "" }} />
-                              <label class="custom-control-label" for="customRadioInline5">Tidak Boleh</label>
-                           </div>
-                           @if ($errors->has('leandable_perlengkapan'))
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $errors->first('leandable_perlengkapan') }}</strong>
-                           </span>
-                           @endif
-                        </div>
-                     </div>
-                  </div>
-                  <!-- /.card-body -->
-                  <div class="card-footer">
-                     <!-- /.card-body -->
-                     <div class="text-center">
-                        <button class="btn btn-success btn-submit" id="simpanBTN1">Submit</button>
-                        <div id="load1" class="spinner-border text-primary"></div>
-                     </div>
-                  </div>
-               </form>
-            </div>
-         </div>
-         <div class="card card-danger card-outline">
-            <a class="d-block w-100" data-toggle="collapse" href="#collapseSeven">
-               <div class="card-header">
-                  <h4 class="card-title w-100">
-                     <b>Mutasi Perlengkapan</b> 
-                  </h4>
-               </div>
-            </a>
-            <div id="collapseSeven" class="collapse" data-parent="#accordion">
-               <!-- form start -->
-               <form id="formTarget" enctype="multipart/form-data" >
-                  @csrf  
-                  <div class="card-body">
-                  <input type="hidden" id="perlengkapan_id" name="perlengkapan_id" value="{{$perlengkapan->id}}" >
-                  <input type="hidden" id="kode" name="kode" value="{{$perlengkapan->kode_perlengkapan}}" >
-                     <input type="hidden" id="barang_id" name="barang_id" value="{{$barang->id}}" >
-                     <div class="form-group row">
-                        <label for="lokasi_penempatan_lama" class="col-md-4 col-form-label text-md-right">{{ __('Lokasi Perlengkapan yang Lama') }}</label>
-                        <div class="col-md-6">
-                           <input id="lokasi_penempatan_lama" type="text" class="form-control" name="lokasi_penempatan_lama" value="{{$perlengkapan->lokasi_perlengkapan}}"required autofocus />
-                           @if ($errors->has('lokasi_penempatan_lama'))
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $errors->first('lokasi_penempatan_lama') }}</strong>
-                           </span>
-                           @endif
-                        </div>
-                     </div>
-                     <div class="form-group row">
-                        <label for="lokasi_penempatan_baru" class="col-md-4 col-form-label text-md-right">{{ __('Lokasi Perlengkapan yang Baru') }}</label>
-                        <div class="col-md-6">
-                           <input id="lokasi_penempatan_baru" type="text" class="form-control" name="lokasi_penempatan_baru"required autofocus />
-                           @if ($errors->has('lokasi_penempatan_baru'))
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $errors->first('lokasi_penempatan_baru') }}</strong>
-                           </span>
-                           @endif
-                        </div>
-                     </div>
-                     <div class="form-group row">
-                        <label for="departemen_lama" class="col-md-4 col-form-label text-md-right">{{ __('Departemen yang lama') }}</label>
-                        <div class="col-md-6">
-                           <input id="departemen_lama" type="text" class="form-control" name="departemen_lama" value="{{$perlengkapan->departemen}}" required autofocus/>
-                           @if ($errors->has('departemen_lama'))
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $errors->first('departemen_lama') }}</strong>
-                           </span>
-                           @endif
-                        </div>
-                     </div>
-                     <div class="form-group row">
-                        <label for="departemen_baru" class="col-md-4 col-form-label text-md-right">{{ __('Departemen yang baru') }}</label>
-                        <div class="col-md-6">
-                           <input id="departemen_baru" type="text" class="form-control" name="departemen_baru" required autofocus/>
-                           @if ($errors->has('departemen_baru'))
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $errors->first('departemen_baru') }}</strong>
-                           </span>
-                           @endif
-                        </div>
-                     </div>
-                     
-                     <div class="form-group row">
-                        <label for="tanggal_mutasi" class="col-md-4 col-form-label text-md-right">{{ __('Tanggal Mutasi') }}</label>
-                        <div class="col-md-6">
-                           <div class="input-group date">
-                              <div class="input-group-addon">
-                                 <span class="glyphicon glyphicon-th"></span>
-                              </div>
-                              <input placeholder="tanggal mutasi" type="text" class="form-control datepicker" name="tanggal_mutasi" required autofocus    />
-                           </div>
-                        </div>
-                     </div>
-                     <div class="form-group row">
-                        <label for="foto_pemindahan" class="col-md-4 col-form-label text-md-right">{{ __('foto pemindahan') }}</label>
-                        <div class="col-md-4">
-                           <input id="foto_pemindahan" type="file" class="form-control" name="foto_pemindahan" value="{{ old('foto_pemindahan') }}" ></input>
-                           @if ($errors->has('foto_pemindahan'))
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $errors->first('foto_pemindahan') }}</strong>
-                           </span>
-                           @endif
-                        </div>
-                     </div>
-                     <div class="form-group row">
-                        <label for="keterangan" class="col-md-4 col-form-label text-md-right">{{ __('Keterangan') }}</label>
-                        <div class="col-md-6">
-                           <textarea id="keterangan" type="text" class="form-control" name="keterangan" value="{{ old('keterangan') }}"required autofocus></textarea>
-                           @if ($errors->has('keterangan'))
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $errors->first('keterangan') }}</strong>
-                           </span>
-                           @endif
-                        </div>
-                     </div>
-                  </div>
-                  <!-- /.card-body -->
-                  <div class="card-footer">
-                     <!-- /.card-body -->
-                     <div class="text-center">
-                        <button class="btn btn-success btn-submit" id="simpanBTN">Submit</button>
-                        <div id="load" class="spinner-border text-primary"></div>
-                     </div>
-                  </div>
-               </form>
-            </div>
-         </div>
-      </div>
-      <div class="col-md-12">
-         <!-- general form elements -->
-         <div class="card card-primary">
-            <div class="card-header">
-               <h3 class="card-title">perlengkapan Edit</h3>
-            </div>
-            <!-- /.card-header -->
-            <!-- form start -->
-         </div>
-         <!-- /.card -->
-      </div>
       <div class="col-12">
          <div class="card">
             <div class="card-header">
@@ -314,13 +41,13 @@
             <!-- /.card-header -->
             <div class="card-body">
                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
+               <thead>
                      <tr>
                         <th>no</th>
-                        <th>Loasi Baru</th>
-                        <th>Departemen Baru</th>
-                        <th>Tanggal</th>
-                        <th>Gambar</th>
+                        <th>Kode</th>
+                        <th>gambar</th>
+                        <th>Pemindahan Tempat</th>
+                        <th>Pemindahan Unit</th>
                         <th>action</th>
                      </tr>
                   </thead>
@@ -328,11 +55,11 @@
                   </tbody>
                   <tfoot>
                      <tr>
-                     <th>no</th>
-                        <th>Loasi Baru</th>
-                        <th>Departemen Baru</th>
-                        <th>Tanggal</th>
-                        <th>Gambar</th>
+                        <th>no</th>
+                        <th>Kode</th>
+                        <th>gambar</th>
+                        <th>Pemindahan Tempat</th>
+                        <th>Pemindahan Unit</th>
                         <th>action</th>
                      </tr>
                   </tfoot>
@@ -348,31 +75,7 @@
 </section>
 @endsection
 @section('script')
-<script>
-    function goBack() {
-        window.history.back();
-        }
-        function rupiah(){
-               var bilangan = {{$harga_perlengkapan}};
-               var	number_string = bilangan.toString(),
-               sisa 	= number_string.length % 3,
-               rupiah 	= number_string.substr(0, sisa),
-               ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
-               
-               if (ribuan) {
-                  separator = sisa ? '.' : '';
-                  rupiah += separator + ribuan.join('.');
-               }
-               
-               // Cetak hasil
-               
-                  
-               
-               $("omset").text("Rp "+rupiah)
-         
-         //the function body is the same as you have defined sue the textbox object to set the value
-         }
-         rupiah();
+<script>    
    $.ajaxSetup({
        headers: {
            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -384,7 +87,7 @@
                processing: true,
                serverSide: true,
                ajax: {
-                   url: "{{route('tabelMutasiPerlengkapan',$perlengkapan->id)}}",
+                   url: "{{route('tabelMutasi')}}",
                    type: 'GET'
                },
                columns: [{
@@ -392,28 +95,30 @@
                        name: 'DT_RowIndex'
                    },
                    {
-                       data: 'Lokasi',
-                       name: 'Lokasi',
+                       data: 'kode_perlengkapan',
+                       name: 'kode_perlengkapan',
                        orderable: true,
                        searchable: true
                    },
                    {
-                       data: 'Departemen',
-                       name: 'Departemen',
-                       orderable: true,
-                       searchable: true
-                   },
-                   {
-                       data: 'tanggal',
-                       name: 'tanggal',
+                       data: 'jumlah_perlengkapan',
+                       name: 'jumlah',
                        orderable: true,
                        searchable: true
                    },
                    {
                        data: 'image',
                        name: 'image',
+                       
+                       
                    },
                    
+                   {
+                       data: 'kondisi',
+                       name: 'kondisi',
+                       orderable: true,
+                       searchable: true
+                   },
                    {
                        data: 'action',
                        name: 'action'
@@ -446,32 +151,7 @@
            .buttons()
            .container()
            .appendTo("#example1_wrapper .col-md-6:eq(0)");
-   });
-   var rupiah = document.getElementById("harga_perlengkapan");
-         harga_perlengkapan.addEventListener("keyup", function(e) {
-            // tambahkan 'Rp.' pada saat form di ketik
-            // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
-            rupiah.value = formatRupiah(this.value, "Rp. ");
-         });
-         
-         /* Fungsi formatRupiah */
-         function formatRupiah(angka, prefix) {
-            var number_string = angka.replace(/[^,\d]/g, "").toString(),
-            split = number_string.split(","),
-            sisa = split[0].length % 3,
-            rupiah = split[0].substr(0, sisa),
-            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-            
-            // tambahkan titik jika yang di input sudah menjadi angka ribuan
-            if (ribuan) {
-            separator = sisa ? "." : "";
-            rupiah += separator + ribuan.join(".");
-            }
-            
-            rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
-            return prefix == undefined ? rupiah : rupiah ? "Rp. " + rupiah : "";
-         }
-        
+   });     
    $('#load').hide();
    $('#load1').hide();
    $(function() {

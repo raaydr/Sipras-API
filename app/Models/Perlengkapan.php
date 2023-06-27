@@ -25,6 +25,7 @@ class Perlengkapan extends Model
         'status_peminjaman',
         'status',
         'barang_id',
+        'mutasi_id',
         'user_id',
         'user_name',
         'editedBy_id',

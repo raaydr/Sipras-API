@@ -34,7 +34,7 @@
                      
                             </li>
                             <li class="nav-item">
-                            <a href="{{ route('BarangEdit') }}" class="nav-link ">
+                            <a href="{{ route('MutasiEdit') }}" class="nav-link ">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
                                         Data Mutasi
