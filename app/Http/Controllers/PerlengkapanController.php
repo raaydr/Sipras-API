@@ -201,6 +201,8 @@ class PerlengkapanController extends Controller
                 
                 
             }
+            
+            
         } else{
             
             $update['barang_id'] = $barang_id;
@@ -248,20 +250,22 @@ class PerlengkapanController extends Controller
             );
 
             //Ngebuat jumlah barang nambah kalau kondisinya gk rusak
-            if($update['kondisi_perlengkapan'] != 3){
-                $jumlah = Barang::where('id', $barang_id)->value('jumlah');
-                $jumlah = $jumlah + $update['jumlah_perlengkapan'];
-
-                $barang['jumlah'] = $jumlah; 
-                Barang::updateOrInsert(
-                    ['id' => $barang_id], $barang
-                );
-                return response()->json(['status'=>2,'success'=>'Berhasil Update Barang Bagus','jumlah'=>$jumlah]);
-                
-            }
+            
             
 
         }
+
+        //Ngebuat jumlah barang nambah kalau kondisinya gk rusak
+        
+            $jumlah_barang = Perlengkapan::where('barang_id', $barang_id)->where('status', 1)->where('kondisi_perlengkapan',1)->orWhere('kondisi_perlengkapan',2)->sum('jumlah_perlengkapan');
+
+            $barang['jumlah'] = $jumlah_barang; 
+            Barang::updateOrInsert(
+                ['id' => $barang_id], $barang
+            );
+            
+            
+        
         return response()->json(['status'=>1,'success'=>'Berhasil Update Barang']);
         
     }
@@ -307,95 +311,15 @@ class PerlengkapanController extends Controller
                                 break;
                         } 
                     }) 
-                    ->addColumn('action', function($row){
-                        $id = $row->id;
-                        $nama = $row->nama_perlengkapan;
-                        $qrcode = route('PerlengkapanQrcode',$id); 
-                        $actionBtn = '<a class="btn btn-outline-info m-1" href='.$qrcode.' target="_blank">QRcode</a>';
-                        $detail = route('PerlengkapanDetail',$id); 
-                        $actionBtn =$actionBtn. '<a class="btn btn-outline-primary m-1" href='.$detail.'>detail</a>';
-                        $qrpage = route('PageQrcodePerlengkapan'); 
-                        $actionBtn =$actionBtn. '<a class="btn btn-outline-warning m-1" href='.$qrpage.'>qrpage</a>';
+                    ->addColumn('status', function($row){
                         $status = $row->status;
-                        switch ($status) {
-                            case '2':
-                                $actionBtn =$actionBtn.' <a data-id="'.$id.'" class="btn btn-outline-success m-1 publishPerlengkapan">Kembalikan</a>';
-                                break;
-                            case '1':
-                                $actionBtn =$actionBtn.' 
-                                <a id="hapus" data-toggle="modal" data-target="#hapus-Perlengkapan'.$id.'" class="btn btn-outline-danger m-1">Hapus</a></dl>
-                                                            <div class="modal fade" id="hapus-Perlengkapan'.$id.'">
-                                                                <div class="modal-dialog">
-                                                                    <div class="modal-content bg-danger">
-                                                                        <div class="modal-header">
-                                                                            <h4 class="modal-title">Penolakan</h4>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">    
-                                                                                <p>Apa anda yakin ingin menghapus Perlengkapan '.$nama.' ini ?</p>
-                                                                                <div class="modal-footer justify-content-between">
-                                                                                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-                                                                                <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$id.'" data-dismiss="modal" data-original-title="Delete" class="btn btn-outline-light deletePerlengkapan">Delete</a>
-                                                                                </div>
-                                                                            
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- /.modal-content -->
-                                                                </div>
-                                                                <!-- /.modal-dialog -->
-                                                            </div>
-                                                            <!-- /.modal -->';
-                         
-                                break;
-                                default:
-                                echo "stikes medistra";
-                                break;
-                        
-                            }
-                        
-                        
-                        return $actionBtn;
-                    })->rawColumns(['image','kondisi','action'])
-                    ->make(true);
-            }
-    }
-
-    public function tabelPerlengkapanBarang(Request $request, $id)
-    {
-        
-        $data = Perlengkapan::where('barang_id', $id)->where('status', '!=',0)->orderBy('created_at', 'desc')->get();
-            if($request->ajax()){
-    
-                return datatables()->of($data)                   
-                    ->addIndexColumn()
-                    ->addColumn('image', function($row){
-                        $b = $row->foto_perlengkapan;
-                        $c = $row->foto_perlengkapan_thumbnail;
-                        $asset= "/foto-perlengkapan/";
-                        $detail=  $asset.$b;
-                        $assetThumbnail= "/foto-perlengkapan/";
-                        $thumbnail=  $assetThumbnail.$c;
-                        $id = $row->id;
-                        $image = '<div class="col-md-8"> <a href='.$detail.' data-toggle="lightbox" >
-                        <img src='.$thumbnail.' class="img-fluid" alt="white sample"/>
-                        </a> </div>';
-                        
-                            return $image;
-                    }) 
-                    ->addColumn('kondisi', function($row){
-                        $status = $row->kondisi_perlengkapan;
                         switch ($status) {
                             
                             case '1':
-                                return '<p class="text-success">Bagus</p>';     
+                                return '<p class="text-success">aktif</p>';     
                                 break;
                             case '2':
-                                return '<p class="text-warning">Kurang Bagus</p>';
-                                break;
-                            case '3':
-                                return '<p class="text-danger">Rusak</p>';
+                                return '<p class="text-danger">Dihapus</p>';
                                 break;
                                 default:
                                 echo "stikes medistra";
@@ -452,7 +376,117 @@ class PerlengkapanController extends Controller
                         
                         
                         return $actionBtn;
-                    })->rawColumns(['image','kondisi','action'])
+                    })->rawColumns(['image','kondisi','status','action'])
+                    ->make(true);
+            }
+    }
+
+    public function tabelPerlengkapanBarang(Request $request, $id)
+    {
+        
+        $data = Perlengkapan::where('barang_id', $id)->where('status', '!=',0)->orderBy('status', 'asc')->orderBy('created_at', 'desc')->get();
+            if($request->ajax()){
+    
+                return datatables()->of($data)                   
+                    ->addIndexColumn()
+                    ->addColumn('image', function($row){
+                        $b = $row->foto_perlengkapan;
+                        $c = $row->foto_perlengkapan_thumbnail;
+                        $asset= "/foto-perlengkapan/";
+                        $detail=  $asset.$b;
+                        $assetThumbnail= "/foto-perlengkapan/";
+                        $thumbnail=  $assetThumbnail.$c;
+                        $id = $row->id;
+                        $image = '<div class="col-md-8"> <a href='.$detail.' data-toggle="lightbox" >
+                        <img src='.$thumbnail.' class="img-fluid" alt="white sample"/>
+                        </a> </div>';
+                        
+                            return $image;
+                    }) 
+                    ->addColumn('kondisi', function($row){
+                        $status = $row->kondisi_perlengkapan;
+                        switch ($status) {
+                            
+                            case '1':
+                                return '<p class="text-success">Bagus</p>';     
+                                break;
+                            case '2':
+                                return '<p class="text-warning">Kurang Bagus</p>';
+                                break;
+                            case '3':
+                                return '<p class="text-danger">Rusak</p>';
+                                break;
+                                default:
+                                echo "stikes medistra";
+                                break;
+                        } 
+                    })
+                    ->addColumn('status', function($row){
+                        $status = $row->status;
+                        switch ($status) {
+                            
+                            case '1':
+                                return '<p class="text-success">aktif</p>';     
+                                break;
+                            case '2':
+                                return '<p class="text-danger">Dihapus</p>';
+                                break;
+                                default:
+                                echo "stikes medistra";
+                                break;
+                        } 
+                    })  
+                    ->addColumn('action', function($row){
+                        $id = $row->id;
+                        $nama = $row->nama_perlengkapan;
+                        $qrcode = route('PerlengkapanQrcode',$id); 
+                        $actionBtn = '<a class="btn btn-outline-info m-1" href='.$qrcode.' target="_blank">QRcode</a>';
+                        $detail = route('PerlengkapanDetail',$id); 
+                        $actionBtn =$actionBtn. '<a class="btn btn-outline-primary m-1" href='.$detail.'>detail</a>';
+                        $qrpage = route('PageQrcodePerlengkapan'); 
+                        $actionBtn =$actionBtn. '<a class="btn btn-outline-warning m-1" href='.$qrpage.'>qrpage</a>';
+                        $status = $row->status;
+                        switch ($status) {
+                            case '2':
+                                $actionBtn =$actionBtn.' <a data-id="'.$id.'" class="btn btn-outline-success m-1 publishPerlengkapan">Kembalikan</a>';
+                                break;
+                            case '1':
+                                $actionBtn =$actionBtn.' 
+                                <a id="hapus" data-toggle="modal" data-target="#hapus-Perlengkapan'.$id.'" class="btn btn-outline-danger m-1">Hapus</a></dl>
+                                                            <div class="modal fade" id="hapus-Perlengkapan'.$id.'">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content bg-danger">
+                                                                        <div class="modal-header">
+                                                                            <h4 class="modal-title">Penolakan</h4>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">    
+                                                                                <p>Apa anda yakin ingin menghapus Perlengkapan '.$nama.' ini ?</p>
+                                                                                <div class="modal-footer justify-content-between">
+                                                                                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+                                                                                <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$id.'" data-dismiss="modal" data-original-title="Delete" class="btn btn-outline-light deletePerlengkapan">Delete</a>
+                                                                                </div>
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- /.modal-content -->
+                                                                </div>
+                                                                <!-- /.modal-dialog -->
+                                                            </div>
+                                                            <!-- /.modal -->';
+                         
+                                break;
+                                default:
+                                echo "stikes medistra";
+                                break;
+                        
+                            }
+                        
+                        
+                        return $actionBtn;
+                    })->rawColumns(['image','kondisi','status','action'])
                     ->make(true);
             }
     }
@@ -468,6 +502,14 @@ class PerlengkapanController extends Controller
                     'updated_at' => now(),
                     ]
                 );
+                 //Ngebuat jumlah barang nambah kalau kondisinya gk rusak
+        
+                $jumlah_barang = Perlengkapan::where('barang_id', $id)->where('status', 1)->where('kondisi_perlengkapan',1)->orWhere('kondisi_perlengkapan',2)->sum('jumlah_perlengkapan');
+
+                $barang['jumlah'] = $jumlah_barang; 
+                Barang::updateOrInsert(
+                    ['id' => $id], $barang
+                );
                 return response()->json(['success'=>'Batal Publish Perlengkapan']);
                 break;
             case '2':
@@ -476,6 +518,14 @@ class PerlengkapanController extends Controller
                     'updated_at' => now(),
                     ]
                 );
+                 //Ngebuat jumlah barang nambah kalau kondisinya gk rusak
+        
+                 $jumlah_barang = Perlengkapan::where('barang_id', $id)->where('status', 1)->where('kondisi_perlengkapan',1)->orWhere('kondisi_perlengkapan',2)->sum('jumlah_perlengkapan');
+
+                 $barang['jumlah'] = $jumlah_barang; 
+                 Barang::updateOrInsert(
+                     ['id' => $id], $barang
+                 );
                 return response()->json(['success'=>'Publish Perlengkapan']);
                 break;
                 default:

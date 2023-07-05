@@ -301,6 +301,7 @@
                         <th>Jumlah</th>
                         <th>gambar</th>
                         <th>Kondisi</th>
+                        <th>status</th>
                         <th>action</th>
                      </tr>
                   </thead>
@@ -313,6 +314,7 @@
                         <th>Jumlah</th>
                         <th>gambar</th>
                         <th>Kondisi</th>
+                        <th>status</th>
                         <th>action</th>
                      </tr>
                   </tfoot>
@@ -369,6 +371,12 @@
                    {
                        data: 'kondisi',
                        name: 'kondisi',
+                       orderable: true,
+                       searchable: true
+                   },
+                   {
+                       data: 'status',
+                       name: 'status',
                        orderable: true,
                        searchable: true
                    },

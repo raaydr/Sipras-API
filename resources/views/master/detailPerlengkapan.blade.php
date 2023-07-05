@@ -154,7 +154,7 @@
                               <label class="custom-control-label" for="customRadioInline2">Kurang Bagus</label>
                            </div>
                            <div class="custom-control custom-radio custom-control-inline">
-                              <input type="radio" id="customRadioInline3" name="kondisi_perlengkapan" class="custom-control-input" {{ ($perlengkapan->kondisi_perlengkapan == 3)? "checked" : "" }} />
+                              <input type="radio" id="customRadioInline3" name="kondisi_perlengkapan" class="custom-control-input" value="3" {{ ($perlengkapan->kondisi_perlengkapan == 3)? "checked" : "" }} />
                               <label class="custom-control-label" for="customRadioInline3">Rusak</label>
                            </div>
                            @if ($errors->has('kondisi_perlengkapan'))
