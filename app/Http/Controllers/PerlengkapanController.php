@@ -45,9 +45,14 @@ class PerlengkapanController extends Controller
         return view('master.detailPerlengkapan',compact('barang','perlengkapan','harga_perlengkapan'));
     }
 
-    Public function PageQrcodePerlengkapan(){
+    Public function PageQrcodePerlengkapan($id){
+        $perlengkapan_id = Crypt::decrypt($id);
+        $perlengkapan = Perlengkapan::where('id',$perlengkapan_id)->first();
+        $barang = Barang::where('id',$perlengkapan->barang_id)->first();
         
-        return view('master.qrcodePerlengkapan',);
+        
+        
+        return view('master.qrcodePerlengkapan',compact('perlengkapan','barang'));
     }
     public function PerlengkapanQrcode($id){
         $perlengkapan = Perlengkapan::where('id',$id)->first();
@@ -443,7 +448,7 @@ class PerlengkapanController extends Controller
                         $actionBtn = '<a class="btn btn-outline-info m-1" href='.$qrcode.' target="_blank">QRcode</a>';
                         $detail = route('PerlengkapanDetail',$id); 
                         $actionBtn =$actionBtn. '<a class="btn btn-outline-primary m-1" href='.$detail.'>detail</a>';
-                        $qrpage = route('PageQrcodePerlengkapan'); 
+                        $qrpage = route('PageQrcodePerlengkapan', Crypt::encrypt($id)); 
                         $actionBtn =$actionBtn. '<a class="btn btn-outline-warning m-1" href='.$qrpage.'>qrpage</a>';
                         $status = $row->status;
                         switch ($status) {

@@ -1,168 +1,175 @@
-@extends('general.layout')
-@section('content')
-            <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>E-commerce</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">E-commerce</li>
-            </ol>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
+<!DOCTYPE html>
+<html lang="en">
 
-    <!-- Main content -->
-    <section class="content">
+<head>
+    <title>SIPRASMI - {{$perlengkapan->kode_perlengkapan}}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      <!-- Default box -->
-      <div class="card card-solid">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-12 col-sm-6">
-              <h3 class="d-inline-block d-sm-none">LOWA Men’s Renegade GTX Mid Hiking Boots Review</h3>
-              <div class="col-12">
-                <img src="../../dist/img/prod-1.jpg" class="product-image" alt="Product Image">
-              </div>
-              <div class="col-12 product-image-thumbs">
-                <div class="product-image-thumb active"><img src="../../dist/img/prod-1.jpg" alt="Product Image"></div>
-                <div class="product-image-thumb" ><img src="../../dist/img/prod-2.jpg" alt="Product Image"></div>
-                <div class="product-image-thumb" ><img src="../../dist/img/prod-3.jpg" alt="Product Image"></div>
-                <div class="product-image-thumb" ><img src="../../dist/img/prod-4.jpg" alt="Product Image"></div>
-                <div class="product-image-thumb" ><img src="../../dist/img/prod-5.jpg" alt="Product Image"></div>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6">
-              <h3 class="my-3">LOWA Men’s Renegade GTX Mid Hiking Boots Review</h3>
-              <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terr.</p>
+    <link href="{{asset('stikes')}}/stikes.png" rel="icon" />
+    <link rel="stylesheet" href="{{asset('zay')}}/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{asset('zay')}}/assets/css/templatemo.css">
+    <link rel="stylesheet" href="{{asset('zay')}}/assets/css/custom.css">
 
-              <hr>
-              <h4>Available Colors</h4>
-              <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-default text-center active">
-                  <input type="radio" name="color_option" id="color_option_a1" autocomplete="off" checked>
-                  Green
-                  <br>
-                  <i class="fas fa-circle fa-2x text-green"></i>
-                </label>
-                <label class="btn btn-default text-center">
-                  <input type="radio" name="color_option" id="color_option_a2" autocomplete="off">
-                  Blue
-                  <br>
-                  <i class="fas fa-circle fa-2x text-blue"></i>
-                </label>
-                <label class="btn btn-default text-center">
-                  <input type="radio" name="color_option" id="color_option_a3" autocomplete="off">
-                  Purple
-                  <br>
-                  <i class="fas fa-circle fa-2x text-purple"></i>
-                </label>
-                <label class="btn btn-default text-center">
-                  <input type="radio" name="color_option" id="color_option_a4" autocomplete="off">
-                  Red
-                  <br>
-                  <i class="fas fa-circle fa-2x text-red"></i>
-                </label>
-                <label class="btn btn-default text-center">
-                  <input type="radio" name="color_option" id="color_option_a5" autocomplete="off">
-                  Orange
-                  <br>
-                  <i class="fas fa-circle fa-2x text-orange"></i>
-                </label>
-              </div>
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="{{asset('zay')}}/assets/css/fontawesome.min.css">
 
-              <h4 class="mt-3">Size <small>Please select one</small></h4>
-              <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-default text-center">
-                  <input type="radio" name="color_option" id="color_option_b1" autocomplete="off">
-                  <span class="text-xl">S</span>
-                  <br>
-                  Small
-                </label>
-                <label class="btn btn-default text-center">
-                  <input type="radio" name="color_option" id="color_option_b2" autocomplete="off">
-                  <span class="text-xl">M</span>
-                  <br>
-                  Medium
-                </label>
-                <label class="btn btn-default text-center">
-                  <input type="radio" name="color_option" id="color_option_b3" autocomplete="off">
-                  <span class="text-xl">L</span>
-                  <br>
-                  Large
-                </label>
-                <label class="btn btn-default text-center">
-                  <input type="radio" name="color_option" id="color_option_b4" autocomplete="off">
-                  <span class="text-xl">XL</span>
-                  <br>
-                  Xtra-Large
-                </label>
-              </div>
+    <!-- Slick -->
+    <link rel="stylesheet" type="text/css" href="{{asset('zay')}}/assets/css/slick.min.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('zay')}}/assets/css/slick-theme.css">
+</head>
 
-              <div class="bg-gray py-2 px-3 mt-4">
-                <h2 class="mb-0">
-                  $80.00
-                </h2>
-                <h4 class="mt-0">
-                  <small>Ex Tax: $80.00 </small>
-                </h4>
-              </div>
-
-              <div class="mt-4">
-                <div class="btn btn-primary btn-lg btn-flat">
-                  <i class="fas fa-cart-plus fa-lg mr-2"></i>
-                  Add to Cart
+<body>
+    <!-- Open Content -->
+    <section class="bg-light">
+        <div class="container pb-5">
+            <div class="row">
+                <div class="col-lg-5 mt-5">
+                    <div class="card mb-3">
+                        <img class="card-img img-fluid" src="{{asset('foto-perlengkapan')}}/{{$perlengkapan->foto_perlengkapan}}" alt="Card image cap" id="product-detail">
+                    </div>
                 </div>
+                <!-- col end -->
+                <div class="col-lg-7 mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="h2">Nama Barang : {{$barang->nama_barang}}</h1>
+                            <h1 class="h4">Kode Barang : {{$perlengkapan->kode_perlengkapan}}</h1>
+                            <h1 class="h4">Tipe Barang : {{$barang->tipe_barang}}</h1>
+                            <p class="h3 py-2"><a read only><b><omset  ></omset></b></a></p>
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <h6>Kondisi:</h6>
+                                </li>
+                                <li class="list-inline-item">
+                                @switch( $perlengkapan->kondisi_perlengkapan )
+                                    @case(3)
+                                    <p class="text-danger"><strong>Rusak</strong></p>
+                                    @break
+                                    @case(1)
+                                    <p class="text-success"><strong>Bagus</strong></p>
+                                    @break
+                                    @case(2)
+                                    <p class="text-warning"><strong>Kurang Bagus</strong></p>
+                                    @break
+                                @endswitch
+                                    
+                                </li>
+                            </ul>
 
-                <div class="btn btn-default btn-lg btn-flat">
-                  <i class="fas fa-heart fa-lg mr-2"></i>
-                  Add to Wishlist
+                            <h6>Keterangan Barang:</h6>
+                            <p>{{$barang->keterangan}}</p>
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <h6>Tanggal Pembelian :</h6>
+                                </li>
+                                <li class="list-inline-item">
+                                    <p class="text-primary"><strong>{{\Carbon\Carbon::parse($perlengkapan->tanggal_pembelian)->toFormattedDateString()}}</strong></p>
+                                </li>
+                            </ul>
+
+                            <h6>Detail Perlengkapan:</h6>
+                            <ul class="list-unstyled pb-3">
+                                <li>Departemen : <strong>{{$perlengkapan->departemen}}</strong></li>
+                                <li>Lokasi Perlengkapan : <strong>{{$perlengkapan->lokasi_perlengkapan}}</strong></li>
+                                <li>Jumlah Perlengkapan : <strong>{{$perlengkapan->jumlah_perlengkapan}}</strong></li>
+                                <li>Peminjaman Perlengkapan : 
+                                @switch( $perlengkapan->leandable_perlengkapan )
+                                    @case(1)
+                                    <a class="text-success"><strong>Boleh Dipinjam</strong></a>
+                                    @break
+                                    @case(2)
+                                    <a class="text-danger"><strong>Tidak Dapat Dipinjam</strong></a>
+                                    @break
+                                @endswitch
+                                </li>
+                                @switch( $perlengkapan->status_peminjaman )
+                                    @case(1)
+                                    Status Peminjaman : 
+                                    <a class="text-success"><strong>Sedang Dipinjam</strong></a>
+                                    @break
+                                    @case(0)
+                                    
+                                    @break
+                                @endswitch
+                            </ul>
+                            <h6>Keterangan Perlengkapan:</h6>
+                            <p>{{$perlengkapan->keterangan_perlengkapan}}</p>
+                        </div>
+                    </div>
                 </div>
-              </div>
-
-              <div class="mt-4 product-share">
-                <a href="#" class="text-gray">
-                  <i class="fab fa-facebook-square fa-2x"></i>
-                </a>
-                <a href="#" class="text-gray">
-                  <i class="fab fa-twitter-square fa-2x"></i>
-                </a>
-                <a href="#" class="text-gray">
-                  <i class="fas fa-envelope-square fa-2x"></i>
-                </a>
-                <a href="#" class="text-gray">
-                  <i class="fas fa-rss-square fa-2x"></i>
-                </a>
-              </div>
-
             </div>
-          </div>
-          <div class="row mt-4">
-            <nav class="w-100">
-              <div class="nav nav-tabs" id="product-tab" role="tablist">
-                <a class="nav-item nav-link active" id="product-desc-tab" data-toggle="tab" href="#product-desc" role="tab" aria-controls="product-desc" aria-selected="true">Description</a>
-                <a class="nav-item nav-link" id="product-comments-tab" data-toggle="tab" href="#product-comments" role="tab" aria-controls="product-comments" aria-selected="false">Comments</a>
-                <a class="nav-item nav-link" id="product-rating-tab" data-toggle="tab" href="#product-rating" role="tab" aria-controls="product-rating" aria-selected="false">Rating</a>
-              </div>
-            </nav>
-            <div class="tab-content p-3" id="nav-tabContent">
-              <div class="tab-pane fade show active" id="product-desc" role="tabpanel" aria-labelledby="product-desc-tab"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae condimentum erat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed posuere, purus at efficitur hendrerit, augue elit lacinia arcu, a eleifend sem elit et nunc. Sed rutrum vestibulum est, sit amet cursus dolor fermentum vel. Suspendisse mi nibh, congue et ante et, commodo mattis lacus. Duis varius finibus purus sed venenatis. Vivamus varius metus quam, id dapibus velit mattis eu. Praesent et semper risus. Vestibulum erat erat, condimentum at elit at, bibendum placerat orci. Nullam gravida velit mauris, in pellentesque urna pellentesque viverra. Nullam non pellentesque justo, et ultricies neque. Praesent vel metus rutrum, tempus erat a, rutrum ante. Quisque interdum efficitur nunc vitae consectetur. Suspendisse venenatis, tortor non convallis interdum, urna mi molestie eros, vel tempor justo lacus ac justo. Fusce id enim a erat fringilla sollicitudin ultrices vel metus. </div>
-              <div class="tab-pane fade" id="product-comments" role="tabpanel" aria-labelledby="product-comments-tab"> Vivamus rhoncus nisl sed venenatis luctus. Sed condimentum risus ut tortor feugiat laoreet. Suspendisse potenti. Donec et finibus sem, ut commodo lectus. Cras eget neque dignissim, placerat orci interdum, venenatis odio. Nulla turpis elit, consequat eu eros ac, consectetur fringilla urna. Duis gravida ex pulvinar mauris ornare, eget porttitor enim vulputate. Mauris hendrerit, massa nec aliquam cursus, ex elit euismod lorem, vehicula rhoncus nisl dui sit amet eros. Nulla turpis lorem, dignissim a sapien eget, ultrices venenatis dolor. Curabitur vel turpis at magna elementum hendrerit vel id dui. Curabitur a ex ullamcorper, ornare velit vel, tincidunt ipsum. </div>
-              <div class="tab-pane fade" id="product-rating" role="tabpanel" aria-labelledby="product-rating-tab"> Cras ut ipsum ornare, aliquam ipsum non, posuere elit. In hac habitasse platea dictumst. Aenean elementum leo augue, id fermentum risus efficitur vel. Nulla iaculis malesuada scelerisque. Praesent vel ipsum felis. Ut molestie, purus aliquam placerat sollicitudin, mi ligula euismod neque, non bibendum nibh neque et erat. Etiam dignissim aliquam ligula, aliquet feugiat nibh rhoncus ut. Aliquam efficitur lacinia lacinia. Morbi ac molestie lectus, vitae hendrerit nisl. Nullam metus odio, malesuada in vehicula at, consectetur nec justo. Quisque suscipit odio velit, at accumsan urna vestibulum a. Proin dictum, urna ut varius consectetur, sapien justo porta lectus, at mollis nisi orci et nulla. Donec pellentesque tortor vel nisl commodo ullamcorper. Donec varius massa at semper posuere. Integer finibus orci vitae vehicula placerat. </div>
-            </div>
-          </div>
         </div>
-        <!-- /.card-body -->
-      </div>
-      <!-- /.card -->
-
     </section>
-    <!-- /.content -->
-@endsection
-@section('script')
-@endsection
+    <!-- Close Content -->
+
+    
+    <!-- Start Script -->
+    <script src="{{asset('zay')}}/assets/js/jquery-1.11.0.min.js"></script>
+    <script src="{{asset('zay')}}/assets/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="{{asset('zay')}}/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="{{asset('zay')}}/assets/js/templatemo.js"></script>
+    <script src="{{asset('zay')}}/assets/js/custom.js"></script>
+    <!-- End Script -->
+
+    <!-- Start Slider Script -->
+    <script src="{{asset('zay')}}/assets/js/slick.min.js"></script>
+    <script>
+        $('#carousel-related-product').slick({
+            infinite: true,
+            arrows: false,
+            slidesToShow: 4,
+            slidesToScroll: 3,
+            dots: true,
+            responsive: [{
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 3
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 3
+                    }
+                }
+            ]
+        });
+
+        function rupiah(){
+               var bilangan = {{$perlengkapan->harga_perlengkapan}};
+               var	number_string = bilangan.toString(),
+               sisa 	= number_string.length % 3,
+               rupiah 	= number_string.substr(0, sisa),
+               ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
+               
+               if (ribuan) {
+                  separator = sisa ? '.' : '';
+                  rupiah += separator + ribuan.join('.');
+               }
+               
+               // Cetak hasil
+               
+                  
+               
+               $("omset").text("Rp "+rupiah)
+         
+         //the function body is the same as you have defined sue the textbox object to set the value
+         }
+         rupiah();
+    </script>
+    <!-- End Slider Script -->
+
+</body>
+
+</html>
