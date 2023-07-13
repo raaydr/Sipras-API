@@ -47,6 +47,7 @@ class BarangController extends Controller
             'nama_barang' => 'required|string',
             'kode_barang' => 'nullable|string|unique:barang,kode_barang',
             'tipe_barang' => 'nullable|string',
+            'satuan_barang' => 'nullable|string',
             'keterangan' => 'required',
         ],
 
@@ -57,6 +58,7 @@ class BarangController extends Controller
             'kode_barang.required' => 'kode barang tidak boleh kosong!',
             'kode_barang.unique' => 'kode barang tidak boleh sama',            
             'tipe_barang.required' => 'tipe barang unit tidak boleh kosong!',
+            'satuan_barang.required' => 'satuan barang tidak boleh kosong!',
             'keterangan.required' => 'keterangan barang tidak boleh kosong!',
             
         ]);     
@@ -77,7 +79,9 @@ class BarangController extends Controller
         if($request->tipe_barang != NULL){
             $update['tipe_barang'] = $request->tipe_barang;
         }
-        
+        if($request->satuan_barang != NULL){
+            $update['satuan_barang'] = $request->satuan_barang;
+        }
         if($request->keterangan != NULL){
             $update['keterangan'] = $request->keterangan;;
         }
@@ -121,6 +125,12 @@ class BarangController extends Controller
     
                 return datatables()->of($data)                   
                     ->addIndexColumn()
+                    ->addColumn('jumlahbarang', function($row){
+                        $jumlah = $row->jumlah;
+                        $satuan = $row->satuan_barang;
+                        
+                        return $jumlah.' '.$satuan;
+                    }) 
                     ->addColumn('status', function($row){
                         $status = $row->status;
                         switch ($status) {
@@ -181,7 +191,7 @@ class BarangController extends Controller
                         
                         
                         return $actionBtn;
-                    })->rawColumns(['status','action'])
+                    })->rawColumns(['jumlahbarang','status','action'])
                     ->make(true);
             }
     }

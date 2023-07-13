@@ -94,6 +94,18 @@
                         </div>
                      </div>
                      <div class="form-group row">
+                        <label for="satuan_barang" class="col-md-4 col-form-label text-md-right">{{ __('Satuan Barang') }}</label>
+                        <div class="col-md-6">
+                           <input id="satuan_barang" type="text" class="form-control" name="satuan_barang" value="{{$barang->satuan_barang}}"required autofocus />
+                           <small>Contoh : unit atau liter</small>
+                           @if ($errors->has('satuan_barang'))
+                           <span class="invalid-feedback" role="alert">
+                           <strong>{{ $errors->first('satuan_barang') }}</strong>
+                           </span>
+                           @endif
+                        </div>
+                     </div>
+                     <div class="form-group row">
                         <label for="keterangan" class="col-md-4 col-form-label text-md-right">{{ __('Keterangan') }}</label>
                         <div class="col-md-6">
                            <textarea id="keterangan" type="text" class="form-control" name="keterangan" value="{{ old('keterangan') }}"required autofocus>{{$barang->keterangan}}</textarea>
@@ -544,8 +556,9 @@
                    },
                    tipe_barang: {
                        required: true,
-   
-   
+                   },
+                   satuan_barang: {
+                       required: true,
                    },
                    keterangan: {
                        required: true,
@@ -560,6 +573,10 @@
    
                    },
                    tipe_barang: {
+                       required: 'Tolong Diisi',
+   
+                   },
+                   satuan_barang: {
                        required: 'Tolong Diisi',
    
                    },

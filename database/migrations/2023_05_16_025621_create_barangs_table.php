@@ -16,6 +16,7 @@ return new class extends Migration
             $table->text('nama_barang');
             $table->text('kode_barang')->unique();
             $table->text('tipe_barang');
+            $table->string('satuan_barang');
             $table->integer('jumlah')->unsigned();
             $table->text('keterangan');
             $table->boolean('status');
