@@ -315,7 +315,7 @@ class PerlengkapanController extends Controller
                                 echo "stikes medistra";
                                 break;
                         } 
-                    }) 
+                    })
                     ->addColumn('status', function($row){
                         $status = $row->status;
                         switch ($status) {
@@ -330,7 +330,7 @@ class PerlengkapanController extends Controller
                                 echo "stikes medistra";
                                 break;
                         } 
-                    }) 
+                    })  
                     ->addColumn('action', function($row){
                         $id = $row->id;
                         $nama = $row->nama_perlengkapan;
@@ -338,8 +338,8 @@ class PerlengkapanController extends Controller
                         $actionBtn = '<a class="btn btn-outline-info m-1" href='.$qrcode.' target="_blank">QRcode</a>';
                         $detail = route('PerlengkapanDetail',$id); 
                         $actionBtn =$actionBtn. '<a class="btn btn-outline-primary m-1" href='.$detail.'>detail</a>';
-                        $qrpage = route('PageQrcodePerlengkapan'); 
-                        $actionBtn =$actionBtn. '<a class="btn btn-outline-warning m-1" href='.$qrpage.'>qrpage</a>';
+                        $qrpage = route('PageQrcodePerlengkapan', $id); 
+                        $actionBtn =$actionBtn. '<a class="btn btn-outline-warning m-1" href='.$qrpage.' target="_blank">qrpage</a>';
                         $status = $row->status;
                         switch ($status) {
                             case '2':
