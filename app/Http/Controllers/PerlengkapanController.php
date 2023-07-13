@@ -59,7 +59,7 @@ class PerlengkapanController extends Controller
         $qrpage = route('PageQrcodePerlengkapan', $id);
         $kode = $perlengkapan->kode_perlengkapan;
         $image = QrCode::format('png')
-        
+        ->merge('/public/stikes/stikes.png')
         ->size(300)
         ->errorCorrection('H')
         ->generate($qrpage);
