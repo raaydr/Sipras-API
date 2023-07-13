@@ -46,7 +46,7 @@ class PerlengkapanController extends Controller
     }
 
     Public function PageQrcodePerlengkapan($id){
-        $perlengkapan_id = Crypt::decrypt($id);
+        $perlengkapan_id = $id;
         $perlengkapan = Perlengkapan::where('id',$perlengkapan_id)->first();
         $barang = Barang::where('id',$perlengkapan->barang_id)->first();
         
@@ -56,13 +56,13 @@ class PerlengkapanController extends Controller
     }
     public function PerlengkapanQrcode($id){
         $perlengkapan = Perlengkapan::where('id',$id)->first();
-        
+        $qrpage = route('PageQrcodePerlengkapan', $id);
         $kode = $perlengkapan->kode_perlengkapan;
         $image = QrCode::format('png')
-        ->merge('/public/stikes/stikes.png')
-        ->size(200)
+        
+        ->size(300)
         ->errorCorrection('H')
-        ->generate($kode);
+        ->generate($qrpage);
 
         return response($image)->header('Content-type','image/png');
     }
@@ -448,8 +448,8 @@ class PerlengkapanController extends Controller
                         $actionBtn = '<a class="btn btn-outline-info m-1" href='.$qrcode.' target="_blank">QRcode</a>';
                         $detail = route('PerlengkapanDetail',$id); 
                         $actionBtn =$actionBtn. '<a class="btn btn-outline-primary m-1" href='.$detail.'>detail</a>';
-                        $qrpage = route('PageQrcodePerlengkapan', Crypt::encrypt($id)); 
-                        $actionBtn =$actionBtn. '<a class="btn btn-outline-warning m-1" href='.$qrpage.'>qrpage</a>';
+                        $qrpage = route('PageQrcodePerlengkapan', $id); 
+                        $actionBtn =$actionBtn. '<a class="btn btn-outline-warning m-1" href='.$qrpage.' target="_blank">qrpage</a>';
                         $status = $row->status;
                         switch ($status) {
                             case '2':

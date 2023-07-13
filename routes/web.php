@@ -41,7 +41,7 @@ Route::group(['middleware' => 'check-permission:superadmin'], function () {
         Route::get('/Perlengkapan/Perlengkapan-Detail/{id}', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanDetail'])->name('PerlengkapanDetail');
         Route::get('/Barang/Perlengkapan-QrCode/{id}', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanQrcode'])->name('PerlengkapanQrcode');  
         Route::post('/Perlengkapan/Barang-Search', [App\Http\Controllers\PerlengkapanController::class, 'searchBarang'])->name('searchBarang');
-        Route::get('/Perlengkapan/Perlengkapan-QrCode/{id}', [App\Http\Controllers\PerlengkapanController::class, 'PageQrcodePerlengkapan'])->name('PageQrcodePerlengkapan');  
+        Route::get('/QrCode/{id}', [App\Http\Controllers\PerlengkapanController::class, 'PageQrcodePerlengkapan'])->name('PageQrcodePerlengkapan');  
         
         //Mutasi
         Route::get('/Perlengkapan/Mutasi-Edit', [App\Http\Controllers\MutasiController::class, 'MutasiEdit'])->name('MutasiEdit');  
