@@ -279,7 +279,7 @@ class PerlengkapanController extends Controller
     public function tabelPerlengkapan(Request $request)
     {
         
-        $data = Perlengkapan::where('status', 1)->orderBy('created_at', 'desc')->get();
+        $data = Perlengkapan::where('status', '!=',0)->orderBy('status', 'asc')->orderBy('created_at', 'desc')->get();
             if($request->ajax()){
     
                 return datatables()->of($data)                   
@@ -443,7 +443,6 @@ class PerlengkapanController extends Controller
                     })  
                     ->addColumn('action', function($row){
                         $id = $row->id;
-                        $nama = $row->nama_perlengkapan;
                         $qrcode = route('PerlengkapanQrcode',$id); 
                         $actionBtn = '<a class="btn btn-outline-info m-1" href='.$qrcode.' target="_blank">QRcode</a>';
                         $detail = route('PerlengkapanDetail',$id); 
@@ -468,7 +467,7 @@ class PerlengkapanController extends Controller
                                                                             </button>
                                                                         </div>
                                                                         <div class="modal-body">    
-                                                                                <p>Apa anda yakin ingin menghapus Perlengkapan '.$nama.' ini ?</p>
+                                                                                <p>Apa anda yakin ingin menghapus Perlengkapan ini ?</p>
                                                                                 <div class="modal-footer justify-content-between">
                                                                                 <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
                                                                                 <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$id.'" data-dismiss="modal" data-original-title="Delete" class="btn btn-outline-light deletePerlengkapan">Delete</a>
@@ -500,6 +499,7 @@ class PerlengkapanController extends Controller
         
         //$mata_pelatihan_id = Crypt::decrypt($id);
         $val = Perlengkapan::where('id', $id)->value('status');
+        $barang_id = Perlengkapan::where('id', $id)->value('barang_id');
         switch ($val) {
             case '1':
                 Perlengkapan::where('id', $id)->update([
@@ -507,14 +507,16 @@ class PerlengkapanController extends Controller
                     'updated_at' => now(),
                     ]
                 );
-                 //Ngebuat jumlah barang nambah kalau kondisinya gk rusak
+                //Ngebuat jumlah barang nambah kalau kondisinya gk rusak
         
-                $jumlah_barang = Perlengkapan::where('barang_id', $id)->where('status', 1)->where('kondisi_perlengkapan',1)->orWhere('kondisi_perlengkapan',2)->sum('jumlah_perlengkapan');
+                $jumlah_barang = Perlengkapan::where('barang_id', $barang_id)->where('status', 1)->where('kondisi_perlengkapan','!=',3)->sum('jumlah_perlengkapan');
 
-                $barang['jumlah'] = $jumlah_barang; 
-                Barang::updateOrInsert(
-                    ['id' => $id], $barang
+                Barang::where('id', $barang_id)->update([
+                    'jumlah' => $jumlah_barang,
+                    'updated_at' => now(),
+                    ]
                 );
+               
                 return response()->json(['success'=>'Batal Publish Perlengkapan']);
                 break;
             case '2':
@@ -523,25 +525,29 @@ class PerlengkapanController extends Controller
                     'updated_at' => now(),
                     ]
                 );
-                 //Ngebuat jumlah barang nambah kalau kondisinya gk rusak
+                
         
-                 $jumlah_barang = Perlengkapan::where('barang_id', $id)->where('status', 1)->where('kondisi_perlengkapan',1)->orWhere('kondisi_perlengkapan',2)->sum('jumlah_perlengkapan');
+                //Ngebuat jumlah barang nambah kalau kondisinya gk rusak
+        
+                $jumlah_barang = Perlengkapan::where('barang_id', $barang_id)->where('status', 1)->where('kondisi_perlengkapan','!=',3)->sum('jumlah_perlengkapan');
 
-                 $barang['jumlah'] = $jumlah_barang; 
-                 Barang::updateOrInsert(
-                     ['id' => $id], $barang
-                 );
+                Barang::where('id', $barang_id)->update([
+                    'jumlah' => $jumlah_barang,
+                    'updated_at' => now(),
+                    ]
+                ); 
                 return response()->json(['success'=>'Publish Perlengkapan']);
                 break;
                 default:
                 echo "stikes medistra";
                 break;
-        }    
+        }
+        
     }
 
     public function PerlengkapanDelete($id)
     {
-        
+        $barang_id = Perlengkapan::where('id', $id)->value('barang_id');
         Perlengkapan::where('id', $id)->update([
             
             'status' => 2,
@@ -549,6 +555,15 @@ class PerlengkapanController extends Controller
             ]
         );
         
+        
+        //Ngebuat jumlah barang nambah kalau kondisinya gk rusak
+        
+        $jumlah_barang = Perlengkapan::where('barang_id', $barang_id)->where('status', 1)->where('kondisi_perlengkapan','!=',3)->sum('jumlah_perlengkapan');
+        Barang::where('id', $barang_id)->update([
+            'jumlah' => $jumlah_barang,
+            'updated_at' => now(),
+            ]
+        );
         return response()->json(['success'=>'Hapus Perlengkapan ']);
         
     }

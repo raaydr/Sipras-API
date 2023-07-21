@@ -496,7 +496,7 @@
                    });
                    var oTable = $('#example1').dataTable(); //inialisasi datatable
                    oTable.fnDraw(false); //reset datatable
-   
+                   location.reload(); 
                },
    
                error: function(data) {
@@ -528,7 +528,7 @@
                    });
                    var oTable = $('#example1').dataTable(); //inialisasi datatable
                    oTable.fnDraw(false); //reset datatable
-   
+                   location.reload(); 
                },
    
                error: function(data) {
