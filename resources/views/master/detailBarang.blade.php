@@ -213,6 +213,9 @@
                         <label for="foto" class="col-md-4 col-form-label text-md-right">{{ __('foto perlengkapan') }}</label>
                         <div class="col-md-4">
                            <input id="foto_perlengkapan" type="file" class="form-control" name="foto_perlengkapan" value="{{ old('foto_perlengkapan') }}" ></input>
+                           <p class="text-primary" role="alert">
+                           <strong>file harus jpeg,jpg,png dan maksimal 2 MB</strong>
+                           </p>
                            @if ($errors->has('foto_perlengkapan'))
                            <span class="invalid-feedback" role="alert">
                            <strong>{{ $errors->first('foto_perlengkapan') }}</strong>
@@ -701,7 +704,7 @@
                    foto_perlengkapan: {
                         
                         extension: "jpeg|jpg|png",
-                          filesize : 5, // here we are working with MB
+                          filesize : 2, // here we are working with MB
                            
                         },
    
@@ -744,7 +747,7 @@
                    foto_perlengkapan: {
                      required: 'Tolong Diisi',
                      extension: 'Harap mengupload file dengan format jpeg,jpg,png',
-                     filesize: 'ukuran file terlalu besar, harap upload file dibawah 5 mb',
+                     filesize: 'ukuran file terlalu besar, harap upload file dibawah 2 mb',
                        
                     },
                    
