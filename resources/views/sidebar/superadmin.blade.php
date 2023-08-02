@@ -53,6 +53,15 @@
                      
                             </li>
                             <li class="nav-item">
+                            <a href="{{ route('PembuatanAdmin') }}" class="nav-link ">
+                                    <i class="nav-icon fas fa-user"></i>
+                                    <p>
+                                        Akun Admin
+                                    </p>
+                                </a>
+                     
+                            </li>
+                            <li class="nav-item">
                             <a href="{{ route('dokumenEdit') }}" class="nav-link ">
                                     <i class="nav-icon fas fa-book"></i>
                                     <p>

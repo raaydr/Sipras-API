@@ -61,6 +61,12 @@ Route::group(['middleware' => 'check-permission:superadmin'], function () {
         Route::get('/Dokumen/Dokumen-Delete/{id}', [App\Http\Controllers\DokumenController::class, 'dokumenDelete'])->name('dokumenDelete');
         Route::get('/Dokumen/Dokumen-Detail/{id}', [App\Http\Controllers\DokumenController::class, 'dokumenDetailAdmin'])->name('dokumenDetailAdmin');
 
+
+        //Pembuatan Admin
+        Route::get('/User/Admin-Edit', [App\Http\Controllers\AkunController::class, 'PembuatanAdmin'])->name('PembuatanAdmin');    
+        Route::get('/User/Admin-Tabel', [App\Http\Controllers\AkunController::class, 'TabelAdmin'])->name('TabelAdmin');    
+        Route::post('/User/Admin-Daftar', [App\Http\Controllers\AkunController::class, 'DaftarAdmin'])->name('DaftarAdmin');
+        Route::get('/User/Admin-Level/{id}', [App\Http\Controllers\AkunController::class, 'LevelAdmin'])->name('LevelAdmin');            
     });
 });
 Route::group(['middleware' => 'check-permission:admin'], function () {
