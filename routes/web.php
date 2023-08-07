@@ -21,6 +21,9 @@ Route::get('/ubah-password', [App\Http\Controllers\GeneralController::class, 'ub
 Route::post('/change-password', [App\Http\Controllers\GeneralController::class, 'change_password'])->name('general.change.password');
 Route::get('/QrCode/{id}', [App\Http\Controllers\QrpageController::class, 'PageQrcodePerlengkapan'])->name('PageQrcodePerlengkapan');  
 
+
+Route::get('/ubah-password', [App\Http\Controllers\AkunController::class, 'ubah_password'])->name('general.ubah.password');
+Route::post('/post-password-change', [App\Http\Controllers\AkunController::class, 'change_password'])->name('general.change.password');
 Route::group(['middleware' => 'check-permission:superadmin'], function () {
     Route::group(['prefix' => 'superadmin'], function () {
         //Barang

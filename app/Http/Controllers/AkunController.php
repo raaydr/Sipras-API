@@ -8,6 +8,7 @@ use Auth;
 use Redirect;
 use DataTables;
 use Carbon\Carbon;
+use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Input;
 use App\Providers\RouteServiceProvider;
 use App\Http\Controllers\Controller;
@@ -159,5 +160,37 @@ class AkunController extends Controller
                 echo "stikes medistra";
                 break;
         }    
+    }
+
+    public function ubah_password(){
+        $title = 'Akun ubah password';
+        
+        
+
+        return view('master.ubahpassword', compact('title'));
+    }
+
+    public function change_password(Request $request)
+
+    {
+
+        $request->validate([
+
+            'current_password' => ['required', new MatchOldPassword],
+
+            'new_password' => ['required'],
+
+            'new_confirm_password' => ['same:new_password'],
+
+        ]);
+
+   
+
+        User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
+
+   
+        return redirect()->route('general.ubah.password')->with('berhasil', 'berhasil ubah password');
+        //return redirect()->route('admin.listPendaftar');
+
     }
 }
