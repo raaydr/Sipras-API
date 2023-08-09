@@ -27,13 +27,7 @@ Route::post('/post-password-change', [App\Http\Controllers\AkunController::class
 Route::group(['middleware' => 'check-permission:superadmin'], function () {
     Route::group(['prefix' => 'superadmin'], function () {
         //Barang
-        Route::get('/Barang/Barang-Edit', [App\Http\Controllers\BarangController::class, 'BarangEdit'])->name('BarangEdit');  
-        Route::post('/Barang/Barang-Update', [App\Http\Controllers\BarangController::class, 'BarangUpdate'])->name('BarangUpdate');        
-        Route::get('/Barang/Barang-Tabel', [App\Http\Controllers\BarangController::class, 'tabelBarang'])->name('tabelBarang');
-        Route::get('/Barang/Barang-Publish/{id}', [App\Http\Controllers\BarangController::class, 'BarangPublish'])->name('BarangPublish');
-        Route::get('/Barang/Barang-Delete/{id}', [App\Http\Controllers\BarangController::class, 'BarangDelete'])->name('BarangDelete');
-        Route::get('/Barang/Barang-Detail/{id}', [App\Http\Controllers\BarangController::class, 'BarangDetail'])->name('BarangDetail');
-
+        
         //Perlengkapan
         Route::get('/Perlengkapan/Perlengkapan-Edit', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanEdit'])->name('PerlengkapanEdit');  
         Route::post('/Perlengkapan/Perlengkapan-Update', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanUpdate'])->name('PerlengkapanUpdate');        
@@ -72,8 +66,16 @@ Route::group(['middleware' => 'check-permission:superadmin'], function () {
         Route::get('/User/Admin-Level/{id}', [App\Http\Controllers\AkunController::class, 'LevelAdmin'])->name('LevelAdmin');            
     });
 });
-Route::group(['middleware' => 'check-permission:admin'], function () {
+Route::group(['middleware' => 'check-permission:superadmin|admin'], function () {
     Route::group(['prefix' => 'admin'], function () {
-        Route::get('/Data-Barang', [App\Http\Controllers\BarangController::class, 'dataBarang'])->name('admin.dataBarang');
+        
+        
+        Route::get('/Barang/Barang-Edit', [App\Http\Controllers\BarangController::class, 'BarangEdit'])->name('BarangEdit');  
+        Route::post('/Barang/Barang-Update', [App\Http\Controllers\BarangController::class, 'BarangUpdate'])->name('BarangUpdate');        
+        Route::get('/Barang/Barang-Tabel', [App\Http\Controllers\BarangController::class, 'tabelBarang'])->name('tabelBarang');
+        Route::get('/Barang/Barang-Publish/{id}', [App\Http\Controllers\BarangController::class, 'BarangPublish'])->name('BarangPublish');
+        Route::get('/Barang/Barang-Delete/{id}', [App\Http\Controllers\BarangController::class, 'BarangDelete'])->name('BarangDelete');
+        Route::get('/Barang/Barang-Detail/{id}', [App\Http\Controllers\BarangController::class, 'BarangDetail'])->name('BarangDetail');
+
     });
 });

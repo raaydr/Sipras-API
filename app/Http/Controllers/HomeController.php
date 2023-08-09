@@ -25,8 +25,28 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $now = Carbon::now(); // today
-        $date = Carbon::parse($now)->isoFormat('D MMMM Y');
-        return view('master.welcome', compact('date'));
+        
+
+        $level = Auth::user()->level;
+        switch ($level) {
+            case '0':
+                $now = Carbon::now(); // today
+                $date = Carbon::parse($now)->isoFormat('D MMMM Y');
+                return view('master.welcome', compact('date'));
+                break;
+            case '1':
+                $now = Carbon::now(); // today
+                $date = Carbon::parse($now)->isoFormat('D MMMM Y');
+                return view('master.welcome', compact('date'));
+                break;   
+            case '2':
+                return view('master.nonAktif');
+                break;
+            case '3':
+                default:
+                echo "STIKES MEDISTRA INDONESIA";
+                break;
+        }        
+    
     }
 }
