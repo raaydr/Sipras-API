@@ -89,28 +89,41 @@ class BarangController extends Controller
             $update['updated_at'] = now(); 
             $user_id = Auth::user()->id;        
             $user_name = Auth::user()->name;
+            $level = Auth::user()->level;
             $update['editedBy_id'] = $user_id;      
             $update['editedBy_name'] = $user_name;    
-    
-            Barang::updateOrInsert(
-                ['id' => $id], $update
-            );
-            
+            $data = Barang::where('id', $id)->value('user_id');
+            if ($level == 0){
+                Barang::updateOrInsert(
+                    ['id' => $id], $update
+                );
+            } else{
+                if($data != $user_id){
+                    return response()->json(['status'=>2,'error'=>'Anda tidak bisa mengubah Barang ini']);
+                } else{
+                    Barang::updateOrInsert(
+                        ['id' => $id], $update
+                    );
+                }
+            }            
         } else{
             
-            $update['status'] = 1;
-            $update['jumlah'] = 0;
-            $user_id = Auth::user()->id;        
-            $user_name = Auth::user()->name;  
-            $update['user_id'] = $user_id;      
-            $update['user_name'] = $user_name;
-            $update['editedBy_id'] = $user_id;      
-            $update['editedBy_name'] = $user_name;
-            $update['updated_at'] = now(); 
-            $update['created_at'] = now(); 
-            Barang::updateOrInsert(
-                 $update
-            );
+            $barang = new Barang;
+            $barang->nama_barang =  $update['nama_barang'];
+            $barang->kode_barang =  $update['kode_barang'];
+            $barang->tipe_barang =  $update['tipe_barang'];
+            $barang->satuan_barang =  $update['satuan_barang'];
+            $barang->keterangan =  $update['keterangan'];
+            $barang->status =  1;
+            $barang->jumlah =  0;
+            $user_id = Auth::user()->id;
+            $user_name = Auth::user()->name;
+            $barang->user_id =  $user_id;
+            $barang->user_name =  $user_name;
+            $barang->editedBy_id =  $user_id;
+            $barang->editedBy_name =  $user_name;
+            $barang->save();
+            
         }
         return response()->json(['status'=>1,'success'=>'Berhasil Update Dokumen']);
         
@@ -146,48 +159,95 @@ class BarangController extends Controller
                         } 
                     }) 
                     ->addColumn('action', function($row){
+                        $userID = Auth::user()->id;
+                        $level = Auth::user()->level;
                         $id = $row->id;
                         $nama = $row->nama_barang;
                         $detail = route('BarangDetail',$id); 
                         $actionBtn = '<a class="btn btn-outline-primary m-1" href='.$detail.'>detail</a>';
                         $status = $row->status;
-                        switch ($status) {
-                            case '2':
-                                $actionBtn =$actionBtn.' <a data-id="'.$id.'" class="btn btn-outline-success m-1 publishBarang">Kembalikan</a>';
-                                break;
-                            case '1':
-                                $actionBtn =$actionBtn.' 
-                                <a id="hapus" data-toggle="modal" data-target="#hapus-barang'.$id.'" class="btn btn-outline-danger m-1">Hapus</a></dl>
-                                                            <div class="modal fade" id="hapus-barang'.$id.'">
-                                                                <div class="modal-dialog">
-                                                                    <div class="modal-content bg-danger">
-                                                                        <div class="modal-header">
-                                                                            <h4 class="modal-title">Penolakan</h4>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                            </button>
+                        $user_id = $row->user_id;
+                        if ($level == 0){
+                            switch ($status) {
+                                case '2':
+                                    $actionBtn =$actionBtn.' <a data-id="'.$id.'" class="btn btn-outline-success m-1 publishBarang">Kembalikan</a>';
+                                    break;
+                                case '1':
+                                    $actionBtn =$actionBtn.' 
+                                    <a id="hapus" data-toggle="modal" data-target="#hapus-barang'.$id.'" class="btn btn-outline-danger m-1">Hapus</a></dl>
+                                                                <div class="modal fade" id="hapus-barang'.$id.'">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content bg-danger">
+                                                                            <div class="modal-header">
+                                                                                <h4 class="modal-title">Penolakan</h4>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body">    
+                                                                                    <p>Apa anda yakin ingin menghapus Barang '.$nama.' ini ?</p>
+                                                                                    <div class="modal-footer justify-content-between">
+                                                                                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+                                                                                    <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$id.'" data-dismiss="modal" data-original-title="Delete" class="btn btn-outline-light publishBarang">Delete</a>
+                                                                                    </div>
+                                                                                
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="modal-body">    
-                                                                                <p>Apa anda yakin ingin menghapus Barang '.$nama.' ini ?</p>
-                                                                                <div class="modal-footer justify-content-between">
-                                                                                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-                                                                                <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$id.'" data-dismiss="modal" data-original-title="Delete" class="btn btn-outline-light deleteBarang">Delete</a>
-                                                                                </div>
-                                                                            
-                                                                        </div>
+                                                                        <!-- /.modal-content -->
                                                                     </div>
-                                                                    <!-- /.modal-content -->
+                                                                    <!-- /.modal-dialog -->
                                                                 </div>
-                                                                <!-- /.modal-dialog -->
-                                                            </div>
-                                                            <!-- /.modal -->';
-                         
-                                break;
-                                default:
-                                echo "stikes medistra";
-                                break;
-                        
+                                                                <!-- /.modal -->';
+                             
+                                    break;
+                                    default:
+                                    echo "stikes medistra";
+                                    break;
+                            
+                                }
+                        } else{
+                            if($user_id == $userID){
+                                switch ($status) {
+                                    case '2':
+                                        $actionBtn =$actionBtn.' <a data-id="'.$id.'" class="btn btn-outline-success m-1 publishBarang">Kembalikan</a>';
+                                        break;
+                                    case '1':
+                                        $actionBtn =$actionBtn.' 
+                                        <a id="hapus" data-toggle="modal" data-target="#hapus-barang'.$id.'" class="btn btn-outline-danger m-1">Hapus</a></dl>
+                                                                    <div class="modal fade" id="hapus-barang'.$id.'">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content bg-danger">
+                                                                                <div class="modal-header">
+                                                                                    <h4 class="modal-title">Penolakan</h4>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">    
+                                                                                        <p>Apa anda yakin ingin menghapus Barang '.$nama.' ini ?</p>
+                                                                                        <div class="modal-footer justify-content-between">
+                                                                                        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+                                                                                        <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$id.'" data-dismiss="modal" data-original-title="Delete" class="btn btn-outline-light publishBarang">Delete</a>
+                                                                                        </div>
+                                                                                    
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- /.modal-content -->
+                                                                        </div>
+                                                                        <!-- /.modal-dialog -->
+                                                                    </div>
+                                                                    <!-- /.modal -->';
+                                 
+                                        break;
+                                        default:
+                                        echo "stikes medistra";
+                                        break;
+                                
+                                    }
                             }
+                        }
+                        
+                        
                         
                         
                         return $actionBtn;
@@ -201,28 +261,72 @@ class BarangController extends Controller
     {
         
         //$mata_pelatihan_id = Crypt::decrypt($id);
-        $val = Barang::where('id', $id)->value('status');
-        switch ($val) {
+        $userID = Auth::user()->id;
+        $userLevel = Auth::user()->level;
+        $dataUser = Barang::where('id', $id)->value('user_id');
+    
+        switch ($userLevel){
+            case '0':
+                $val = Barang::where('id', $id)->value('status');
+             switch ($val) {
+                case '1':
+                    Barang::where('id', $id)->update([
+                        'status' => 2,
+                        'updated_at' => now(),
+                        ]
+                    );
+                    return response()->json(['status'=>1,'success'=>'Batal Publish Barang']);
+                    break;
+                case '2':
+                    Barang::where('id', $id)->update([
+                        'status' => 1,
+                        'updated_at' => now(),
+                        ]
+                    );
+                    return response()->json(['status'=>1,'success'=>' Publish Barang']);
+                    break;
+                    default:
+                    echo "stikes medistra";
+                    break;
+            }    
+                break;
             case '1':
-                Barang::where('id', $id)->update([
-                    'status' => 2,
-                    'updated_at' => now(),
-                    ]
-                );
-                return response()->json(['success'=>'Batal Publish Barang']);
+                if($userID == $dataUser){
+                    $val = Barang::where('id', $id)->value('status');
+            switch ($val) {
+                case '1':
+                    Barang::where('id', $id)->update([
+                        'status' => 2,
+                        'updated_at' => now(),
+                        ]
+                    );
+                    return response()->json(['status'=>1,'success'=>' Batal Publish Barang']);
+                    break;
+                case '2':
+                    Barang::where('id', $id)->update([
+                        'status' => 1,
+                        'updated_at' => now(),
+                        ]
+                    );
+                    return response()->json(['status'=>1,'success'=>' Publish Barang']);
+                    break;
+                    default:
+                    echo "stikes medistra";
+                    break;
+            }    
+                }else{
+                    return response()->json(['error'=>'Anda Tidak bisa mengubah']);
+                }
                 break;
             case '2':
-                Barang::where('id', $id)->update([
-                    'status' => 1,
-                    'updated_at' => now(),
-                    ]
-                );
-                return response()->json(['success'=>'Publish Barang']);
+                return response()->json(['status'=>0,'error'=>' Anda tidak bisa mengubah ini']);
                 break;
                 default:
                 echo "stikes medistra";
                 break;
-        }    
+        }
+        
+      
     }
 
     public function BarangDelete($id)

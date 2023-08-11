@@ -638,6 +638,17 @@
                                        position: 'bottomRight'
                                    });
                                    break;
+
+                                case 2:
+                                   $('#load').hide();
+                                   $('#simpanBTN').html('Submit');
+                                   $('#simpanBTN').show();
+                                   iziToast.error({
+                                       title: 'Error',
+                                       message: data.error,
+                                   });
+                                   console.log('Error:', "Hanya Super Admin yang dapat mengganti");
+                                   break;
                                default:
                                    // code block
    
