@@ -64,6 +64,8 @@ Route::group(['middleware' => 'check-permission:superadmin'], function () {
         Route::get('/User/Admin-Tabel', [App\Http\Controllers\AkunController::class, 'TabelAdmin'])->name('TabelAdmin');    
         Route::post('/User/Admin-Daftar', [App\Http\Controllers\AkunController::class, 'DaftarAdmin'])->name('DaftarAdmin');
         Route::get('/User/Admin-Level/{id}', [App\Http\Controllers\AkunController::class, 'LevelAdmin'])->name('LevelAdmin');            
+        Route::get('/User/Ubah-Akun/{id}', [App\Http\Controllers\AkunController::class, 'ubah_Akun'])->name('ubah_Akun');    
+        Route::post('/User/Change-Account', [App\Http\Controllers\AkunController::class, 'change_account'])->name('change_account');
     });
 });
 Route::group(['middleware' => 'check-permission:superadmin|admin'], function () {

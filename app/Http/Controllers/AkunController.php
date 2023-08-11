@@ -7,6 +7,7 @@ use App\Models\User;
 use Auth;
 use Redirect;
 use DataTables;
+use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Input;
@@ -92,12 +93,14 @@ class AkunController extends Controller
                         $id = $row->id;
                         $nama = $row->name;
                         $level = $row->level;
+                        $detail = route('ubah_Akun',$id); 
+                        $actionBtn = '<a class="btn btn-outline-primary m-1" href='.$detail.'>detail</a>';
                         switch ($level) {
                             case '2':
-                                $actionBtn =' <a data-id="'.$id.'" class="btn btn-outline-success m-1 levelAdmin">Aktifkan</a>';
+                                $actionBtn =$actionBtn.' <a data-id="'.$id.'" class="btn btn-outline-success m-1 levelAdmin">Aktifkan</a>';
                                 break;
                             case '1':
-                                $actionBtn =' 
+                                $actionBtn =$actionBtn.' 
                                 <a id="hapus" data-toggle="modal" data-target="#hapus-barang'.$id.'" class="btn btn-outline-danger m-1">Hapus</a></dl>
                                                             <div class="modal fade" id="hapus-barang'.$id.'">
                                                                 <div class="modal-dialog">
@@ -178,9 +181,11 @@ class AkunController extends Controller
 
             'current_password' => ['required', new MatchOldPassword],
 
-            'new_password' => ['required'],
+            'new_password' => ['required','string','min:8','required'],
 
             'new_confirm_password' => ['same:new_password'],
+            
+            
 
         ]);
 
@@ -190,6 +195,63 @@ class AkunController extends Controller
 
    
         return redirect()->route('general.ubah.password')->with('berhasil', 'berhasil ubah password');
+        //return redirect()->route('admin.listPendaftar');
+
+    }
+
+    public function ubah_Akun($id){
+        $title = 'ubah akun';
+        
+        $user = User::where('id',$id)->first();
+
+        return view('master.ubahAkun', compact('title','user'));
+    }
+
+    public function change_account(Request $request)
+
+    {
+
+        $id = $request->id;
+        $validator = Validator::make($request->all(), 
+        [   
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255', Rule::unique('users')->ignore($id, 'id'),
+            
+
+            'password' => 'nullable|string|min:8|confirmed',
+
+        ],
+
+        $messages = 
+        [
+            'name.required' => 'Nama tidak boleh kosong!',
+            'email.required' => 'E-Mail tidak boleh kosong !',
+            
+            
+        ]);     
+
+        if($validator->fails())
+        {
+        return back()->withErrors($validator)->withInput();  
+        }
+        
+        //Table Users
+        if($request->name != NULL){
+            $update['name'] = $request->name;
+        }
+        if($request->email != NULL){
+            $update['email'] = $request->email;
+        }
+        if($request->password != NULL){
+            $update['password'] = Hash::make($request->password);
+        }  
+        User::updateOrInsert(
+            ['id' => $id], $update
+        );
+
+
+   
+        return Redirect::back()->with('berhasil', 'berhasil ubah akun');
         //return redirect()->route('admin.listPendaftar');
 
     }
