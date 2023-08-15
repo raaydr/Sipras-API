@@ -162,7 +162,6 @@
                         <th>Pemindahan Tempat</th>
                         <th>Pemindahan Unit</th>
                         <th>Created By</th>
-                        <th>Updated By</th>
                         <th>action</th>
                      </tr>
                   </thead>
@@ -177,7 +176,6 @@
                         <th>Pemindahan Tempat</th>
                         <th>Pemindahan Unit</th>
                         <th>Created By</th>
-                        <th>Updated By</th>
                         <th>action</th>
                      </tr>
                   </tfoot>
@@ -253,12 +251,6 @@
                     name: 'user_name',
                     orderable: true,
                     searchable: true
-                    },
-                    {
-                        data: 'editedBy_name',
-                        name: 'editedBy_name',
-                        orderable: true,
-                        searchable: true
                     },
                    {
                        data: 'action',

@@ -344,7 +344,6 @@
                         <th>Tanggal</th>
                         <th>Gambar</th>
                         <th>Created By</th>
-                        <th>Updated By</th>
                         <th>action</th>
                      </tr>
                   </thead>
@@ -358,7 +357,6 @@
                         <th>Tanggal</th>
                         <th>Gambar</th>
                         <th>Created By</th>
-                        <th>Updated By</th>
                         <th>action</th>
                      </tr>
                   </tfoot>
@@ -444,12 +442,6 @@
                     name: 'user_name',
                     orderable: true,
                     searchable: true
-                    },
-                    {
-                        data: 'editedBy_name',
-                        name: 'editedBy_name',
-                        orderable: true,
-                        searchable: true
                     },
                    
                    {
@@ -716,6 +708,16 @@
                                        position: 'bottomRight'
                                    });
                                    break;
+                                case 2:
+                                   $('#load').hide();
+                                   $('#simpanBTN').html('Submit');
+                                   $('#simpanBTN').show();
+                                   iziToast.error({
+                                       title: 'Error',
+                                       message: data.error,
+                                   });
+                                   console.log('Error:', "Hanya Super Admin yang dapat mengganti");
+                                   break;
                                default:
                                    // code block
    
@@ -877,13 +879,11 @@
                                    $('#simpanBTN1').html('Submit'); //tombol simpan
                                    $('#simpanBTN1').show();
                                    
-                                   //$('#uploadStatus').html('<p style="color:#28A74B;">File Berhasil diupload!</p>');
-                                   iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
-                                       title: 'Data Berhasil Disimpan',
-                                       message: '{{ Session('
-                                       success ')}}',
-                                       position: 'bottomRight'
+                                   iziToast.error({
+                                       title: 'Error',
+                                       message: data.error,
                                    });
+                                   console.log('Error:', "Hanya Super Admin yang dapat mengganti");
                                    break;
                                default:
                                    // code block

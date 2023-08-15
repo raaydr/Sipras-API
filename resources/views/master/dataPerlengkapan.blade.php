@@ -57,6 +57,7 @@
                         <input id="search_barang" type="text" class="form-control" name="search_barang" required autofocus>  
                         <input id="barang_id" type="hidden" class="form-control" name="barang_id" required autofocus>
                         <input id="kode" type="hidden" class="form-control" name="kode" required autofocus>       
+                        <strong>Harus memilih barang, bukan hanya diketik</strong>
                            @if ($errors->has('jumlah_perlengkapan'))
                            <span class="invalid-feedback" role="alert">
                            <strong>{{ $errors->first('jumlah_perlengkapan') }}</strong>
