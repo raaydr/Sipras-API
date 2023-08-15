@@ -213,6 +213,8 @@
                         <th>gambar</th>
                         <th>Kondisi</th>
                         <th>status</th>
+                        <th>Created By</th>
+                        <th>Updated By</th>
                         <th>action</th>
                      </tr>
                   </thead>
@@ -226,6 +228,8 @@
                         <th>gambar</th>
                         <th>Kondisi</th>
                         <th>status</th>
+                        <th>Created By</th>
+                        <th>Updated By</th>
                         <th>action</th>
                      </tr>
                   </tfoot>
@@ -297,6 +301,18 @@
                        orderable: true,
                        searchable: true
                    },
+                   {
+                    data: 'user_name',
+                    name: 'user_name',
+                    orderable: true,
+                    searchable: true
+                    },
+                    {
+                        data: 'editedBy_name',
+                        name: 'editedBy_name',
+                        orderable: true,
+                        searchable: true
+                    },
                    {
                        data: 'action',
                        name: 'action'

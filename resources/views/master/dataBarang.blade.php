@@ -136,6 +136,7 @@
                         <th>Nama Barang</th>
                         <th>Kode</th>
                         <th>Jumlah</th>
+                        <th>Created By</th>
                         <th>Updated By</th>
                         <th>status</th>
                         <th>action</th>
@@ -149,6 +150,7 @@
                         <th>Nama Barang</th>
                         <th>Kode</th>
                         <th>Jumlah</th>
+                        <th>Created By</th>
                         <th>Updated By</th>
                         <th>status</th>
                         <th>action</th>
@@ -213,6 +215,12 @@ $(function() {
                 {
                     data: 'user_name',
                     name: 'user_name',
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                    data: 'editedBy_name',
+                    name: 'editedBy_name',
                     orderable: true,
                     searchable: true
                 },

@@ -299,8 +299,18 @@
                   <div class="card-footer">
                      <!-- /.card-body -->
                      <div class="text-center">
-                        <button class="btn btn-success btn-submit" id="simpanBTN">Submit</button>
-                        <div id="load" class="spinner-border text-primary"></div>
+                     @switch($perlengkapan->status)
+                                 @case(1)
+                                 <button class="btn btn-success btn-submit" id="simpanBTN">Submit</button>
+                                <div id="load" class="spinner-border text-primary"></div>
+                                    @break
+                                 @case(2)
+                                    <p id ="publish0" class="text-danger"><b>Status Perlengkapan Tidak Aktif, Mohon diaktifkan terlebih dahulu atau hubungi Admin</b></p>
+                                    @break                              
+                                 @default
+                                    Default case...
+                            @endswitch
+                        
                      </div>
                   </div>
                </form>
@@ -333,6 +343,8 @@
                         <th>Departemen Baru</th>
                         <th>Tanggal</th>
                         <th>Gambar</th>
+                        <th>Created By</th>
+                        <th>Updated By</th>
                         <th>action</th>
                      </tr>
                   </thead>
@@ -345,6 +357,8 @@
                         <th>Departemen Baru</th>
                         <th>Tanggal</th>
                         <th>Gambar</th>
+                        <th>Created By</th>
+                        <th>Updated By</th>
                         <th>action</th>
                      </tr>
                   </tfoot>
@@ -425,6 +439,18 @@
                        data: 'image',
                        name: 'image',
                    },
+                   {
+                    data: 'user_name',
+                    name: 'user_name',
+                    orderable: true,
+                    searchable: true
+                    },
+                    {
+                        data: 'editedBy_name',
+                        name: 'editedBy_name',
+                        orderable: true,
+                        searchable: true
+                    },
                    
                    {
                        data: 'action',

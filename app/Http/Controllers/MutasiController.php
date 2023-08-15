@@ -211,7 +211,7 @@ class MutasiController extends Controller
         'perlengkapan.id','perlengkapan.barang_id', 
         'mutasi.lokasi_penempatan_lama','mutasi.lokasi_penempatan_baru',
         'mutasi.departemen_lama','mutasi.departemen_baru','mutasi.foto_pemindahan'
-        ,'mutasi.foto_pemindahan_thumbnail','mutasi.keterangan')
+        ,'mutasi.foto_pemindahan_thumbnail','mutasi.keterangan','mutasi.user_name','mutasi.editedBy_name')
         ->orderBy('perlengkapan.updated_at', 'ASC')->get();
 
         //$data = Perlengkapan::where('status', 1)->orderBy('created_at', 'desc')->get();

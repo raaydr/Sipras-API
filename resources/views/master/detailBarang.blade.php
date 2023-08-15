@@ -116,6 +116,21 @@
                            @endif
                         </div>
                      </div>
+                     <div class="form-group row">
+                        <label for="Status" class="col-md-4 col-form-label text-md-right">{{ __('Status') }}</label>
+                        <div class="col-md-8">
+                            @switch($barang->status)
+                                 @case(1)
+                                    <p id ="publish0" class="text-success"><b>Aktif</b></p>
+                                    @break
+                                 @case(2)
+                                    <p id ="publish0" class="text-danger"><b>Tidak Aktif</b></p>
+                                    @break                              
+                                 @default
+                                    Default case...
+                            @endswitch
+                        </div>
+                     </div>
                   </div>
                   <!-- /.card-body -->
                   <div class="card-footer">
@@ -268,8 +283,18 @@
                   <div class="card-footer">
                      <!-- /.card-body -->
                      <div class="text-center">
-                        <button class="btn btn-success btn-submit" id="simpanBTN1">Submit</button>
-                        <div id="load1" class="spinner-border text-primary"></div>
+                            @switch($barang->status)
+                                 @case(1)
+                                    <button class="btn btn-success btn-submit" id="simpanBTN1">Submit</button>
+                                    <div id="load1" class="spinner-border text-primary"></div>
+                                    @break
+                                 @case(2)
+                                    <p id ="publish0" class="text-danger"><b>Status Barang Tidak Aktif, Mohon diaktifkan terlebih dahulu atau hubungi Admin</b></p>
+                                    @break                              
+                                 @default
+                                    Default case...
+                            @endswitch
+                        
                      </div>
                   </div>
                </form>
@@ -316,6 +341,8 @@
                         <th>Jumlah</th>
                         <th>gambar</th>
                         <th>Kondisi</th>
+                        <th>Created By</th>
+                        <th>Updated By</th>
                         <th>status</th>
                         <th>action</th>
                      </tr>
@@ -329,6 +356,8 @@
                         <th>Jumlah</th>
                         <th>gambar</th>
                         <th>Kondisi</th>
+                        <th>Created By</th>
+                        <th>Updated By</th>
                         <th>status</th>
                         <th>action</th>
                      </tr>
@@ -379,8 +408,6 @@
                    {
                        data: 'image',
                        name: 'image',
-                       
-                       
                    },
                    
                    {
@@ -389,6 +416,18 @@
                        orderable: true,
                        searchable: true
                    },
+                   {
+                    data: 'user_name',
+                    name: 'user_name',
+                    orderable: true,
+                    searchable: true
+                    },
+                    {
+                        data: 'editedBy_name',
+                        name: 'editedBy_name',
+                        orderable: true,
+                        searchable: true
+                    },
                    {
                        data: 'status',
                        name: 'status',
