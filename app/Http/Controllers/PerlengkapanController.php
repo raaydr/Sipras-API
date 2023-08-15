@@ -74,7 +74,7 @@ class PerlengkapanController extends Controller
         if($search == ''){
            $barangs = Barang::where('status', 1)->orderby('nama_barang','asc')->select('id','nama_barang','kode_barang',)->limit(10)->get();
         }else{
-           $barangs = Barang::where('status', 1)->orderby('nama_barang','asc')->select('id','nama_barang','kode_barang',)->where('nama_barang', 'like', '%' .$search . '%')->orWhere('nama_barang', 'like', '%' .$search . '%')->limit(10)->get();
+           $barangs = Barang::where('status', 1)->orderby('nama_barang','asc')->select('id','nama_barang','kode_barang',)->where('nama_barang', 'like', '%' .$search . '%')->limit(10)->get();
         }
   
         $response = array();
