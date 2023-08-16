@@ -539,22 +539,40 @@
    
                url: url,
    
-               success: function(data) {
+               success: function(data) { //jika berhasil
+                           switch (data.status) {
+                               case 0:
+                                iziToast.error({
+                                       title: 'Error',
+                                       message: data.error,
+                                   });
+                                   console.log('Error:', "Hanya Super Admin atau akun lain yang dapat mengganti");
+                                   break;
+                               case 1:
+                                var oTable = $('#example1').dataTable(); //inialisasi datatable
+                                oTable.fnDraw(false); //reset datatable
+                                   //$('#uploadStatus').html('<p style="color:#28A74B;">File Berhasil diupload!</p>');
+                                   iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
+                                       title: 'Data Berhasil Disimpan',
+                                       message: '{{ Session('
+                                       success ')}}',
+                                       position: 'bottomRight'
+                                   });
+                                   break;
+                               default:
+                                   // code block
    
-                   iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
-                       title: 'Data Berhasil Disimpan',
-                       message: '{{ Session('
-                       success ')}}',
-                       position: 'bottomRight'
-                   });
-                   var oTable = $('#example1').dataTable(); //inialisasi datatable
-                   oTable.fnDraw(false); //reset datatable
+                           }
    
-               },
+                       },
    
                error: function(data) {
    
-                   console.log('Error:', data);
+                iziToast.error({
+                    title: 'Error',
+                    message: data.error,
+                    });
+                    console.log('Error:', "Hanya Super Admin atau akun lain yang dapat mengganti");
    
                }
    
@@ -883,7 +901,7 @@
                                        title: 'Error',
                                        message: data.error,
                                    });
-                                   console.log('Error:', "Hanya Super Admin yang dapat mengganti");
+                                   console.log('Error:', "Hanya Super Admin atau akun lain yang dapat mengganti");
                                    break;
                                default:
                                    // code block

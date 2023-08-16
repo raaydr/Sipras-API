@@ -155,46 +155,56 @@ class MutasiController extends Controller
                 
             }
         } else{
-            
-            $update['barang_id'] = $barang_id;
-            $update['perlengkapan_id'] = $perlengkapan_id;
-            
-            $update['status'] = 1;
+            $data_id = Perlengkapan::where('id', $perlengkapan_id)->value('user_id');
             $user_id = Auth::user()->id;        
             $user_name = Auth::user()->name;  
-            $update['user_id'] = $user_id;      
-            $update['user_name'] = $user_name;
-            $update['updated_at'] = now(); 
-            $update['created_at'] = now(); 
-            //Mutasi::updateOrInsert($update);
 
-            $datamutasi = new Mutasi;
-            $datamutasi->lokasi_penempatan_lama=$update['lokasi_penempatan_lama'];
-            $datamutasi->lokasi_penempatan_baru=$update['lokasi_penempatan_baru'];
-            $datamutasi->keterangan=$update['keterangan'];
-            $datamutasi->departemen_lama=$update['departemen_lama'];
-            $datamutasi->departemen_baru=$update['departemen_baru'];
-            $datamutasi->tanggal_mutasi=$update['tanggal_mutasi'];
-            $datamutasi->foto_pemindahan=$update['foto_pemindahan'];
-            $datamutasi->foto_pemindahan_thumbnail=$update['foto_pemindahan_thumbnail'];
-            $datamutasi->barang_id=$update['barang_id'];
-            $datamutasi->perlengkapan_id=$update['perlengkapan_id'];
-            $datamutasi->status=$update['status'];
-            $datamutasi->user_id=$update['user_id'];
-            $datamutasi->user_name=$update['user_name'];
-            $datamutasi->perlengkapan_id=$update['perlengkapan_id'];
-            $datamutasi->save();
+            if($data_id == $user_id){
+                $update['barang_id'] = $barang_id;
+                $update['perlengkapan_id'] = $perlengkapan_id;
+                
+                $update['status'] = 1;
+                
+                $update['user_id'] = $user_id;      
+                $update['user_name'] = $user_name;
+                $update['updated_at'] = now(); 
+                $update['created_at'] = now(); 
+                //Mutasi::updateOrInsert($update);
+    
+                $datamutasi = new Mutasi;
+                $datamutasi->lokasi_penempatan_lama=$update['lokasi_penempatan_lama'];
+                $datamutasi->lokasi_penempatan_baru=$update['lokasi_penempatan_baru'];
+                $datamutasi->keterangan=$update['keterangan'];
+                $datamutasi->departemen_lama=$update['departemen_lama'];
+                $datamutasi->departemen_baru=$update['departemen_baru'];
+                $datamutasi->tanggal_mutasi=$update['tanggal_mutasi'];
+                $datamutasi->foto_pemindahan=$update['foto_pemindahan'];
+                $datamutasi->foto_pemindahan_thumbnail=$update['foto_pemindahan_thumbnail'];
+                $datamutasi->barang_id=$update['barang_id'];
+                $datamutasi->perlengkapan_id=$update['perlengkapan_id'];
+                $datamutasi->status=$update['status'];
+                $datamutasi->user_id=$update['user_id'];
+                $datamutasi->user_name=$update['user_name'];
+                $datamutasi->perlengkapan_id=$update['perlengkapan_id'];
+                $datamutasi->save();
+    
+    
+                $mutasi = array();
+                $mutasi['departemen'] =  $update['departemen_baru'] ;
+                $mutasi['lokasi_perlengkapan'] =  $update['lokasi_penempatan_baru'];
+                $mutasi['mutasi_id'] =  $datamutasi->id;
+                Perlengkapan::updateOrInsert(
+                    ['id' => $perlengkapan_id], $mutasi
+                );
 
+                return response()->json(['status'=>1,'success'=>'Berhasil Update Perlengkapan']);
+            }else{
+                return response()->json(['status'=>2,'error'=>'Anda tidak bisa melakukan mutasi ini, hanya admin atau pembuat perlengkapan ini']);
+            }
 
-            $mutasi = array();
-            $mutasi['departemen'] =  $update['departemen_baru'] ;
-            $mutasi['lokasi_perlengkapan'] =  $update['lokasi_penempatan_baru'];
-            $mutasi['mutasi_id'] =  $datamutasi->id;
-            Perlengkapan::updateOrInsert(
-                ['id' => $perlengkapan_id], $mutasi
-            );
+            
         }
-        return response()->json(['status'=>1,'success'=>'Berhasil Update Barang']);
+        
         
     }
 
@@ -206,7 +216,7 @@ class MutasiController extends Controller
         $data = DB::table('perlengkapan')->where('perlengkapan.status',1)
         ->join('barang', 'barang.id', '=', 'perlengkapan.barang_id')
         ->leftjoin('mutasi', 'mutasi.id', '=', 'perlengkapan.mutasi_id')
-        ->select('barang.nama_barang', 'perlengkapan.kode_perlengkapan', 
+        ->select('barang.nama_barang', 'perlengkapan.kode_perlengkapan', 'perlengkapan.user_id', 
         'perlengkapan.lokasi_perlengkapan', 'perlengkapan.departemen',
         'perlengkapan.id','perlengkapan.barang_id', 
         'mutasi.lokasi_penempatan_lama','mutasi.lokasi_penempatan_baru',
@@ -278,16 +288,8 @@ class MutasiController extends Controller
                         $barang_id = $row->barang_id;
                         $lokasi_penempatan_lama = $row->lokasi_perlengkapan;
                         $departemen_lama = $row->departemen;
-                        $actionBtn ='
-                        <a class="btn btn-outline-danger m-1" data-toggle="modal" data-perlengkapan="'.$perlengkapan_id.'" 
-                        data-barang="'.$barang_id.'"
-                        data-lokasi="'.$lokasi_penempatan_lama.'"
-                        data-departemen="'.$departemen_lama.'"  
-                        data-target="#modal-edit-konten"  target="_blank">
-                        Mutasi</a>
-                        ';
                         $detail = route('PerlengkapanDetail',$perlengkapan_id); 
-                        $actionBtn =$actionBtn. '<a class="btn btn-outline-primary m-1" href='.$detail.'>detail</a>';
+                        $actionBtn ='<a class="btn btn-outline-primary m-1" href='.$detail.'>detail</a>';
                         
                         
                         
@@ -414,15 +416,27 @@ class MutasiController extends Controller
 
     public function MutasiDelete($id)
     {
-        
-        Mutasi::where('id', $id)->update([
+        $perlengkapan_id = Mutasi::where('id', $id)->value('perlengkapan_id');
+        $data_id = Perlengkapan::where('id', $perlengkapan_id)->value('user_id');
+        $user_id = Auth::user()->id;        
+        $user_name = Auth::user()->name;  
+
+        if($data_id == $user_id){
+            Mutasi::where('id', $id)->update([
             
-            'status' => 2,
-            'updated_at' => now(),
-            ]
-        );
+                'status' => 2,
+                'updated_at' => now(),
+                ]
+            );
+            $file = Mutasi::where('id', $id)->value('foto_pemindahan');
+            $thumbnail = Mutasi::where('id', $id)->value('foto_pemindahan_thumbnail');
+            File::delete('foto-mutasi/' . $file);
+            File::delete('foto-mutasi/' . $thumbnail);
+            return response()->json(['status'=>1,'success'=>'Berhasil Hapus Mutasi']);
+        }else{
+            return response()->json(['status'=>0,'error'=>'Anda tidak bisa menghapus mutasi ini, hanya admin atau pembuat perlengkapan ini']);
+        }
         
-        return response()->json(['success'=>'Hapus Mutasi ']);
         
     }
 }
