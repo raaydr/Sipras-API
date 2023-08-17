@@ -157,9 +157,9 @@ class MutasiController extends Controller
         } else{
             $data_id = Perlengkapan::where('id', $perlengkapan_id)->value('user_id');
             $user_id = Auth::user()->id;        
-            $user_name = Auth::user()->name;  
-
-            if($data_id == $user_id){
+            $user_name = Auth::user()->name;
+            $level = Auth::user()->level;  
+            if ($level == 0){
                 $update['barang_id'] = $barang_id;
                 $update['perlengkapan_id'] = $perlengkapan_id;
                 
@@ -199,8 +199,50 @@ class MutasiController extends Controller
 
                 return response()->json(['status'=>1,'success'=>'Berhasil Update Perlengkapan']);
             }else{
-                return response()->json(['status'=>2,'error'=>'Anda tidak bisa melakukan mutasi ini, hanya admin atau pembuat perlengkapan ini']);
+                if($data_id == $user_id){
+                    $update['barang_id'] = $barang_id;
+                    $update['perlengkapan_id'] = $perlengkapan_id;
+                    
+                    $update['status'] = 1;
+                    
+                    $update['user_id'] = $user_id;      
+                    $update['user_name'] = $user_name;
+                    $update['updated_at'] = now(); 
+                    $update['created_at'] = now(); 
+                    //Mutasi::updateOrInsert($update);
+        
+                    $datamutasi = new Mutasi;
+                    $datamutasi->lokasi_penempatan_lama=$update['lokasi_penempatan_lama'];
+                    $datamutasi->lokasi_penempatan_baru=$update['lokasi_penempatan_baru'];
+                    $datamutasi->keterangan=$update['keterangan'];
+                    $datamutasi->departemen_lama=$update['departemen_lama'];
+                    $datamutasi->departemen_baru=$update['departemen_baru'];
+                    $datamutasi->tanggal_mutasi=$update['tanggal_mutasi'];
+                    $datamutasi->foto_pemindahan=$update['foto_pemindahan'];
+                    $datamutasi->foto_pemindahan_thumbnail=$update['foto_pemindahan_thumbnail'];
+                    $datamutasi->barang_id=$update['barang_id'];
+                    $datamutasi->perlengkapan_id=$update['perlengkapan_id'];
+                    $datamutasi->status=$update['status'];
+                    $datamutasi->user_id=$update['user_id'];
+                    $datamutasi->user_name=$update['user_name'];
+                    $datamutasi->perlengkapan_id=$update['perlengkapan_id'];
+                    $datamutasi->save();
+        
+        
+                    $mutasi = array();
+                    $mutasi['departemen'] =  $update['departemen_baru'] ;
+                    $mutasi['lokasi_perlengkapan'] =  $update['lokasi_penempatan_baru'];
+                    $mutasi['mutasi_id'] =  $datamutasi->id;
+                    Perlengkapan::updateOrInsert(
+                        ['id' => $perlengkapan_id], $mutasi
+                    );
+    
+                    return response()->json(['status'=>1,'success'=>'Berhasil Update Perlengkapan']);
+                }else{
+                    return response()->json(['status'=>2,'error'=>'Anda tidak bisa melakukan mutasi ini, hanya admin atau pembuat perlengkapan ini']);
+                }
             }
+            
 
             
         }

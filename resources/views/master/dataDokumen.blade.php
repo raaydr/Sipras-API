@@ -115,22 +115,6 @@
                         @endif
                      </div>
                   </div>
-                  <div class="form-group row">
-                     <label for="nama" class="col-md-4 col-form-label text-md-right">{{ __('tipe konten') }}</label>
-                     <div class="col-md-6">
-                        <div class="input-group mb-3">
-                           <select class="form-control" id="tipe_konten" name="tipe_konten">
-                              <option value="1">URL</option>
-                              <option value="2">File</option>
-                           </select>
-                           @error('nama_mata_pelatihan')
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $message }}</strong>
-                           </span>
-                           @enderror
-                        </div>
-                     </div>
-                  </div>
                   <div class="form-group row" id="link">
                      <label for="url_konten" class="col-md-4 col-form-label text-md-right">{{ __('URL') }}</label>
                      <div class="col-md-6">
@@ -138,28 +122,6 @@
                         @if ($errors->has('url_konten'))
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('url_konten') }}</strong>
-                        </span>
-                        @endif
-                     </div>
-                  </div>
-                  <div class="form-group row" id="files">
-                     <label for="file_konten" class="col-md-4 col-form-label text-md-right">{{ __('File') }}</label>
-                     <div class="col-md-8">
-                        <input
-                           id="file_konten"
-                           type="file"
-                           class="form-control{{ $errors->has('file_konten') ? ' is-invalid' : '' }}"
-                           name="file_konten"
-                           value="{{ old('file_konten') }}"
-                           required
-                           autofocus
-                           /></input>
-                        <small id="passwordHelpBlock" class="form-text text-sucess">
-                        Format harus jpg,png,jpeg,pdf dan ukuran 5 mb
-                        </small>
-                        @if ($errors->has('file_konten'))
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('file_konten') }}</strong>
                         </span>
                         @endif
                      </div>
@@ -257,22 +219,6 @@
                            @endif
                         </div>
                      </div>
-                     <div class="form-group row">
-                        <label for="nama" class="col-md-4 col-form-label text-md-right">{{ __('tipe konten') }}</label>
-                        <div class="col-md-6">
-                           <div class="input-group mb-3">
-                              <select class="form-control" id="tipe_konten" name="tipe_konten">
-                                 <option value="1">URL</option>
-                                 <option value="2">File</option>
-                              </select>
-                              @error('nama_mata_pelatihan')
-                              <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                              </span>
-                              @enderror
-                           </div>
-                        </div>
-                     </div>
                      <div class="form-group row" id="link">
                         <label for="url_konten" class="col-md-4 col-form-label text-md-right">{{ __('URL') }}</label>
                         <div class="col-md-6">
@@ -280,28 +226,6 @@
                            @if ($errors->has('url_konten'))
                            <span class="invalid-feedback" role="alert">
                            <strong>{{ $errors->first('url_konten') }}</strong>
-                           </span>
-                           @endif
-                        </div>
-                     </div>
-                     <div class="form-group row" id="files">
-                        <label for="file_konten" class="col-md-4 col-form-label text-md-right">{{ __('File') }}</label>
-                        <div class="col-md-8">
-                           <input
-                              id="file_konten"
-                              type="file"
-                              class="form-control{{ $errors->has('file_konten') ? ' is-invalid' : '' }}"
-                              name="file_konten"
-                              value="{{ old('file_konten') }}"
-                              required
-                              autofocus
-                              /></input>
-                           <small id="passwordHelpBlock" class="form-text text-sucess">
-                           Format harus jpg,png,jpeg,pdf dan ukuran 5 mb
-                           </small>
-                           @if ($errors->has('file_konten'))
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $errors->first('file_konten') }}</strong>
                            </span>
                            @endif
                         </div>
@@ -373,26 +297,6 @@
 <!-- Main JS-->
 <script src="{{asset('colorlib-reg')}}/js/global.js"></script>
 <script>
-  $("#tipe_konten").change(function() {
-    if ($(this).val() == "1") {
-        $("#link").show();
-        $("#url_konten").attr("required");
-        $("#url_konten").attr("data-error");
-        $("#files").hide();
-        $("#file_konten").val("");
-        $("#file_konten").removeAttr("required");
-        $("#file_konten").removeAttr("data-error");
-    } else if ($(this).val() == "2") {
-        $("#link").hide();
-        $("#url_konten").val("");
-        $("#url_konten").removeAttr("required");
-        $("#url_konten").removeAttr("data-error");
-        $("#files").show();
-        $("#file_konten").attr("required");
-        $("#file_konten").attr("data-error");
-    }
-});
-$("#tipe_konten").trigger("change");
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -667,12 +571,7 @@ $(document).ready(function() {
 
                 },
 
-                file_konten: {
-                    required: 'Tolong Diisi',
-                    extension: "jpeg|jpg|png|pdf",
-                    filesize: 10, // here we are working with MB
-
-                },
+               
 
             },
             messages: {
@@ -692,11 +591,7 @@ $(document).ready(function() {
                     required: 'Tolong Diisi',
 
                 },
-                file_konten: {
-                    required: 'Tolong Diisi',
-                    extension: 'Harap mengupload file dengan format jpeg,jpg,png,pdf',
-                    filesize: 'ukuran file terlalu besar, harap upload file dibawah 10 mb',
-                },
+               
             },
             submitHandler: function(form) {
                 var actionType = $('#simpanBTN').val();
@@ -810,12 +705,7 @@ $(document).ready(function() {
 
                 },
 
-                file_konten: {
-                    required: 'Tolong Diisi',
-                    extension: "jpeg|jpg|png|pdf",
-                    filesize: 10, // here we are working with MB
-
-                },
+                
 
             },
             messages: {
@@ -835,11 +725,7 @@ $(document).ready(function() {
                     required: 'Tolong Diisi',
 
                 },
-                file_konten: {
-                    required: 'Tolong Diisi',
-                    extension: 'Harap mengupload file dengan format jpeg,jpg,png,pdf',
-                    filesize: 'ukuran file terlalu besar, harap upload file dibawah 10 mb',
-                },
+                
             },
             submitHandler: function(form) {
                 var actionType = $('#simpanBTN1').val();
@@ -941,7 +827,7 @@ $('#modal-edit-konten').on('show.bs.modal', function(event) {
     var terbit = button.data('terbit')
     var kadaluarsa = button.data('kadaluarsa')
     var kategori = button.data('kategori')
-    var tipe_konten = button.data('tipe_konten')
+    
     var url_konten = button.data('url_konten')
 
 
@@ -954,52 +840,7 @@ $('#modal-edit-konten').on('show.bs.modal', function(event) {
     modal.find('.modal-body #kadaluarsa').val(kadaluarsa)
     modal.find('.modal-body #kategori').val(kategori)
     modal.find('.modal-body #url_konten').val(url_konten)
-    modal.find('.modal-body #tipe_konten').change(function() {
-        if ($(this).val() == "1") {
-            modal.find('.modal-body #link').show();
-            modal.find('.modal-body #url_konten').attr("required");
-            modal.find('.modal-body #url_konten').attr("data-error");
-            modal.find('.modal-body #files').hide();
-            modal.find('.modal-body #file_konten').val("");
-            modal.find('.modal-body #file_konten').removeAttr("required");
-            modal.find('.modal-body #file_konten').removeAttr("data-error");
-        } else if ($(this).val() == "2") {
-            modal.find('.modal-body #link').hide();
-            modal.find('.modal-body #url_konten').val("");
-            modal.find('.modal-body #url_konten').removeAttr("required");
-            modal.find('.modal-body #url_konten').removeAttr("data-error");
-            modal.find('.modal-body #files').show();
-            modal.find('.modal-body #file_konten').attr("required");
-            modal.find('.modal-body #file_konten').attr("data-error");
-        }
-    });
-    modal.find('.modal-body #tipe_konten').trigger("change");
-    modal.find('.modal-body #id').val(id)
-    modal.find('.modal-body #judul').val(judul)
-    modal.find('.modal-body #nomor').val(nomor)
-    modal.find('.modal-body #search_unitUpdate').val(search_unitUpdate)
-    modal.find('.modal-body #terbit').val(terbit)
-    modal.find('.modal-body #kadaluarsa').val(kadaluarsa)
-    modal.find('.modal-body #kategori').val(kategori)
-    modal.find('.modal-body #tipe_konten').val(tipe_konten)
-    if (modal.find('.modal-body #tipe_konten').val() == "1") {
-        modal.find('.modal-body #link').show();
-        modal.find('.modal-body #url_konten').attr("required");
-        modal.find('.modal-body #url_konten').attr("data-error");
-        modal.find('.modal-body #files').hide();
-        modal.find('.modal-body #file_konten').val("");
-        modal.find('.modal-body #file_konten').removeAttr("required");
-        modal.find('.modal-body #file_konten').removeAttr("data-error");
-    } else if (modal.find('.modal-body #tipe_konten').val() == "2") {
-        modal.find('.modal-body #link').hide();
-        modal.find('.modal-body #url_konten').val("");
-        modal.find('.modal-body #url_konten').removeAttr("required");
-        modal.find('.modal-body #url_konten').removeAttr("data-error");
-        modal.find('.modal-body #files').show();
-        modal.find('.modal-body #file_konten').attr("required");
-        modal.find('.modal-body #file_konten').attr("data-error");
-    }
-    modal.find('.modal-body #url_konten').val(url_konten)
+    
 
 
 });     

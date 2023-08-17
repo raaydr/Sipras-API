@@ -195,9 +195,9 @@ class DokumenController extends Controller
             'search_unit' => 'nullable|string',
             'terbit' => 'required|date',
             'kadaluarsa' => 'nullable|date',
-            'tipe_konten' => 'required|string',
+            
             'url_konten' => 'nullable|string',
-            'file_konten' => 'nullable|mimes:jpeg,png,jpg,pdf|max:10240'
+            
         ],
 
         $messages = 
@@ -206,8 +206,7 @@ class DokumenController extends Controller
             'judul.required' => 'judul tidak boleh kosong!',
             'terbit.required' => 'tanggal terbit tidak boleh kosong!',            
             'deskripsi.required' => 'deskripsi unit tidak boleh kosong!',
-            'file_konten.image' => 'Format file tidak mendukung! Gunakan jpg, jpeg, png,pdf.',
-            'file_konten.max' => 'Ukuran file terlalu besar, maksimal file 5Mb !',
+            
         ]);     
 
         if($validator->fails())
@@ -217,6 +216,7 @@ class DokumenController extends Controller
         $update = array();
 
         $id = $request->id;
+        $user_id = Auth::user()->id;
         $dokumen="kosong";
         $update['judul'] = $request->judul;
         if($request->nomor != NULL){
@@ -237,38 +237,12 @@ class DokumenController extends Controller
             $update['unit'] = $unit;
         }
 
-        
-        switch ($request->tipe_konten) {
-            case '1':
-                if($request->url_konten != NULL){
-                    $update['tipe_konten'] = $request->tipe_konten;
-                    $update['link_dokumen'] = $request->url_konten;
-                    
-                }
-                
-                
-                break;
-            case '2':
-                if($request->file('file_konten') != NULL){
-                    
-                    $file = $request->file('file_konten');
-                    $namaFile=$file->getClientOriginalName();
-                    $fileName = $namaFile.'-'.time().'.'.$file->getClientOriginalExtension() ;
-                    $destinationPath = public_path().'/dokumen/' ;
-                    $file->move($destinationPath,$fileName);
-                    $update['link_dokumen'] = $fileName;
-                    $update['tipe_konten'] = $request->tipe_konten;
-
-                    if($request->id != NULL){
-                        $dokumen = Dokumen::where('id', $id)->value('link_dokumen');
-                    }
-                }
-                
-                break;
-                default:
-                echo "stikes medistra";
-                break;
-        }   
+        if($request->url_konten != NULL){
+            $update['tipe_konten'] = 1;
+            $update['link_dokumen'] = $request->url_konten;
+            
+        }
+        $user_id = Auth::user()->id; 
         
         
         
@@ -283,7 +257,8 @@ class DokumenController extends Controller
             );
             File::delete('dokumen/' . $dokumen);
         } else{
-            
+                
+            $update['unit_id'] = $user_id;
             $update['status'] = 1;
             $update['updated_at'] = now(); 
             $update['created_at'] = now(); 
