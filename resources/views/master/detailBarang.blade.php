@@ -13,6 +13,9 @@
       <div class="row mb-2">
          <div class="col-sm-6">
             <h1>Detail Barang</h1>
+            <a class="btn btn-info btn-sm mb-3" onclick="goBack()" >
+                        <i class="fas fa-arrow-left"></i> kembali
+                     </a>
          </div>
          <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -375,6 +378,9 @@
 @endsection
 @section('script')
 <script>
+    function goBack() {
+        window.history.back();
+        }
    $.ajaxSetup({
        headers: {
            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

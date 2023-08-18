@@ -31,14 +31,6 @@ Route::group(['middleware' => 'check-permission:superadmin'], function () {
         //Perlengkapan
         
         
-        //Mutasi
-        Route::get('/Perlengkapan/Mutasi-Edit', [App\Http\Controllers\MutasiController::class, 'MutasiEdit'])->name('MutasiEdit');  
-        Route::post('/Mutasi/Mutasi-Update', [App\Http\Controllers\MutasiController::class, 'MutasiUpdate'])->name('MutasiUpdate');        
-        Route::get('/Mutasi/Mutasi-Tabel', [App\Http\Controllers\MutasiController::class, 'tabelMutasi'])->name('tabelMutasi');
-        Route::get('/Mutasi/Mutasi-Tabel-Perlengkapan/{id}', [App\Http\Controllers\MutasiController::class, 'tabelMutasiPerlengkapan'])->name('tabelMutasiPerlengkapan');
-        Route::get('/Mutasi/Mutasi-Publish/{id}', [App\Http\Controllers\MutasiController::class, 'MutasiPublish'])->name('MutasiPublish');
-        Route::get('/Mutasi/Mutasi-Delete/{id}', [App\Http\Controllers\MutasiController::class, 'MutasiDelete'])->name('MutasiDelete');
-        Route::get('/Mutasi/Mutasi-Detail/{id}', [App\Http\Controllers\MutasiController::class, 'MutasiDetail'])->name('MutasiDetail');
         
         //Dokumen
         Route::get('/Dokumen/Dokumen-Edit', [App\Http\Controllers\DokumenController::class, 'dokumenEdit'])->name('dokumenEdit');    
@@ -87,5 +79,14 @@ Route::group(['middleware' => 'check-permission:superadmin|admin'], function () 
         Route::get('/Mutasi/Mutasi-Publish/{id}', [App\Http\Controllers\MutasiController::class, 'MutasiPublish'])->name('MutasiPublish');
         Route::get('/Mutasi/Mutasi-Delete/{id}', [App\Http\Controllers\MutasiController::class, 'MutasiDelete'])->name('MutasiDelete');
         Route::get('/Mutasi/Mutasi-Detail/{id}', [App\Http\Controllers\MutasiController::class, 'MutasiDetail'])->name('MutasiDetail');
+
+          //Dokumen
+          Route::get('/Dokumen/Dokumen-Edit', [App\Http\Controllers\DokumenController::class, 'dokumenEdit'])->name('dokumenEdit');    
+          Route::post('/Dokumen/Dokumen-Search-Unit', [App\Http\Controllers\DokumenController::class, 'searchUnit'])->name('searchUnit');
+          Route::post('/Dokumen/Dokumen-Update', [App\Http\Controllers\DokumenController::class, 'dokumenUpdate'])->name('dokumenUpdate');        
+          Route::get('/Dokumen/Dokumen-Tabel', [App\Http\Controllers\DokumenController::class, 'tabelDokumen'])->name('tabelDokumen');
+          Route::get('/Dokumen/Dokumen-Publish/{id}', [App\Http\Controllers\DokumenController::class, 'dokumenPublish'])->name('dokumenPublish');
+          Route::get('/Dokumen/Dokumen-Delete/{id}', [App\Http\Controllers\DokumenController::class, 'dokumenDelete'])->name('dokumenDelete');
+          Route::get('/Dokumen/Dokumen-Detail/{id}', [App\Http\Controllers\DokumenController::class, 'dokumenDetailAdmin'])->name('dokumenDetailAdmin');
     });
 });

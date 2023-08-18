@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('kadaluarsa')->nullable();
             $table->string('kategori')->nullable();
             $table->integer('unit_id')->nullable();
-            $table->string('tipe_konten');
+            $table->string('nama_pembuat');
             $table->text('link_dokumen');
             $table->boolean('status');
             $table->timestamps();

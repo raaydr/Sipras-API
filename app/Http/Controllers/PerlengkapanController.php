@@ -195,7 +195,7 @@ class PerlengkapanController extends Controller
             $data = Barang::where('id', $id)->value('user_id');    
             $file = Perlengkapan::where('id', $id)->value('foto_perlengkapan');
             $thumbnail = Perlengkapan::where('id', $id)->value('foto_perlengkapan_thumbnail');
-            if ($level == 0){
+            if (($level == 0)||($data == $user_id)){
                 Perlengkapan::updateOrInsert(
                     ['id' => $id], $update
                 );
@@ -208,7 +208,7 @@ class PerlengkapanController extends Controller
                     
                     
                 }
-                $jumlah_barang = Perlengkapan::where('barang_id', $barang_id)->where('status', 1)->where('kondisi_perlengkapan',1)->orWhere('kondisi_perlengkapan',2)->sum('jumlah_perlengkapan');
+                $jumlah_barang = Perlengkapan::where('barang_id', $barang_id)->where('status', 1)->where('kondisi_perlengkapan','!=',3)->sum('jumlah_perlengkapan');
 
                 $barang['jumlah'] = $jumlah_barang; 
                 Barang::updateOrInsert(
@@ -219,33 +219,7 @@ class PerlengkapanController extends Controller
             
                 return response()->json(['status'=>1,'success'=>'Berhasil Update Perlengkapan']);
             } else{
-                if($data != $user_id){
-                    return response()->json(['status'=>2,'error'=>'Anda tidak bisa mengubah Perlengkapan ini']);
-                } else{
-                    Perlengkapan::updateOrInsert(
-                        ['id' => $id], $update
-                    );
-
-                    if($request->foto_perlengkapan != NULL){
-
-                
-                    
-                        File::delete('foto-perlengkapan/' . $file);
-                        File::delete('foto-perlengkapan/' . $thumbnail);
-                        
-                        
-                    }
-                    $jumlah_barang = Perlengkapan::where('barang_id', $barang_id)->where('status', 1)->where('kondisi_perlengkapan',1)->orWhere('kondisi_perlengkapan',2)->sum('jumlah_perlengkapan');
-
-                    $barang['jumlah'] = $jumlah_barang; 
-                    Barang::updateOrInsert(
-                        ['id' => $barang_id], $barang
-                    );
-                    
-                    
-                
-                    return response()->json(['status'=>1,'success'=>'Berhasil Update Perlengkapan']);
-                }
+                return response()->json(['status'=>2,'error'=>'Anda tidak bisa mengubah Perlengkapan ini']);
             }  
             
             
@@ -299,7 +273,7 @@ class PerlengkapanController extends Controller
 
             //Ngebuat jumlah barang nambah kalau kondisinya gk rusak
             
-            $jumlah_barang = Perlengkapan::where('barang_id', $barang_id)->where('status', 1)->where('kondisi_perlengkapan',1)->orWhere('kondisi_perlengkapan',2)->sum('jumlah_perlengkapan');
+            $jumlah_barang = Perlengkapan::where('barang_id', $barang_id)->where('status', 1)->where('kondisi_perlengkapan','!=',3)->sum('jumlah_perlengkapan');
 
             $barang['jumlah'] = $jumlah_barang; 
             Barang::updateOrInsert(

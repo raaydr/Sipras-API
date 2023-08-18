@@ -259,7 +259,7 @@
                         <th><input type="text" placeholder="Search"  style="width: 100%"  />Tanggal Terbit</th>
                         <th>File</th>
                         <th>Status Berlaku</th>
-                        <th>status</th>
+                        <th>CreatedBy</th>
                         <th>action</th>
                      </tr>
                   </thead>
@@ -275,7 +275,7 @@
                         <th>Tanggal Terbit</th>
                         <th>File</th>
                         <th>Status Berlaku</th>
-                        <th>status</th>
+                        <th>CreatedBy</th>
                         <th>action</th>
                      </tr>
                   </tfoot>
@@ -357,8 +357,8 @@ $(function() {
                     searchable: true
                 },
                 {
-                    data: 'status',
-                    name: 'status',
+                    data: 'nama_pembuat',
+                    name: 'nama_pembuat',
                     orderable: true,
                     searchable: true
                 },
@@ -778,6 +778,17 @@ $(document).ready(function() {
                                     position: 'bottomRight'
                                 });
                                 break;
+
+                                case 2:
+                                   $('#load1').hide();
+                                   $('#simpanBTN1').html('Submit');
+                                   $('#simpanBTN1').show();
+                                   iziToast.error({
+                                       title: 'Error',
+                                       message: data.error,
+                                   });
+                                   console.log('Error:', "Hanya Super Admin yang dapat mengganti");
+                                   break;
                             default:
                                 // code block
 

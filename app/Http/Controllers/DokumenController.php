@@ -64,33 +64,16 @@ class DokumenController extends Controller
                         
                         $tanggal_mulai = $row->terbit;
                         $tanggal_mulai=Carbon::parse($tanggal_mulai)->isoFormat('D MMMM Y');
-    
-                        return $tanggal_mulai;
+                        $tanggal_akhir = $row->kadaluarsa;
+                        $tanggal_akhir=Carbon::parse($tanggal_akhir)->isoFormat('D MMMM Y');
+                        return $tanggal_mulai.' s/d '.$tanggal_akhir ;
                         
                     })
                     ->addColumn('konten', function($row){
 
-                        $status = $row->tipe_konten;
-                        switch ($status) {
-                            case '2':
-                                $b = $row->link_dokumen;
-                                
-                                $asset= "/dokumen/";
-                                $detail=  $asset.$b;
-                                
-                                $image = '<a href="'.$detail.'"  target="_blank" class="btn btn-outline-warning">File</a>';
-                                return $image;
-                                break;
-                            case '1':
-                                $url_konten = $row->link_dokumen;
+                        $url_konten = $row->link_dokumen;
                                 $actionBtn =' <a href="'.$url_konten.'"  target="_blank" class="btn btn-outline-info">Link</a>';
                                 return $actionBtn;
-                                break;
-                                default:
-                                echo "stikes medistra";
-                                break;
-                        } 
-                        
                         
                             
                     })
@@ -111,20 +94,6 @@ class DokumenController extends Controller
                         
         
                     })
-                    ->addColumn('status', function($row){
-                        $status = $row->status;
-                        switch ($status) {
-                            case '2':
-                                return '<p class="text-warning">Belum Dipublish</p>';
-                                break;
-                            case '1':
-                                return '<p class="text-success">Sudah Dipublish</p>';     
-                                break;
-                                default:
-                                echo "stikes medistra";
-                                break;
-                        } 
-                    }) 
                     ->addColumn('action', function($row){
                         $id = $row->id;
                         $judul = $row->judul;
@@ -133,7 +102,7 @@ class DokumenController extends Controller
                         $terbit = $row->terbit;
                         $kadaluarsa = $row->kadaluarsa;
                         $kategori = $row->kategori;
-                        $tipe_konten = $row->tipe_konten;
+                        
                         $link_dokumen = $row->link_dokumen;
                         $actionBtn ='
                         <a class="btn btn-outline-primary m-2" data-toggle="modal" data-myid="'.$id.'" 
@@ -143,15 +112,19 @@ class DokumenController extends Controller
                         data-terbit="'.$terbit.'"  
                         data-kadaluarsa="'.$kadaluarsa.'"  
                         data-kategori="'.$kategori.'"  
-                        data-tipe_konten="'.$tipe_konten.'"
+                       
                         data-url_konten="'.$link_dokumen.'"
                         
                         
                         data-target="#modal-edit-konten"  target="_blank">
                         edit</a>
                         ';
-                        $actionBtn =$actionBtn.' <a data-id="'.$id.'" class="btn btn-outline-success m-1 publishDokumen">Publish</a>';
-                        $actionBtn =$actionBtn.' 
+                        $user_id = Auth::user()->id;
+                        $nama = Auth::user()->name;
+                        $level = Auth::user()->level;
+                        $data = Dokumen::where('id', $id)->value('unit_id');
+                        if (($level == 0)||($data == $user_id)){
+                            $actionBtn =$actionBtn.' 
                             <a id="hapus" data-toggle="modal" data-target="#upload-dokumen'.$id.'" class="btn btn-outline-danger m-1">Hapus</a></dl>
                                                             <div class="modal fade" id="upload-dokumen'.$id.'">
                                                                 <div class="modal-dialog">
@@ -176,11 +149,13 @@ class DokumenController extends Controller
                                                                 <!-- /.modal-dialog -->
                                                             </div>
                                                             <!-- /.modal -->';
+                        } 
+                        
                         
                         
                         
                         return $actionBtn;
-                    })->rawColumns(['tanggal','konten','berlaku','status','action'])
+                    })->rawColumns(['tanggal','konten','berlaku','action'])
                     ->make(true);
             }
     }
@@ -217,6 +192,8 @@ class DokumenController extends Controller
 
         $id = $request->id;
         $user_id = Auth::user()->id;
+        $nama = Auth::user()->name;
+        $level = Auth::user()->level;
         $dokumen="kosong";
         $update['judul'] = $request->judul;
         if($request->nomor != NULL){
@@ -238,27 +215,32 @@ class DokumenController extends Controller
         }
 
         if($request->url_konten != NULL){
-            $update['tipe_konten'] = 1;
+            
             $update['link_dokumen'] = $request->url_konten;
             
         }
-        $user_id = Auth::user()->id; 
+         
         
         
         
         
         if($request->id != NULL){
             $update['updated_at'] = now(); 
-            
-            
+            $data = Dokumen::where('id', $id)->value('unit_id');
+            if (($level == 0)||($data == $user_id)){
+                Dokumen::updateOrInsert(
+                    ['id' => $id], $update
+                );
+            } else{
+                return response()->json(['status'=>2,'error'=>'Anda tidak bisa mengubah Dokumen ini']);
+            }     
     
-            Dokumen::updateOrInsert(
-                ['id' => $id], $update
-            );
-            File::delete('dokumen/' . $dokumen);
+            
+           
         } else{
                 
             $update['unit_id'] = $user_id;
+            $update['nama_pembuat'] = $nama;
             $update['status'] = 1;
             $update['updated_at'] = now(); 
             $update['created_at'] = now(); 
@@ -300,14 +282,24 @@ class DokumenController extends Controller
 
     public function dokumenDelete($id)
     {
-        $dokumen = Dokumen::where('id', $id)->value('link_dokumen');
-        Dokumen::where('id', $id)->update([
+        $user_id = Auth::user()->id;
+        $nama = Auth::user()->name;
+        $level = Auth::user()->level;
+        $data = Dokumen::where('id', $id)->value('unit_id');
+        if (($level == 0)||($data == $user_id)){
+            Dokumen::where('id', $id)->update([
             
-            'status' => 0,
-            'updated_at' => now(),
-            ]
-        );
-        File::delete('dokumen/' . $dokumen);
+                'status' => 0,
+                'updated_at' => now(),
+                ]
+            );
+        } else{
+            return response()->json(['status'=>2,'error'=>'Anda tidak bisa mengubah Dokumen ini']);
+        }     
+
+        
+        
+        
         return response()->json(['success'=>'Hapus Dokumen ']);
         
     }
