@@ -30,6 +30,7 @@ class AkunController extends Controller
     {
         $title = 'Welcome Admin';
         
+        
         return view('master.dataAdmin',);
     }
     public function DaftarAdmin(Request $request)
@@ -69,8 +70,10 @@ class AkunController extends Controller
 
     public function TabelAdmin(Request $request)
     {
-        
+        $user_id = Auth::user()->id;
+        $admin = User::where('id', $user_id)->first();
         $data = User::where('level', 1)->orWhere('level', 2)->orderBy('created_at', 'desc')->get();
+        $data->push($admin);
             if($request->ajax()){
     
                 return datatables()->of($data)                   
@@ -78,6 +81,9 @@ class AkunController extends Controller
                     ->addColumn('admin', function($row){
                         $level = $row->level;
                         switch ($level) {
+                            case '0':
+                                return '<p class="text-primary">SUPER ADMIN</p>';
+                                break;
                             case '2':
                                 return '<p class="text-danger">Tidak Aktif</p>';
                                 break;
@@ -96,6 +102,9 @@ class AkunController extends Controller
                         $detail = route('ubah_Akun',$id); 
                         $actionBtn = '<a class="btn btn-outline-primary m-1" href='.$detail.'>detail</a>';
                         switch ($level) {
+                            case '0':
+                                
+                                break;
                             case '2':
                                 $actionBtn =$actionBtn.' <a data-id="'.$id.'" class="btn btn-outline-success m-1 levelAdmin">Aktifkan</a>';
                                 break;
