@@ -173,14 +173,17 @@ class PerlengkapanController extends Controller
 
 
                 
-            $imageThumbnail->resize(255,255, function($constraint)
-                {
-                    $constraint->aspectRatio();
-                });
+       
             $namaFileFake = $namaFile.'_thumbnail'.'.'.$image->getClientOriginalExtension();
             $namaFileFake = preg_replace("/\s+/", "", $namaFileFake);
             $destinationPathFake = public_path().'/foto-perlengkapan/' ;
-            $imageThumbnail->save($destinationPathFake . $namaFileFake, 30);
+            $imageThumbnail->save($destinationPath . $namaFileRILL, 20);
+            
+            $imageThumbnail->resize(400,400, function($constraint)
+            {
+                $constraint->aspectRatio();
+            });
+            $imageThumbnail->save($destinationPathFake . $namaFileFake, 20);
             $update['foto_perlengkapan'] = $namaFileRILL;
             $update['foto_perlengkapan_thumbnail'] = $namaFileFake;
         

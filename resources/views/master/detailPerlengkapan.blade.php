@@ -13,6 +13,9 @@
       <div class="row mb-2">
          <div class="col-sm-6">
             <h1>Detail Perlengkapan</h1>
+            <a class="btn btn-info btn-sm mb-3" onclick="goBack()" >
+                        <i class="fas fa-arrow-left"></i> kembali
+                     </a>
          </div>
          <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -133,7 +136,7 @@
                         <div class="col-md-4">
                            <input id="foto_perlengkapan" type="file" class="form-control" name="foto_perlengkapan" value="{{ old('foto_perlengkapan') }}" ></input>
                            <p class="text-primary" role="alert">
-                           <strong>file harus jpeg,jpg,png dan maksimal 2 MB</strong>
+                           <strong>file harus jpeg,jpg,png dan maksimal 5 MB</strong>
                            </p>
                            @if ($errors->has('foto_perlengkapan'))
                            <span class="invalid-feedback" role="alert">
@@ -274,7 +277,7 @@
                         <div class="col-md-4">
                            <input id="foto_pemindahan" type="file" class="form-control" name="foto_pemindahan" value="{{ old('foto_pemindahan') }}" ></input>
                            <p class="text-primary" role="alert">
-                           <strong>file harus jpeg,jpg,png dan maksimal 2 MB</strong>
+                           <strong>file harus jpeg,jpg,png dan maksimal 5 MB</strong>
                            </p>
                            @if ($errors->has('foto_pemindahan'))
                            <span class="invalid-feedback" role="alert">
@@ -645,6 +648,12 @@
    
    
                    },
+                   foto_pemindahan: {
+                        
+                        extension: "jpeg|jpg|png",
+                          filesize : 5, // here we are working with MB
+                           
+                        },
    
                },
                messages: {
@@ -672,6 +681,12 @@
                        required: 'Tolong Diisi',
    
                    },
+                   foto_pemindahan: {
+                     
+                     extension: 'Harap mengupload file dengan format jpeg,jpg,png',
+                     filesize: 'ukuran file terlalu besar, harap upload file dibawah 5 mb',
+                       
+                    },
                    
                },
                submitHandler: function(form) {
@@ -717,7 +732,6 @@
                                    document.getElementById("formTarget").reset();
                                    var oTable = $('#example1').dataTable(); //inialisasi datatable
                                     oTable.fnDraw(false); //reset datatable 
-                                    location.reload();
                                    //$('#uploadStatus').html('<p style="color:#28A74B;">File Berhasil diupload!</p>');
                                    iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                                        title: 'Data Berhasil Disimpan',
@@ -725,6 +739,8 @@
                                        success ')}}',
                                        position: 'bottomRight'
                                    });
+                                   setTimeout(function() {location.reload()}, 5000);
+
                                    break;
                                 case 2:
                                    $('#load').hide();
@@ -798,7 +814,7 @@
                    foto_perlengkapan: {
                         
                         extension: "jpeg|jpg|png",
-                          filesize : 2, // here we are working with MB
+                          filesize : 5, // here we are working with MB
                            
                         },
    
@@ -883,7 +899,7 @@
                                    $('#load1').hide();
                                    $('#simpanBTN1').html('Submit'); //tombol simpan
                                    $('#simpanBTN1').show();
-                                   location.reload();
+                                   
                                    //$('#uploadStatus').html('<p style="color:#28A74B;">File Berhasil diupload!</p>');
                                    iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                                        title: 'Data Berhasil Disimpan',
@@ -891,6 +907,7 @@
                                        success ')}}',
                                        position: 'bottomRight'
                                    });
+                                   setTimeout(function() {location.reload()}, 3000);
                                    break;
                                  case 2:
                                    $('#load1').hide();
