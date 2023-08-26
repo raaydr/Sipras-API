@@ -127,7 +127,7 @@ class MutasiController extends Controller
             $destinationPathFake = public_path().'/foto-Mutasi/' ;
             $imageThumbnail->save($destinationPath . $namaFileRILL, 20);
             
-            $imageThumbnail->resize(400,400, function($constraint)
+            $imageThumbnail->resize(200,200, function($constraint)
             {
                 $constraint->aspectRatio();
             });
@@ -181,8 +181,11 @@ class MutasiController extends Controller
                 $datamutasi->departemen_lama=$update['departemen_lama'];
                 $datamutasi->departemen_baru=$update['departemen_baru'];
                 $datamutasi->tanggal_mutasi=$update['tanggal_mutasi'];
-                $datamutasi->foto_pemindahan=$update['foto_pemindahan'];
-                $datamutasi->foto_pemindahan_thumbnail=$update['foto_pemindahan_thumbnail'];
+                if($request->foto_pemindahan != NULL){
+                    $datamutasi->foto_pemindahan=$update['foto_pemindahan'];
+                    $datamutasi->foto_pemindahan_thumbnail=$update['foto_pemindahan_thumbnail'];
+                }
+                
                 $datamutasi->barang_id=$update['barang_id'];
                 $datamutasi->perlengkapan_id=$update['perlengkapan_id'];
                 $datamutasi->status=$update['status'];
@@ -285,16 +288,27 @@ class MutasiController extends Controller
                             $b = $row->foto_pemindahan;
                             $c = $row->foto_pemindahan_thumbnail;
                             $d = $row->keterangan;
-                            $asset= "/foto-mutasi/";
-                            $detail=  $asset.$b;
-                            $assetThumbnail= "/foto-mutasi/";
-                            $thumbnail=  $assetThumbnail.$c;
-                            $id = $row->id;
-                            $image = '<div class="col-md-8"> <a href='.$detail.' data-toggle="lightbox" >
-                            <img src='.$thumbnail.' class="img-fluid" alt="white sample"/>
-                            </a> </div>
-                            <strong>'.$d.'</strong>';
-                            
+                           
+                            if( $b != NULL){
+                                $asset= "/foto-mutasi/";
+                                $detail=  $asset.$b;
+                                $assetThumbnail= "/foto-mutasi/";
+                                $thumbnail=  $assetThumbnail.$c;
+                                $id = $row->id;
+                                $image = '<div class="col-md-8"> <a href='.$detail.' data-toggle="lightbox" >
+                                <img src='.$thumbnail.' class="img-fluid" alt="white sample"/>
+                                </a> </div>
+                                <strong>'.$d.'</strong>';
+                            } else{
+                                $asset= "/stikes/stikes.png";
+                                $detail=  $asset;
+                                $assetThumbnail= "/stikes/stikes.png";
+                                $thumbnail=  $assetThumbnail;
+                                $id = $row->id;
+                                $image = '<div class="col-md-8"> <a href='.$detail.' data-toggle="lightbox" >
+                                <img src='.$thumbnail.' class="img-fluid" alt="white sample"/>
+                                </a> </div>';
+                            }
                             return $image;
                         }else{
                             return "belum dipindahkan";
@@ -372,16 +386,27 @@ class MutasiController extends Controller
                     ->addColumn('image', function($row){
                         $b = $row->foto_pemindahan;
                         $c = $row->foto_pemindahan_thumbnail;
-                        $asset= "/foto-Mutasi/";
-                        $detail=  $asset.$b;
-                        $assetThumbnail= "/foto-Mutasi/";
-                        $thumbnail=  $assetThumbnail.$c;
-                        $id = $row->id;
-                        $image = '<div class="col-md-8"> <a href='.$detail.' data-toggle="lightbox" >
-                        <img src='.$thumbnail.' class="img-fluid" alt="white sample"/>
-                        </a> </div>';
-                        
-                            return $image;
+                        if( $b != NULL){
+                            $asset= "/foto-mutasi/";
+                            $detail=  $asset.$b;
+                            $assetThumbnail= "/foto-mutasi/";
+                            $thumbnail=  $assetThumbnail.$c;
+                            $id = $row->id;
+                            $image = '<div class="col-md-8"> <a href='.$detail.' data-toggle="lightbox" >
+                            <img src='.$thumbnail.' class="img-fluid" alt="white sample"/>
+                            </a> </div>
+                            <strong>'.$d.'</strong>';
+                        } else{
+                            $asset= "/stikes/stikes.png";
+                            $detail=  $asset;
+                            $assetThumbnail= "/stikes/stikes.png";
+                            $thumbnail=  $assetThumbnail;
+                            $id = $row->id;
+                            $image = '<div class="col-md-8"> <a href='.$detail.' data-toggle="lightbox" >
+                            <img src='.$thumbnail.' class="img-fluid" alt="white sample"/>
+                            </a> </div>';
+                        }
+                        return $image;
                     }) 
                     ->addColumn('action', function($row){
                         $id = $row->id;
