@@ -98,7 +98,7 @@ class PerlengkapanController extends Controller
             'departemen' => 'required|string',
             'kondisi_perlengkapan' => 'required',
             'leandable_perlengkapan' => 'required',
-            'foto_perlengkapan' => 'required',
+            'foto_perlengkapan' => 'nullable',
             'foto_perlengkapan' => 'image|mimes:jpeg,png,jpg|max:5120',
             
 
@@ -117,7 +117,7 @@ class PerlengkapanController extends Controller
             'kondisi_perlengkapan.required' => 'kondisi perlengkapan tidak boleh kosong!',
             'leandable_perlengkapan.required' => 'Status peminjaman Perlengkapan tidak boleh kosong!',
             
-            'foto_perlengkapan.required' => 'Foto Perlengkapan tidak boleh kosong!',
+            //'foto_perlengkapan.required' => 'Foto Perlengkapan tidak boleh kosong!',
             'foto_perlengkapan.mimes' => 'foto harus format jpeg,jpg,png!',
             'foto_perlengkapan.max' => 'file harus dibawah 5 mb !',
         ]);     
@@ -171,9 +171,6 @@ class PerlengkapanController extends Controller
             $destinationPath = public_path().'/foto-perlengkapan/' ;
             $image->move($destinationPath,$namaFileRILL);
 
-
-                
-       
             $namaFileFake = $namaFile.'_thumbnail'.'.'.$image->getClientOriginalExtension();
             $namaFileFake = preg_replace("/\s+/", "", $namaFileFake);
             $destinationPathFake = public_path().'/foto-perlengkapan/' ;
@@ -252,8 +249,11 @@ class PerlengkapanController extends Controller
             $perlengkapan->departemen=$update['departemen'];
             $perlengkapan->kondisi_perlengkapan=$update['kondisi_perlengkapan'];
             $perlengkapan->leandable_perlengkapan=$update['leandable_perlengkapan'];
-            $perlengkapan->foto_perlengkapan=$update['foto_perlengkapan'];
-            $perlengkapan->foto_perlengkapan_thumbnail=$update['foto_perlengkapan_thumbnail'];
+            if($request->foto_perlengkapan != NULL){
+                $perlengkapan->foto_perlengkapan=$update['foto_perlengkapan'];
+                $perlengkapan->foto_perlengkapan_thumbnail=$update['foto_perlengkapan_thumbnail'];
+            }
+           
             $perlengkapan->barang_id=$barang_id;
             $perlengkapan->kode_perlengkapan="kosong";
             $perlengkapan->barcode_perlengkapan="kosong";
@@ -314,16 +314,31 @@ class PerlengkapanController extends Controller
                 return datatables()->of($data)                   
                     ->addIndexColumn()
                     ->addColumn('image', function($row){
+
+
+
                         $b = $row->foto_perlengkapan;
                         $c = $row->foto_perlengkapan_thumbnail;
-                        $asset= "/foto-perlengkapan/";
-                        $detail=  $asset.$b;
-                        $assetThumbnail= "/foto-perlengkapan/";
-                        $thumbnail=  $assetThumbnail.$c;
-                        $id = $row->id;
-                        $image = '<div class="col-md-8"> <a href='.$detail.' data-toggle="lightbox" >
-                        <img src='.$thumbnail.' class="img-fluid" alt="white sample"/>
-                        </a> </div>';
+                        if( $b != NULL){
+                            $asset= "/foto-perlengkapan/";
+                            $detail=  $asset.$b;
+                            $assetThumbnail= "/foto-perlengkapan/";
+                            $thumbnail=  $assetThumbnail.$c;
+                            $id = $row->id;
+                            $image = '<div class="col-md-8"> <a href='.$detail.' data-toggle="lightbox" >
+                            <img src='.$thumbnail.' class="img-fluid" alt="white sample"/>
+                            </a> </div>';
+                        } else{
+                            $asset= "/stikes/stikes.png";
+                            $detail=  $asset;
+                            $assetThumbnail= "/stikes/stikes.png";
+                            $thumbnail=  $assetThumbnail;
+                            $id = $row->id;
+                            $image = '<div class="col-md-8"> <a href='.$detail.' data-toggle="lightbox" >
+                            <img src='.$thumbnail.' class="img-fluid" alt="white sample"/>
+                            </a> </div>';
+                        }
+                       
                         
                             return $image;
                     }) 
@@ -469,14 +484,26 @@ class PerlengkapanController extends Controller
                     ->addColumn('image', function($row){
                         $b = $row->foto_perlengkapan;
                         $c = $row->foto_perlengkapan_thumbnail;
-                        $asset= "/foto-perlengkapan/";
-                        $detail=  $asset.$b;
-                        $assetThumbnail= "/foto-perlengkapan/";
-                        $thumbnail=  $assetThumbnail.$c;
-                        $id = $row->id;
-                        $image = '<div class="col-md-8"> <a href='.$detail.' data-toggle="lightbox" >
-                        <img src='.$thumbnail.' class="img-fluid" alt="white sample"/>
-                        </a> </div>';
+                        if( $b != NULL){
+                            $asset= "/foto-perlengkapan/";
+                            $detail=  $asset.$b;
+                            $assetThumbnail= "/foto-perlengkapan/";
+                            $thumbnail=  $assetThumbnail.$c;
+                            $id = $row->id;
+                            $image = '<div class="col-md-8"> <a href='.$detail.' data-toggle="lightbox" >
+                            <img src='.$thumbnail.' class="img-fluid" alt="white sample"/>
+                            </a> </div>';
+                        } else{
+                            $asset= "/stikes/stikes.png";
+                            $detail=  $asset;
+                            $assetThumbnail= "/stikes/stikes.png";
+                            $thumbnail=  $assetThumbnail;
+                            $id = $row->id;
+                            $image = '<div class="col-md-8"> <a href='.$detail.' data-toggle="lightbox" >
+                            <img src='.$thumbnail.' class="img-fluid" alt="white sample"/>
+                            </a> </div>';
+                        }
+                       
                         
                             return $image;
                     }) 

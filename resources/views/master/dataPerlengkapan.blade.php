@@ -708,7 +708,7 @@
    
                    },
                    foto_perlengkapan: {
-                     required: 'Tolong Diisi',
+                     
                      extension: 'Harap mengupload file dengan format jpeg,jpg,png',
                      filesize: 'ukuran file terlalu besar, harap upload file dibawah 5 mb',
                        
