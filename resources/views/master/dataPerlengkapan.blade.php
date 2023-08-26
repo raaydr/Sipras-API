@@ -209,13 +209,14 @@
                   <thead>
                      <tr>
                         <th>no</th>
-                        <th>Kode</th>
-                        <th>Jumlah</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Nama Barang</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Kode</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Jumlah</th>
                         <th>gambar</th>
-                        <th>Kondisi</th>
-                        <th>status</th>
-                        <th>Created By</th>
-                        <th>Updated By</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Lokasi</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Kondisi</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Tanggal Pembelian</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Updated By</th>
                         <th>action</th>
                      </tr>
                   </thead>
@@ -224,12 +225,13 @@
                   <tfoot>
                      <tr>
                         <th>no</th>
+                        <th>Nama Barang</th>
                         <th>Kode</th>
                         <th>Jumlah</th>
                         <th>gambar</th>
+                        <th>Lokasi</th>
                         <th>Kondisi</th>
-                        <th>status</th>
-                        <th>Created By</th>
+                        <th>Tanggal Pembelian</th>
                         <th>Updated By</th>
                         <th>action</th>
                      </tr>
@@ -272,14 +274,20 @@
                        name: 'DT_RowIndex'
                    },
                    {
+                       data: 'nama_barang',
+                       name: 'nama_barang',
+                       orderable: true,
+                       searchable: true
+                   },
+                   {
                        data: 'kode_perlengkapan',
                        name: 'kode_perlengkapan',
                        orderable: true,
                        searchable: true
                    },
                    {
-                       data: 'jumlah_perlengkapan',
-                       name: 'jumlah',
+                       data: 'Jumlah',
+                       name: 'Jumlah',
                        orderable: true,
                        searchable: true
                    },
@@ -289,6 +297,12 @@
                        
                        
                    },
+                   {
+                       data: 'lokasi_perlengkapan',
+                       name: 'lokasi_perlengkapan',
+                       orderable: true,
+                       searchable: true
+                   },
                    
                    {
                        data: 'kondisi',
@@ -296,15 +310,10 @@
                        orderable: true,
                        searchable: true
                    },
+                   
                    {
-                       data: 'status',
-                       name: 'status',
-                       orderable: true,
-                       searchable: true
-                   },
-                   {
-                    data: 'user_name',
-                    name: 'user_name',
+                    data: 'tanggal',
+                    name: 'tanggal',
                     orderable: true,
                     searchable: true
                     },
@@ -327,6 +336,7 @@
                responsive: true,
                lengthChange: false,
                autoWidth: false,
+               dom: 'Bfrtip',
                buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
                initComplete: function() {
                    // Apply the search
@@ -652,7 +662,7 @@
                    foto_perlengkapan: {
                         
                         extension: "jpeg|jpg|png",
-                          filesize : 2, // here we are working with MB
+                          filesize : 5, // here we are working with MB
                            
                         },
    
@@ -700,7 +710,7 @@
                    foto_perlengkapan: {
                      required: 'Tolong Diisi',
                      extension: 'Harap mengupload file dengan format jpeg,jpg,png',
-                     filesize: 'ukuran file terlalu besar, harap upload file dibawah 2 mb',
+                     filesize: 'ukuran file terlalu besar, harap upload file dibawah 5 mb',
                        
                     },
                    

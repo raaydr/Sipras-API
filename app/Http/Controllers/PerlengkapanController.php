@@ -179,7 +179,7 @@ class PerlengkapanController extends Controller
             $destinationPathFake = public_path().'/foto-perlengkapan/' ;
             $imageThumbnail->save($destinationPath . $namaFileRILL, 20);
             
-            $imageThumbnail->resize(400,400, function($constraint)
+            $imageThumbnail->resize(200,200, function($constraint)
             {
                 $constraint->aspectRatio();
             });
@@ -298,8 +298,17 @@ class PerlengkapanController extends Controller
 
     public function tabelPerlengkapan(Request $request)
     {
+        $data = Perlengkapan::join('barang', 'barang.id', '=', 'perlengkapan.barang_id')
+                    ->where('perlengkapan.status', 1)->orderBy('perlengkapan.updated_at', 'desc')->get();
+
+        $data = DB::table('perlengkapan')->where('perlengkapan.status',1)
+        ->join('barang', 'barang.id', '=', 'perlengkapan.barang_id')
+        ->select('barang.nama_barang','barang.satuan_barang','barang.tipe_barang', 'perlengkapan.foto_perlengkapan', 'perlengkapan.foto_perlengkapan_thumbnail', 
+        'perlengkapan.kondisi_perlengkapan', 'perlengkapan.status', 'perlengkapan.user_id', 'perlengkapan.kode_perlengkapan', 'perlengkapan.jumlah_perlengkapan', 'perlengkapan.updated_at', 
+        'perlengkapan.lokasi_perlengkapan','perlengkapan.user_name','perlengkapan.tanggal_pembelian','perlengkapan.editedBy_name','perlengkapan.id','perlengkapan.barang_id')
+        ->orderBy('perlengkapan.updated_at', 'desc')->get();
         
-        $data = Perlengkapan::where('status', 1)->orderBy('status', 'asc')->orderBy('created_at', 'desc')->get();
+        //$data = Perlengkapan::where('status', 1)->orderBy('status', 'asc')->orderBy('created_at', 'desc')->get();
             if($request->ajax()){
     
                 return datatables()->of($data)                   
@@ -336,27 +345,22 @@ class PerlengkapanController extends Controller
                                 break;
                         } 
                     })
-                    ->addColumn('status', function($row){
-                        $status = $row->status;
-                        switch ($status) {
-                            
-                            case '1':
-                                return '<p class="text-success">aktif</p>';     
-                                break;
-                            case '2':
-                                return '<p class="text-danger">Dihapus</p>';
-                                break;
-                                default:
-                                echo "stikes medistra";
-                                break;
-                        } 
+                    ->addColumn('Jumlah', function($row){
+                        $jumlah = $row->jumlah_perlengkapan;
+                        $piece = $row->satuan_barang;
+                        return $jumlah.' '.$piece;   
+                    })
+                    ->addColumn('tanggal', function($row){
+                        $terakhir = $row->tanggal_pembelian;
+                        $tanggal_akhir=Carbon::parse($terakhir)->isoFormat('D MMMM Y');
+                        return $tanggal_akhir;
                     })  
                     ->addColumn('action', function($row){
                         $userID = Auth::user()->id;
                         $level = Auth::user()->level;
                         $user_id = $row->user_id;
                         $id = $row->id;
-                        $nama = $row->nama_perlengkapan;
+                        $nama = $row->kode_perlengkapan;
                         $qrcode = route('PerlengkapanQrcode',$id); 
                         $actionBtn = '<a class="btn btn-outline-info m-1" href='.$qrcode.' target="_blank">QRcode</a>';
                         $detail = route('PerlengkapanDetail',$id); 
@@ -449,7 +453,7 @@ class PerlengkapanController extends Controller
                         
                         
                         return $actionBtn;
-                    })->rawColumns(['image','kondisi','status','action'])
+                    })->rawColumns(['image','kondisi','Jumlah','tanggal','action'])
                     ->make(true);
             }
     }
