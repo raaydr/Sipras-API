@@ -210,6 +210,7 @@
                      <tr>
                         <th>no</th>
                         <th><input type="text" placeholder="Search"  style="width: 100%"  />Nama Barang</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Tipe Barang</th>
                         <th><input type="text" placeholder="Search"  style="width: 100%"  />Kode</th>
                         <th><input type="text" placeholder="Search"  style="width: 100%"  />Jumlah</th>
                         <th>gambar</th>
@@ -226,6 +227,7 @@
                      <tr>
                         <th>no</th>
                         <th>Nama Barang</th>
+                        <th>Tipe Barang</th>
                         <th>Kode</th>
                         <th>Jumlah</th>
                         <th>gambar</th>
@@ -276,6 +278,12 @@
                    {
                        data: 'nama_barang',
                        name: 'nama_barang',
+                       orderable: true,
+                       searchable: true
+                   },
+                   {
+                       data: 'tipe_barang',
+                       name: 'tipe_barang',
                        orderable: true,
                        searchable: true
                    },
