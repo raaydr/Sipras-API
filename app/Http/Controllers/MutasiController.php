@@ -116,7 +116,7 @@ class MutasiController extends Controller
             $namaFile = $kode.'_'.time();
             $namaFileRILL = $namaFile.'.'.$image->getClientOriginalExtension();
             $namaFileRILL = preg_replace("/\s+/", "", $namaFileRILL);
-            $destinationPath = public_path().'/foto-Mutasi/' ;
+            $destinationPath = public_path().'/foto-mutasi/' ;
             $image->move($destinationPath,$namaFileRILL);
 
 
@@ -124,7 +124,7 @@ class MutasiController extends Controller
           
             $namaFileFake = $namaFile.'_thumbnail'.'.'.$image->getClientOriginalExtension();
             $namaFileFake = preg_replace("/\s+/", "", $namaFileFake);
-            $destinationPathFake = public_path().'/foto-Mutasi/' ;
+            $destinationPathFake = public_path().'/foto-mutasi/' ;
             $imageThumbnail->save($destinationPath . $namaFileRILL, 20);
             
             $imageThumbnail->resize(200,200, function($constraint)
@@ -152,8 +152,8 @@ class MutasiController extends Controller
 
                 
                     
-                File::delete('foto-Mutasi/' . $file);
-                File::delete('foto-Mutasi/' . $thumbnail);
+                File::delete('foto-mutasi/' . $file);
+                File::delete('foto-mutasi/' . $thumbnail);
                 
                 
             }
@@ -386,6 +386,7 @@ class MutasiController extends Controller
                     ->addColumn('image', function($row){
                         $b = $row->foto_pemindahan;
                         $c = $row->foto_pemindahan_thumbnail;
+                        $d = $row->keterangan;
                         if( $b != NULL){
                             $asset= "/foto-mutasi/";
                             $detail=  $asset.$b;
