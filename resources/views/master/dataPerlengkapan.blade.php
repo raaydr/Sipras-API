@@ -215,9 +215,11 @@
                         <th><input type="text" placeholder="Search"  style="width: 100%"  />Jumlah</th>
                         <th>gambar</th>
                         <th><input type="text" placeholder="Search"  style="width: 100%"  />Lokasi</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Departemen</th>
                         <th><input type="text" placeholder="Search"  style="width: 100%"  />Kondisi</th>
                         <th><input type="text" placeholder="Search"  style="width: 100%"  />Tanggal Pembelian</th>
                         <th><input type="text" placeholder="Search"  style="width: 100%"  />Updated By</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Keterangan</th>
                         <th>action</th>
                      </tr>
                   </thead>
@@ -232,9 +234,11 @@
                         <th>Jumlah</th>
                         <th>gambar</th>
                         <th>Lokasi</th>
+                        <th>Departemen</th>
                         <th>Kondisi</th>
                         <th>Tanggal Pembelian</th>
                         <th>Updated By</th>
+                        <th>Keterangan</th>
                         <th>action</th>
                      </tr>
                   </tfoot>
@@ -311,6 +315,12 @@
                        orderable: true,
                        searchable: true
                    },
+                   {
+                       data: 'departemen',
+                       name: 'departemen',
+                       orderable: true,
+                       searchable: true
+                   },
                    
                    {
                        data: 'kondisi',
@@ -328,6 +338,12 @@
                     {
                         data: 'editedBy_name',
                         name: 'editedBy_name',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'keterangan_perlengkapan',
+                        name: 'keterangan_perlengkapan',
                         orderable: true,
                         searchable: true
                     },

@@ -305,7 +305,7 @@ class PerlengkapanController extends Controller
         ->join('barang', 'barang.id', '=', 'perlengkapan.barang_id')
         ->select('barang.nama_barang','barang.satuan_barang','barang.tipe_barang', 'perlengkapan.foto_perlengkapan', 'perlengkapan.foto_perlengkapan_thumbnail', 
         'perlengkapan.kondisi_perlengkapan', 'perlengkapan.status', 'perlengkapan.user_id', 'perlengkapan.kode_perlengkapan', 'perlengkapan.jumlah_perlengkapan', 'perlengkapan.updated_at', 
-        'perlengkapan.lokasi_perlengkapan','perlengkapan.user_name','perlengkapan.tanggal_pembelian','perlengkapan.editedBy_name','perlengkapan.id','perlengkapan.barang_id')
+        'perlengkapan.lokasi_perlengkapan','perlengkapan.departemen','perlengkapan.user_name','perlengkapan.tanggal_pembelian','perlengkapan.keterangan_perlengkapan','perlengkapan.editedBy_name','perlengkapan.id','perlengkapan.barang_id')
         ->orderBy('perlengkapan.updated_at', 'desc')->get();
         
         //$data = Perlengkapan::where('status', 1)->orderBy('status', 'asc')->orderBy('created_at', 'desc')->get();
