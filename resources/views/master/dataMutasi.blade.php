@@ -156,12 +156,13 @@
                <thead>
                      <tr>
                         <th>no</th>
-                        <th>Nama Barang</th>
-                        <th>Kode</th>
-                        <th>gambar</th>
-                        <th>Pemindahan Tempat</th>
-                        <th>Pemindahan Unit</th>
-                        <th>Created By</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Nama Barang</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Kode</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Tipe Barang</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Keterangan</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Pemindahan Tempat</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Pemindahan Unit</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Created By</th>
                         <th>action</th>
                      </tr>
                   </thead>
@@ -172,7 +173,8 @@
                         <th>no</th>
                         <th>Nama Barang</th>
                         <th>Kode</th>
-                        <th>gambar</th>
+                        <th>Tipe Barang</th>
+                        <th>Keterangan</th>
                         <th>Pemindahan Tempat</th>
                         <th>Pemindahan Unit</th>
                         <th>Created By</th>
@@ -228,6 +230,12 @@
                        searchable: true
                    },
                    {
+                    data: 'tipe_barang',
+                    name: 'tipe_barang',
+                    orderable: true,
+                    searchable: true
+                },
+                   {
                        data: 'image',
                        name: 'image',
                        
@@ -265,6 +273,7 @@
                responsive: true,
                lengthChange: false,
                autoWidth: false,
+               dom: 'Bfrtip',
                buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
                initComplete: function() {
                    // Apply the search

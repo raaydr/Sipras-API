@@ -264,7 +264,7 @@ class MutasiController extends Controller
         $data = DB::table('perlengkapan')->where('perlengkapan.status',1)
         ->join('barang', 'barang.id', '=', 'perlengkapan.barang_id')
         ->leftjoin('mutasi', 'mutasi.id', '=', 'perlengkapan.mutasi_id')
-        ->select('barang.nama_barang', 'perlengkapan.kode_perlengkapan', 'perlengkapan.user_id', 
+        ->select('barang.nama_barang','barang.tipe_barang', 'perlengkapan.kode_perlengkapan', 'perlengkapan.user_id', 
         'perlengkapan.lokasi_perlengkapan', 'perlengkapan.departemen',
         'perlengkapan.id','perlengkapan.barang_id', 
         'mutasi.lokasi_penempatan_lama','mutasi.lokasi_penempatan_baru',

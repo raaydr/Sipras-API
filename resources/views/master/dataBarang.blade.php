@@ -133,13 +133,14 @@
                   <thead>
                      <tr>
                         <th>no</th>
-                        <th>Nama Barang</th>
-                        <th>Kode</th>
-                        <th>Jumlah</th>
-                        <th>Rusak</th>
-                        <th>Created By</th>
-                        <th>Updated By</th>
-                        <th>status</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Nama Barang</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Kode</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Tipe Barang</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Jumlah</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Rusak</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Created By</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />Updated By</th>
+                        <th><input type="text" placeholder="Search"  style="width: 100%"  />status</th>
                         <th>action</th>
                      </tr>
                   </thead>
@@ -150,6 +151,7 @@
                         <th>no</th>
                         <th>Nama Barang</th>
                         <th>Kode</th>
+                        <th>Tipe Barang</th>
                         <th>Jumlah</th>
                         <th>Rusak</th>
                         <th>Created By</th>
@@ -209,6 +211,12 @@ $(function() {
                     searchable: true
                 },
                 {
+                    data: 'tipe_barang',
+                    name: 'tipe_barang',
+                    orderable: true,
+                    searchable: true
+                },
+                {
                     data: 'jumlahbarang',
                     name: 'jumlahbarang',
                     orderable: true,
@@ -252,6 +260,7 @@ $(function() {
             responsive: true,
             lengthChange: false,
             autoWidth: false,
+            dom: 'Bfrtip',
             buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
             initComplete: function() {
                 // Apply the search
