@@ -33,7 +33,7 @@ class PerlengkapanController extends Controller
         $title = 'Welcome Admin';
         
         
-        return view('master.dataPerlengkapan',);
+        return view('master.dataPerlengkapan');
     }
 
     public function PerlengkapanDetail($id)
@@ -209,10 +209,12 @@ class PerlengkapanController extends Controller
                     
                 }
                 $jumlah_barang = Perlengkapan::where('barang_id', $barang_id)->where('status', 1)->where('kondisi_perlengkapan','!=',3)->sum('jumlah_perlengkapan');
-
-                $barang['jumlah'] = $jumlah_barang; 
-                Barang::updateOrInsert(
-                    ['id' => $barang_id], $barang
+                $jumlah_rusak = Perlengkapan::where('barang_id', $barang_id)->where('status', 1)->where('kondisi_perlengkapan',3)->sum('jumlah_perlengkapan');
+                Barang::where('id', $barang_id)->update([
+                    'jumlah' => $jumlah_barang,
+                    'rusak' => $jumlah_rusak,
+                    'updated_at' => now(),
+                    ]
                 );
                 
                 
@@ -277,11 +279,13 @@ class PerlengkapanController extends Controller
             //Ngebuat jumlah barang nambah kalau kondisinya gk rusak
             
             $jumlah_barang = Perlengkapan::where('barang_id', $barang_id)->where('status', 1)->where('kondisi_perlengkapan','!=',3)->sum('jumlah_perlengkapan');
-
-            $barang['jumlah'] = $jumlah_barang; 
-            Barang::updateOrInsert(
-                ['id' => $barang_id], $barang
-            );
+                $jumlah_rusak = Perlengkapan::where('barang_id', $barang_id)->where('status', 1)->where('kondisi_perlengkapan',3)->sum('jumlah_perlengkapan');
+                Barang::where('id', $barang_id)->update([
+                    'jumlah' => $jumlah_barang,
+                    'rusak' => $jumlah_rusak,
+                    'updated_at' => now(),
+                    ]
+                );
             
             
         
@@ -658,9 +662,10 @@ class PerlengkapanController extends Controller
                 //Ngebuat jumlah barang nambah kalau kondisinya gk rusak
         
                 $jumlah_barang = Perlengkapan::where('barang_id', $barang_id)->where('status', 1)->where('kondisi_perlengkapan','!=',3)->sum('jumlah_perlengkapan');
-
+                $jumlah_rusak = Perlengkapan::where('barang_id', $barang_id)->where('status', 1)->where('kondisi_perlengkapan',3)->sum('jumlah_perlengkapan');
                 Barang::where('id', $barang_id)->update([
                     'jumlah' => $jumlah_barang,
+                    'rusak' => $jumlah_rusak,
                     'updated_at' => now(),
                     ]
                 );
@@ -678,12 +683,13 @@ class PerlengkapanController extends Controller
                 //Ngebuat jumlah barang nambah kalau kondisinya gk rusak
         
                 $jumlah_barang = Perlengkapan::where('barang_id', $barang_id)->where('status', 1)->where('kondisi_perlengkapan','!=',3)->sum('jumlah_perlengkapan');
-
+                $jumlah_rusak = Perlengkapan::where('barang_id', $barang_id)->where('status', 1)->where('kondisi_perlengkapan',3)->sum('jumlah_perlengkapan');
                 Barang::where('id', $barang_id)->update([
                     'jumlah' => $jumlah_barang,
+                    'rusak' => $jumlah_rusak,
                     'updated_at' => now(),
                     ]
-                ); 
+                );
                 return response()->json(['success'=>'Publish Perlengkapan']);
                 break;
                 default:
@@ -711,11 +717,13 @@ class PerlengkapanController extends Controller
         //Ngebuat jumlah barang nambah kalau kondisinya gk rusak
         
         $jumlah_barang = Perlengkapan::where('barang_id', $barang_id)->where('status', 1)->where('kondisi_perlengkapan','!=',3)->sum('jumlah_perlengkapan');
-        Barang::where('id', $barang_id)->update([
-            'jumlah' => $jumlah_barang,
-            'updated_at' => now(),
-            ]
-        );
+                $jumlah_rusak = Perlengkapan::where('barang_id', $barang_id)->where('status', 1)->where('kondisi_perlengkapan',3)->sum('jumlah_perlengkapan');
+                Barang::where('id', $barang_id)->update([
+                    'jumlah' => $jumlah_barang,
+                    'rusak' => $jumlah_rusak,
+                    'updated_at' => now(),
+                    ]
+                );
         return response()->json(['success'=>'Hapus Perlengkapan ']);
         
     }

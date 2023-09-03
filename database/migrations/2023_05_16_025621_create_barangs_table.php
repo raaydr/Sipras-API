@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('tipe_barang');
             $table->string('satuan_barang');
             $table->integer('jumlah')->unsigned();
+            $table->integer('rusak')->unsigned();
             $table->text('keterangan');
             $table->boolean('status');
             $table->integer('user_id');

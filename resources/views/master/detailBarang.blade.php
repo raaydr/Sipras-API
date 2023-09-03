@@ -74,9 +74,20 @@
                         </div>
                      </div>
                      <div class="form-group row">
-                        <label for="Jumlah" class="col-md-4 col-form-label text-md-right">{{ __('Jumlah') }}</label>
+                        <label for="Jumlah" class="col-md-4 col-form-label text-md-right">{{ __('Jumlah Barang') }}</label>
                         <div class="col-md-6">
                            <input id="Jumlah" type="text" class="form-control" name="Jumlah" value="{{$barang->jumlah}}" readonly/>
+                           @if ($errors->has('kode_barang'))
+                           <span class="invalid-feedback" role="alert">
+                           <strong>{{ $errors->first('kode_barang') }}</strong>
+                           </span>
+                           @endif
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label for="Jumlah" class="col-md-4 col-form-label text-md-right">{{ __('Jumlah Barang Rusak') }}</label>
+                        <div class="col-md-6">
+                           <input id="Jumlah" type="text" class="form-control" name="rusak" value="{{$barang->rusak}}" readonly/>
                            @if ($errors->has('kode_barang'))
                            <span class="invalid-feedback" role="alert">
                            <strong>{{ $errors->first('kode_barang') }}</strong>

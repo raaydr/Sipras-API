@@ -136,6 +136,7 @@
                         <th>Nama Barang</th>
                         <th>Kode</th>
                         <th>Jumlah</th>
+                        <th>Rusak</th>
                         <th>Created By</th>
                         <th>Updated By</th>
                         <th>status</th>
@@ -150,6 +151,7 @@
                         <th>Nama Barang</th>
                         <th>Kode</th>
                         <th>Jumlah</th>
+                        <th>Rusak</th>
                         <th>Created By</th>
                         <th>Updated By</th>
                         <th>status</th>
@@ -209,6 +211,12 @@ $(function() {
                 {
                     data: 'jumlahbarang',
                     name: 'jumlahbarang',
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                    data: 'jumlahrusak',
+                    name: 'jumlahrusak',
                     orderable: true,
                     searchable: true
                 },

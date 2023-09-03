@@ -116,6 +116,7 @@ class BarangController extends Controller
             $barang->keterangan =  $update['keterangan'];
             $barang->status =  1;
             $barang->jumlah =  0;
+            $barang->rusak =  0;
             $user_id = Auth::user()->id;
             $user_name = Auth::user()->name;
             $barang->user_id =  $user_id;
@@ -140,6 +141,12 @@ class BarangController extends Controller
                     ->addIndexColumn()
                     ->addColumn('jumlahbarang', function($row){
                         $jumlah = $row->jumlah;
+                        $satuan = $row->satuan_barang;
+                        
+                        return $jumlah.' '.$satuan;
+                    })
+                    ->addColumn('jumlahrusak', function($row){
+                        $jumlah = $row->rusak;
                         $satuan = $row->satuan_barang;
                         
                         return $jumlah.' '.$satuan;
@@ -251,7 +258,7 @@ class BarangController extends Controller
                         
                         
                         return $actionBtn;
-                    })->rawColumns(['jumlahbarang','status','action'])
+                    })->rawColumns(['jumlahbarang','jumlahrusak','status','action'])
                     ->make(true);
             }
     }
