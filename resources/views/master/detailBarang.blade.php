@@ -684,8 +684,7 @@
                                case 1:
                                    $('#load').hide();
                                    $('#simpanBTN').html('Submit'); //tombol simpan
-                                   $('#simpanBTN').show();
-                                   location.reload(); 
+                                   $('#simpanBTN').show(); 
                                    //$('#uploadStatus').html('<p style="color:#28A74B;">File Berhasil diupload!</p>');
                                    iziToast.success({ //tampilkan iziToast dengan notif data berhasil disimpan pada posisi kanan bawah
                                        title: 'Data Berhasil Disimpan',
@@ -693,6 +692,7 @@
                                        success ')}}',
                                        position: 'bottomRight'
                                    });
+                                   location.reload();
                                    break;
 
                                 case 2:
@@ -704,6 +704,7 @@
                                        message: data.error,
                                    });
                                    console.log('Error:', "Hanya Super Admin yang dapat mengganti");
+                                   location.reload();
                                    break;
                                default:
                                    // code block
@@ -869,6 +870,7 @@
                                        success ')}}',
                                        position: 'bottomRight'
                                    });
+                                   location.reload();
                                    break;
                                  case 2:
                                    $('#load1').hide();
@@ -885,6 +887,7 @@
                                        success ')}}',
                                        position: 'bottomRight'
                                    });
+                                   location.reload();
                                    break;
                                default:
                                    // code block
