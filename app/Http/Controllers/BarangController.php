@@ -134,7 +134,7 @@ class BarangController extends Controller
     public function tabelBarang(Request $request)
     {
         
-        $data = Barang::where('status', '!=',0)->orderBy('created_at', 'desc')->get();
+        $data = Barang::where('status', '!=',0)->orderBy('status', 'asc')->get();
             if($request->ajax()){
     
                 return datatables()->of($data)                   
@@ -178,6 +178,33 @@ class BarangController extends Controller
                             switch ($status) {
                                 case '2':
                                     $actionBtn =$actionBtn.' <a data-id="'.$id.'" class="btn btn-outline-success m-1 publishBarang">Kembalikan</a>';
+                                    $actionBtn =$actionBtn.' 
+                                        <a id="hapus" data-toggle="modal" data-target="#hapus-barang'.$id.'" class="btn btn-outline-danger m-1">Hapus Permanen</a></dl>
+                                                                    <div class="modal fade" id="hapus-barang'.$id.'">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content bg-danger">
+                                                                                <div class="modal-header">
+                                                                                    <h4 class="modal-title">Penolakan</h4>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">    
+                                                                                        <p>Apa anda yakin ingin menghapus Barang '.$nama.' ini ?</p>
+                                                                                        <div class="modal-footer justify-content-between">
+                                                                                        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+                                                                                        <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$id.'" data-dismiss="modal" data-original-title="Delete" class="btn btn-outline-light deleteBarang">Delete</a>
+                                                                                        </div>
+                                                                                    
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- /.modal-content -->
+                                                                        </div>
+                                                                        <!-- /.modal-dialog -->
+                                                                    </div>
+                                                                    <!-- /.modal -->';
+                                 
+                                        break;
                                     break;
                                 case '1':
                                     $actionBtn =$actionBtn.' 
@@ -217,6 +244,33 @@ class BarangController extends Controller
                                 switch ($status) {
                                     case '2':
                                         $actionBtn =$actionBtn.' <a data-id="'.$id.'" class="btn btn-outline-success m-1 publishBarang">Kembalikan</a>';
+
+                                        $actionBtn =$actionBtn.' 
+                                        <a id="hapus" data-toggle="modal" data-target="#hapus-barang'.$id.'" class="btn btn-outline-danger m-1">Hapus Permanen</a></dl>
+                                                                    <div class="modal fade" id="hapus-barang'.$id.'">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content bg-danger">
+                                                                                <div class="modal-header">
+                                                                                    <h4 class="modal-title">Penolakan</h4>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">    
+                                                                                        <p>Apa anda yakin ingin menghapus Barang '.$nama.' ini ?</p>
+                                                                                        <div class="modal-footer justify-content-between">
+                                                                                        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+                                                                                        <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$id.'" data-dismiss="modal" data-original-title="Delete" class="btn btn-outline-light deleteBarang">Delete</a>
+                                                                                        </div>
+                                                                                    
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- /.modal-content -->
+                                                                        </div>
+                                                                        <!-- /.modal-dialog -->
+                                                                    </div>
+                                                                    <!-- /.modal -->';
+                                 
                                         break;
                                     case '1':
                                         $actionBtn =$actionBtn.' 
@@ -341,7 +395,7 @@ class BarangController extends Controller
         
         Barang::where('id', $id)->update([
             
-            'status' => 2,
+            'status' => 0,
             'updated_at' => now(),
             ]
         );
