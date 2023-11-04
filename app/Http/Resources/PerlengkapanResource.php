@@ -21,6 +21,7 @@ class PerlengkapanResource extends JsonResource
             'code' => $this->kode_perlengkapan,
             'jumlah' => $this->jumlah_perlengkapan,
             'tanggal'=> Carbon::parse($this->tanggal_pembelian)->isoFormat('D MMMM Y'),
+            'barang' => $this->whenLoaded('barang'),
         ];
     }
 }
