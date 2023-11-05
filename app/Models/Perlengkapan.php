@@ -55,4 +55,9 @@ class Perlengkapan extends Model
 	{
 		return $this->belongsTo('App\Models\Barang','barang_id');
 	}
+    public function Creator()
+	{
+		return $this->belongsTo('App\Models\User','user_id');
+	}
+
 }

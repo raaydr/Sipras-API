@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('user_name');
             $table->string('editedBy_name');
             $table->integer('editedBy_id');
+            $table->softDeletes(); 
             $table->timestamps();
 
                
