@@ -32,10 +32,11 @@ class BarangController extends Controller
         return view('master.dataBarang',);
     }
 
-    public function BarangDetail($id)
+    public function BarangDetail($slug)
     {
         $title = 'Welcome Admin';
-        $barang = Barang::where('id',$id)->first();
+        //$barang = Barang::findOrFail($slug);
+        $barang = Barang::where('slug',$slug)->first();
         return view('master.detailBarang',compact('barang'));
     }
 
@@ -168,7 +169,7 @@ class BarangController extends Controller
                     ->addColumn('action', function($row){
                         $userID = Auth::user()->id;
                         $level = Auth::user()->level;
-                        $id = $row->id;
+                        $id = $row->slug;
                         $nama = $row->nama_barang;
                         $detail = route('BarangDetail',$id); 
                         $actionBtn = '<a class="btn btn-outline-primary m-1" href='.$detail.'>detail</a>';

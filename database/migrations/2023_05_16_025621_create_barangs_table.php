@@ -27,7 +27,7 @@ return new class extends Migration
             $table->integer('editedBy_id');
             $table->softDeletes(); 
             $table->timestamps();
-
+            $table->string('slug'); // Field name same as your `saveSlugsTo`
                
         });
     }

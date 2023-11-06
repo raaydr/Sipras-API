@@ -60,7 +60,7 @@ Route::group(['middleware' => 'check-permission:superadmin|admin'], function () 
         Route::get('/Barang/Barang-Tabel', [App\Http\Controllers\BarangController::class, 'tabelBarang'])->name('tabelBarang');
         Route::get('/Barang/Barang-Publish/{id}', [App\Http\Controllers\BarangController::class, 'BarangPublish'])->name('BarangPublish');
         Route::get('/Barang/Barang-Delete/{id}', [App\Http\Controllers\BarangController::class, 'BarangDelete'])->name('BarangDelete');
-        Route::get('/Barang/Barang-Detail/{id}', [App\Http\Controllers\BarangController::class, 'BarangDetail'])->name('BarangDetail');
+        Route::get('/Barang/Barang-Detail/{barang:slug}', [App\Http\Controllers\BarangController::class, 'BarangDetail'])->name('BarangDetail');
         //Perlengkapan
         Route::get('/Perlengkapan/Perlengkapan-Edit', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanEdit'])->name('PerlengkapanEdit');  
         Route::post('/Perlengkapan/Perlengkapan-Update', [App\Http\Controllers\PerlengkapanController::class, 'PerlengkapanUpdate'])->name('PerlengkapanUpdate');        

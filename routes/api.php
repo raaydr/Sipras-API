@@ -28,7 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         Route::get('/perlengkapan', [App\Http\Controllers\Api\PerlengkapanController::class, 'PerlengkapanEdit'])->name('PerlengkapanEdit');
 
         Route::post('/create-barang', [App\Http\Controllers\Api\BarangController::class, 'CreateBarang'])->name('CreateBarang');
-        Route::get('/detail-barang/{id}', [App\Http\Controllers\Api\BarangController::class, 'BarangDetail'])->name('BarangDetail');
+        Route::get('/detail-barang/{barang:slug}', [App\Http\Controllers\Api\BarangController::class, 'BarangDetail'])->name('BarangDetail');
         Route::patch('/update-barang/{id}', [App\Http\Controllers\Api\BarangController::class, 'UpdateBarang'])->name('UpdateBarang')->middleware('check-role');
         Route::delete('/delete-barang/{id}', [App\Http\Controllers\Api\BarangController::class, 'DeleteBarang'])->name('DeleteBarang')->middleware('check-role');
         

@@ -25,7 +25,7 @@ class QrpageController extends Controller
 {
     Public function PageQrcodePerlengkapan($id){
         $perlengkapan_id = $id;
-        $perlengkapan = Perlengkapan::where('id',$perlengkapan_id)->first();
+        $perlengkapan = Perlengkapan::where('kode_perlengkapan',$perlengkapan_id)->first();
         $barang = Barang::where('id',$perlengkapan->barang_id)->first();
         
         

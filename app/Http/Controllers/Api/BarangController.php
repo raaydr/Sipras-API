@@ -23,10 +23,10 @@ use Illuminate\Support\Facades\Crypt;
 
 class BarangController extends BaseController
 {
-    public function BarangDetail($id)
+    public function BarangDetail($slug)
     {
-        
-        $barang = Barang::with('perlengkapan:barang_id,kode_perlengkapan,user_id')->findOrFail($id);
+        $barang = Barang::with('perlengkapan:barang_id,kode_perlengkapan,user_id')->where('slug',$slug)->first();
+        //$barang = Barang::with('perlengkapan:barang_id,kode_perlengkapan,user_id')->findOrFail($id);
         return $this->sendResponse(new BarangResource($barang), 'Barang Berhasil Ditemukan');
     }
     public function CreateBarang(Request $request){

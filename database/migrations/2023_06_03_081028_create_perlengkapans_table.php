@@ -20,8 +20,8 @@ return new class extends Migration
             $table->date('tanggal_pembelian')->nullable();
             $table->string('lokasi_perlengkapan')->nullable();
             $table->string('departemen')->nullable();
-            $table->text('foto_perlengkapan');
-            $table->text('foto_perlengkapan_thumbnail');
+            $table->text('foto_perlengkapan')->nullable();
+            $table->text('foto_perlengkapan_thumbnail')->nullable();
             $table->boolean('kondisi_perlengkapan');
             $table->text('barcode_perlengkapan');
             $table->boolean('status');
@@ -34,6 +34,7 @@ return new class extends Migration
             $table->integer('editedBy_id');
             $table->integer('mutasi_id')->nullable();;
             $table->timestamps();
+            
 
                
         });

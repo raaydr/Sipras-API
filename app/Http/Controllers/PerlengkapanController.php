@@ -39,7 +39,7 @@ class PerlengkapanController extends Controller
     public function PerlengkapanDetail($id)
     {
         $title = 'Welcome Admin';
-        $perlengkapan = Perlengkapan::where('id',$id)->first();
+        $perlengkapan = Perlengkapan::where('kode_perlengkapan',$id)->first();
         $barang = Barang::where('id',$perlengkapan->barang_id)->first();
         $harga_perlengkapan= $perlengkapan->harga_perlengkapan;
         return view('master.detailPerlengkapan',compact('barang','perlengkapan','harga_perlengkapan'));
@@ -47,7 +47,7 @@ class PerlengkapanController extends Controller
 
     Public function PageQrcodePerlengkapan($id){
         $perlengkapan_id = $id;
-        $perlengkapan = Perlengkapan::where('id',$perlengkapan_id)->first();
+        $perlengkapan = Perlengkapan::where('kode_perlengkapan',$perlengkapan_id)->first();
         $barang = Barang::where('id',$perlengkapan->barang_id)->first();
         
         
@@ -55,7 +55,7 @@ class PerlengkapanController extends Controller
         return view('master.qrcodePerlengkapan',compact('perlengkapan','barang'));
     }
     public function PerlengkapanQrcode($id){
-        $perlengkapan = Perlengkapan::where('id',$id)->first();
+        $perlengkapan = Perlengkapan::where('kode_perlengkapan',$id)->first();
         $qrpage = route('PageQrcodePerlengkapan', $id);
         $kode = $perlengkapan->kode_perlengkapan;
         $image = QrCode::format('png')
@@ -378,7 +378,7 @@ class PerlengkapanController extends Controller
                         $userID = Auth::user()->id;
                         $level = Auth::user()->level;
                         $user_id = $row->user_id;
-                        $id = $row->id;
+                        $id = $row->kode_perlengkapan;
                         $nama = $row->kode_perlengkapan;
                         $qrcode = route('PerlengkapanQrcode',$id); 
                         $actionBtn = '<a class="btn btn-outline-info m-1" href='.$qrcode.' target="_blank">QRcode</a>';
@@ -548,7 +548,7 @@ class PerlengkapanController extends Controller
                         $userID = Auth::user()->id;
                         $level = Auth::user()->level;
                         $user_id = $row->user_id;
-                        $id = $row->id;
+                        $id = $row->kode_perlengkapan;
                         $nama = $row->nama_perlengkapan;
                         $qrcode = route('PerlengkapanQrcode',$id); 
                         $actionBtn = '<a class="btn btn-outline-info m-1" href='.$qrcode.' target="_blank">QRcode</a>';

@@ -15,8 +15,8 @@ class createSuperAdmin extends Seeder
     {
         DB::table('users')->insert([
             'name' => 'SuperAdmin',
-            'email' => 'kstikesmedistraindonesia@gmail.com',
-            'password'=>bcrypt('isiadalah0'),
+            'email' => 'super@gmail.com',
+            'password'=>bcrypt('12345678'),
             'level'=>0,
         ]);
     }

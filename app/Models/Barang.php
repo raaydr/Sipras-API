@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
+
 class Barang extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory,SoftDeletes,HasSlug;
     protected $table = 'barang';
     protected $fillable = [
         'nama_barang',
@@ -41,9 +44,20 @@ class Barang extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
-
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('nama_barang')
+            ->saveSlugsTo('slug');
+    }
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
     public function perlengkapan()
     {
         return $this->hasMany('App\Models\Perlengkapan');
     }
+
+    
 }

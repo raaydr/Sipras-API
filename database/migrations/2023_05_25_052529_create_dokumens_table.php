@@ -24,6 +24,7 @@ return new class extends Migration
             $table->text('link_dokumen');
             $table->boolean('status');
             $table->timestamps();
+            $table->string('slug'); // Field name same as your `saveSlugsTo`
         });
     }
 
