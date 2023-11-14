@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 */
     
     Route::post('/login', [App\Http\Controllers\Api\LoginController::class, 'Login'])->name('Login');
+    Route::post('/register', [App\Http\Controllers\Api\RegisterController::class, 'Register'])->name('Register');
     Route::middleware('auth:sanctum')->group( function () {
         Route::get('/logout', [App\Http\Controllers\Api\LoginController::class, 'Logout'])->name('Logout');
         Route::get('/identify', [App\Http\Controllers\Api\LoginController::class, 'IdentifyUser'])->name('IdentifyUser');
