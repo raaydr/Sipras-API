@@ -24,6 +24,7 @@ class RegisterController extends BaseController
             
             
             
+            
 
         ],
 
@@ -40,7 +41,7 @@ class RegisterController extends BaseController
 
         if($validator->fails())
         {
-            return $this->sendError('periksa input',$validator->errors()->all());
+            return $this->sendError('periksa input',$validator->errors());
         }
         $user = new User;
         $user->name = $request->name;
