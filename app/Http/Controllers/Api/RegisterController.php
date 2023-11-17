@@ -21,6 +21,7 @@ class RegisterController extends BaseController
             'name' => 'required|string|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'recaptchaValue' => 'required|captcha',
             
             
             
@@ -52,6 +53,6 @@ class RegisterController extends BaseController
         $user->save();
         $success['name'] =  $user->name;
             //return $user->createToken("User Login")->plainTextToken;
-        return $this->sendResponse($success, 'User login successfully.');
+        return $this->sendResponse($success, 'User regiter successfully.');
     }
 }

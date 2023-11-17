@@ -17,11 +17,26 @@ class LoginController extends BaseController
     public function Login(Request $request)
     {
         
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+      
 
+        if (($request->loginAttempts) >=3 ) {
+            
+            $request->validate([
+                'email' => 'required|email',
+                'password' => 'required',
+                'loginAttempts' => 'required',
+                'recaptchaValue' => 'required|captcha',
+                
+                
+            ]);
+        } else{
+            $request->validate([
+                'email' => 'required|email',
+                'password' => 'required',
+                
+                
+            ]);
+        }
         $user = User::where('email', $request->email)->first();
         if (! $user || ! Hash::check($request->password, $user->password)) {
             
