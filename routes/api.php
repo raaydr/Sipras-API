@@ -22,9 +22,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     
     Route::post('/login', [App\Http\Controllers\Api\LoginController::class, 'Login'])->name('Login');
     Route::post('/register', [App\Http\Controllers\Api\RegisterController::class, 'Register'])->name('Register');
+    Route::post('forgot-password', [App\Http\Controllers\Api\AuthController::class, 'ForgotPassword'])->name('ForgotPassword');
+    
     Route::middleware('auth:sanctum')->group( function () {
         Route::get('/logout', [App\Http\Controllers\Api\LoginController::class, 'Logout'])->name('Logout');
         Route::get('/identify', [App\Http\Controllers\Api\LoginController::class, 'IdentifyUser'])->name('IdentifyUser');
+        Route::post('reset-password', [App\Http\Controllers\Api\AuthController::class, 'ChangePassword'])->name('ChangePassword');
+
+        
         Route::get('/perlengkapan-detail/{id}', [App\Http\Controllers\Api\PerlengkapanController::class, 'PerlengkapanDetail'])->name('PerlengkapanDetail');    
         Route::get('/perlengkapan', [App\Http\Controllers\Api\PerlengkapanController::class, 'PerlengkapanEdit'])->name('PerlengkapanEdit');
 
