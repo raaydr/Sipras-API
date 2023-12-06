@@ -20,6 +20,7 @@ class BarangResource extends JsonResource
         return[
             'id' => $this->id,
             'nama_barang' => $this->nama_barang,
+            'kode_barang' => $this->kode_barang,
             'tipe_barang' => $this->tipe_barang,
             'satuan_barang' => $this->satuan_barang,
             'jumlah' => $this->jumlah,
