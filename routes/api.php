@@ -37,6 +37,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         Route::get('/detail-barang/{barang:slug}', [App\Http\Controllers\Api\BarangController::class, 'BarangDetail'])->name('BarangDetail');
         Route::patch('/update-barang/{id}', [App\Http\Controllers\Api\BarangController::class, 'UpdateBarang'])->name('UpdateBarang')->middleware('check-role');
         Route::delete('/delete-barang/{id}', [App\Http\Controllers\Api\BarangController::class, 'DeleteBarang'])->name('DeleteBarang')->middleware('check-role');
+        Route::get('/data-barang', [App\Http\Controllers\Api\BarangController::class, 'BarangData'])->name('BarangData')->middleware('admin-role');;
         
     });
     //Route::post('/User/Change-Account', [App\Http\Controllers\AkunController::class, 'change_account'])->name('change_account');

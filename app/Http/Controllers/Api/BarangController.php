@@ -86,7 +86,10 @@ class BarangController extends BaseController
     }
 
     public function UpdateBarang(Request $request){
-        $validator = Validator::make($request->all(), 
+        
+        try {
+            DB::beginTransaction();
+            $validator = Validator::make($request->all(), 
         [   
             
             
@@ -136,8 +139,15 @@ class BarangController extends BaseController
             ['id' => $id], $update
         );
         $barang = Barang::findOrFail($id);
-        //return $this->sendResponse($update,'Berhasil Update Barang');
-        return $this->sendResponse($barang,'Berhasil Update Barang');
+
+            
+    
+            DB::commit();
+            return $this->sendResponse($barang,'Berhasil Update Barang');
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollback();
+        }
     }
 
     public function DeleteBarang($id){
@@ -145,5 +155,12 @@ class BarangController extends BaseController
         $barang = Barang::findOrFail($id);
         $barang->delete();
         return $this->sendResponse(new BarangResource($barang), 'Barang Berhasil Dihapus');
+    }
+
+    public function BarangData(){
+        $data = Barang::where('status', '!=',0)->orderBy('id', 'desc')->get();
+
+        return $this->sendResponse(BarangResource::collection($data), 'Barang Berhasil Ditemukan');
+
     }
 }
