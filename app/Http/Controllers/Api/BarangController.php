@@ -23,9 +23,9 @@ use Illuminate\Support\Facades\Crypt;
 
 class BarangController extends BaseController
 {
-    public function BarangDetail($slug)
+    public function BarangDetail($id)
     {
-        $barang = Barang::with('perlengkapan:barang_id,kode_perlengkapan,user_id')->where('slug',$slug)->first();
+        $barang = Barang::with('perlengkapan:barang_id,kode_perlengkapan,user_id')->where('id',$id)->first();
         //$barang = Barang::with('perlengkapan:barang_id,kode_perlengkapan,user_id')->findOrFail($id);
         return $this->sendResponse(new BarangResource($barang), 'Barang Berhasil Ditemukan');
     }
@@ -86,7 +86,7 @@ class BarangController extends BaseController
     }
 
     public function UpdateBarang(Request $request){
-        
+        $id = $request->id;
         try {
             DB::beginTransaction();
             $validator = Validator::make($request->all(), 
@@ -94,7 +94,7 @@ class BarangController extends BaseController
             
             
             'nama_barang' => 'nullable|string',
-            'kode_barang' => 'nullable|string|unique:barang,kode_barang',
+            'kode_barang' => 'nullable|string|unique:barang,kode_barang,'.$id,
             'tipe_barang' => 'nullable|string',
             'satuan_barang' => 'nullable|string',
             'keterangan' => 'nullable',
@@ -113,7 +113,7 @@ class BarangController extends BaseController
         }
         $update = array();
 
-        $id = $request->id;
+        
         if($request->nama_barang != NULL){
             $update['nama_barang'] = $request->nama_barang;
         }
@@ -143,10 +143,11 @@ class BarangController extends BaseController
             
     
             DB::commit();
-            return $this->sendResponse($barang,'Berhasil Update Barang');
+        return $this->sendResponse($barang,'Berhasil Update Barang');
         } catch (\Throwable $th) {
             //throw $th;
             DB::rollback();
+            
         }
     }
 
