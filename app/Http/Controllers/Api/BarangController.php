@@ -45,19 +45,25 @@ class BarangController extends BaseController
             
             'nama_barang.required' => 'nama barang tidak boleh kosong!',
             'kode_barang.required' => 'kode barang tidak boleh kosong!',
-            'kode_barang.unique' => 'kode barang tidak boleh sama',            
+            'kode_barang.unique' => 'kode barang sudah dipakai',            
             'tipe_barang.required' => 'tipe barang unit tidak boleh kosong!',
             'satuan_barang.required' => 'satuan barang tidak boleh kosong!',
             'keterangan.required' => 'keterangan barang tidak boleh kosong!',
             
         ]);     
 
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
+            $errors = $validator->errors();
             
-            
-            return $this->sendError('periksa input',$validator->errors()->all());
-            //return response()->json(['status'=>0, 'msg'=>'periksa input','error'=>$validator->errors()->all()]);
+            $errorMessages = [];
+
+            foreach ($errors->messages() as $field => $messages) {
+                foreach ($messages as $message) {
+                    $errorMessages[$field] = $message;
+                }
+            }
+
+            return $this->sendError('Periksa input', $errorMessages);
         }
         
             
