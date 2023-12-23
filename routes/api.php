@@ -30,14 +30,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         Route::post('reset-password', [App\Http\Controllers\Api\AuthController::class, 'ChangePassword'])->name('ChangePassword');
 
         
-        Route::get('/perlengkapan-detail/{id}', [App\Http\Controllers\Api\PerlengkapanController::class, 'PerlengkapanDetail'])->name('PerlengkapanDetail');    
-        Route::get('/perlengkapan', [App\Http\Controllers\Api\PerlengkapanController::class, 'PerlengkapanEdit'])->name('PerlengkapanEdit');
+        Route::get('/data-perlengkapan/{id}', [App\Http\Controllers\Api\PerlengkapanController::class, 'PerlengkapanDetail'])->name('PerlengkapanDetail');    
+        Route::get('/data-perlengkapan', [App\Http\Controllers\Api\PerlengkapanController::class, 'PerlengkapanData'])->name('PerlengkapanData');
+        Route::post('/create-perlengkapan', [App\Http\Controllers\Api\PerlengkapanController::class, 'CreatePerlengkapan'])->name('CreatePerlengkapan');
+        Route::patch('/update-perlengkapan/{id}', [App\Http\Controllers\Api\PerlengkapanController::class, 'UpdatePerlengkapan'])->name('UpdatePerlengkapan')->middleware('check-perlengkapan');
+        Route::delete('/delete-perlengkapan/{id}', [App\Http\Controllers\Api\PerlengkapanController::class, 'DeletePerlengkapan'])->name('DeletePerlengkapan')->middleware('check-perlengkapan');
 
         Route::post('/create-barang', [App\Http\Controllers\Api\BarangController::class, 'CreateBarang'])->name('CreateBarang');
         Route::get('/detail-barang/{id}', [App\Http\Controllers\Api\BarangController::class, 'BarangDetail'])->name('BarangDetail');
-        Route::patch('/update-barang/{id}', [App\Http\Controllers\Api\BarangController::class, 'UpdateBarang'])->name('UpdateBarang')->middleware('check-role');
-        Route::delete('/delete-barang/{id}', [App\Http\Controllers\Api\BarangController::class, 'DeleteBarang'])->name('DeleteBarang')->middleware('check-role');
-        Route::get('/data-barang', [App\Http\Controllers\Api\BarangController::class, 'BarangData'])->name('BarangData')->middleware('admin-role');;
+        Route::patch('/update-barang/{id}', [App\Http\Controllers\Api\BarangController::class, 'UpdateBarang'])->name('UpdateBarang')->middleware('check-barang');
+        Route::delete('/delete-barang/{id}', [App\Http\Controllers\Api\BarangController::class, 'DeleteBarang'])->name('DeleteBarang')->middleware('check-barang');
+        Route::get('/data-barang', [App\Http\Controllers\Api\BarangController::class, 'BarangData'])->name('BarangData');
         
     });
     //Route::post('/User/Change-Account', [App\Http\Controllers\AkunController::class, 'change_account'])->name('change_account');
