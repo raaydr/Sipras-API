@@ -10,7 +10,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class Barang extends Model
 {
-    use HasFactory,SoftDeletes,HasSlug;
+    use HasFactory,HasSlug;
     protected $table = 'barang';
     protected $fillable = [
         'nama_barang',

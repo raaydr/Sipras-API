@@ -102,7 +102,7 @@ class PerlengkapanController extends BaseController
             'kondisi_perlengkapan' => 'required',
             'leandable_perlengkapan' => 'required',
             'foto_perlengkapan' => 'nullable',
-            'foto_perlengkapan' => 'image|mimes:jpeg,png,jpg|max:5120',
+            //'foto_perlengkapan' => 'image|mimes:jpeg,png,jpg|max:5120',
             
 
         ],

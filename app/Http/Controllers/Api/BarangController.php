@@ -159,13 +159,17 @@ class BarangController extends BaseController
 
     public function DeleteBarang($id){
 
-        $barang = Barang::findOrFail($id);
-        $barang->delete();
+        $barang = Barang::where('id',$id    )->first();
+        Barang::where('id', $id)->update([
+            'status' => 2,
+            'updated_at' => now(),
+            ]
+        );
         return $this->sendResponse(new BarangResource($barang), 'Barang Berhasil Dihapus');
     }
 
     public function BarangData(){
-        $data = Barang::where('status', '!=',0)->orderBy('id', 'desc')->get();
+        $data = Barang::where('status',1)->orderBy('id', 'desc')->get();
 
         return $this->sendResponse(BarangResource::collection($data), 'Barang Berhasil Ditemukan');
 

@@ -701,16 +701,16 @@ class PerlengkapanController extends Controller
 
     public function PerlengkapanDelete($id)
     {
-        $barang_id = Perlengkapan::where('id', $id)->value('barang_id');
-        Perlengkapan::where('id', $id)->update([
+        $barang_id = Perlengkapan::where('kode_perlengkapan', $id)->value('barang_id');
+        Perlengkapan::where('kode_perlengkapan', $id)->update([
             
             'status' => 2,
             'updated_at' => now(),
             ]
         );
          
-        $file = Perlengkapan::where('id', $id)->value('foto_perlengkapan');
-        $thumbnail = Perlengkapan::where('id', $id)->value('foto_perlengkapan_thumbnail');
+        $file = Perlengkapan::where('kode_perlengkapan', $id)->value('foto_perlengkapan');
+        $thumbnail = Perlengkapan::where('kode_perlengkapan', $id)->value('foto_perlengkapan_thumbnail');
         File::delete('foto-perlengkapan/' . $file);
         File::delete('foto-perlengkapan/' . $thumbnail);
         

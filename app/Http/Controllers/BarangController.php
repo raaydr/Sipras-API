@@ -325,14 +325,14 @@ class BarangController extends Controller
         //$mata_pelatihan_id = Crypt::decrypt($id);
         $userID = Auth::user()->id;
         $userLevel = Auth::user()->level;
-        $dataUser = Barang::where('id', $id)->value('user_id');
+        $dataUser = Barang::where('slug', $id)->value('user_id');
     
         switch ($userLevel){
             case '0':
-                $val = Barang::where('id', $id)->value('status');
+                $val = Barang::where('slug', $id)->value('status');
              switch ($val) {
                 case '1':
-                    Barang::where('id', $id)->update([
+                    Barang::where('slug', $id)->update([
                         'status' => 2,
                         'updated_at' => now(),
                         ]
@@ -340,7 +340,7 @@ class BarangController extends Controller
                     return response()->json(['status'=>1,'success'=>'Batal Publish Barang']);
                     break;
                 case '2':
-                    Barang::where('id', $id)->update([
+                    Barang::where('slug', $id)->update([
                         'status' => 1,
                         'updated_at' => now(),
                         ]
@@ -354,10 +354,10 @@ class BarangController extends Controller
                 break;
             case '1':
                 if($userID == $dataUser){
-                    $val = Barang::where('id', $id)->value('status');
+                    $val = Barang::where('slug', $id)->value('status');
             switch ($val) {
                 case '1':
-                    Barang::where('id', $id)->update([
+                    Barang::where('slug', $id)->update([
                         'status' => 2,
                         'updated_at' => now(),
                         ]
@@ -365,7 +365,7 @@ class BarangController extends Controller
                     return response()->json(['status'=>1,'success'=>' Batal Publish Barang']);
                     break;
                 case '2':
-                    Barang::where('id', $id)->update([
+                    Barang::where('slug', $id)->update([
                         'status' => 1,
                         'updated_at' => now(),
                         ]
