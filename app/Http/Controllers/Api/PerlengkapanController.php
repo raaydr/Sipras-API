@@ -183,7 +183,13 @@ class PerlengkapanController extends BaseController
             $perlengkapan->jumlah_perlengkapan=$request->jumlah_perlengkapan;
             $perlengkapan->harga_perlengkapan=$harga_perlengkapan;
             $perlengkapan->keterangan_perlengkapan=$request->keterangan_perlengkapan;
-            $perlengkapan->tanggal_pembelian= $request->tanggal_pembelian;
+
+            $carbonDate = Carbon::parse($request->tanggal_pembelian);
+
+            // Format the date as needed (in this case, "Y-m-d")
+            $formattedDate = $carbonDate->format('Y-m-d');
+            $perlengkapan->tanggal_pembelian= $formattedDate;
+
             $perlengkapan->lokasi_perlengkapan=$request->lokasi_perlengkapan;
             $perlengkapan->departemen=$request->departemen;
             $perlengkapan->kondisi_perlengkapan=$request->kondisi_perlengkapan;
@@ -226,7 +232,7 @@ class PerlengkapanController extends BaseController
             
             
         
-            return $this->sendResponse($barang,'Berhasil Create Perlengkapan');
+            return $this->sendResponse(new PerlengkapanResource($perlengkapan),'Berhasil Create Perlengkapan');
     
     }
 
