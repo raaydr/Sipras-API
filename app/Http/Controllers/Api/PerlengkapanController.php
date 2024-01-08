@@ -43,7 +43,8 @@ class PerlengkapanController extends BaseController
     public function PerlengkapanDetail($id)
     {
         
-        $perlengkapan = Perlengkapan::with('barang:id,nama_barang,tipe_barang,keterangan')->findOrFail($id);
+        //$perlengkapan = Perlengkapan::with('barang:id,nama_barang,tipe_barang,keterangan')->findOrFail($id);
+        $perlengkapan = Perlengkapan::where('id',$id)->first();
         //harus pake id biar bisa kepanggil barangnya
 
         if (is_null($perlengkapan)) {
