@@ -188,8 +188,8 @@ class PerlengkapanController extends BaseController
             $carbonDate = Carbon::parse($request->tanggal_pembelian);
 
             // Format the date as needed (in this case, "Y-m-d")
-            $formattedDate = $carbonDate->format('Y-m-d');
-            $perlengkapan->tanggal_pembelian= $formattedDate;
+            $formattedDate = $carbonDate->format('yyyy-mm-dd');
+            $perlengkapan->tanggal_pembelian= $carbonDate;
 
             $perlengkapan->lokasi_perlengkapan=$request->lokasi_perlengkapan;
             $perlengkapan->departemen=$request->departemen;

@@ -258,10 +258,49 @@ $(function() {
                 [0, 'asc']
             ],
             responsive: true,
-            lengthChange: false,
+            lengthChange: true, // Aktifkan fitur length menu
+            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]], 
             autoWidth: false,
-            dom: 'Bfrtip',
-            buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            dom: 'Blfrtip',
+            
+            buttons:[   
+                        {
+                        extend: 'pdfHtml5',
+                            exportOptions: {
+                                columns: ':not(:last-child)',
+                            },
+                            
+                        },
+                        {
+                        extend: 'excel',
+                            exportOptions: {
+                                columns: ':not(:last-child)',
+                            },
+                            
+                        },
+                        {
+                        extend: 'print',
+                            exportOptions: {
+                                columns: ':not(:last-child)',
+                            },
+                            
+                        },
+                        {
+                        extend: 'csv',
+                            exportOptions: {
+                                columns: ':not(:last-child)',
+                            },
+                            
+                        },
+                        {
+                        extend: 'copy',
+                            exportOptions: {
+                                columns: ':not(:last-child)',
+                            },
+                            
+                        },
+                    
+                    "colvis"],
             initComplete: function() {
                 // Apply the search
                 this.api()
